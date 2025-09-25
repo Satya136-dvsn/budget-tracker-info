@@ -1,0 +1,25 @@
+{
+  "name": "budget-tracker-frontend",
+  "version": "1.0.0",
+  "description": "React frontend for Budget Tracker application",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "echo 'Frontend not implemented yet. Run: npm create vite@latest . -- --template react-ts'",
+    "build": "echo 'Frontend not implemented yet.'",
+    "preview": "echo 'Frontend not implemented yet.'",
+    "lint": "echo 'Frontend not implemented yet.'"
+  },
+  "keywords": [
+    "react",
+    "typescript",
+    "vite",
+    "budget-tracker"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  }
+}
