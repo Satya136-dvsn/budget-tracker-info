@@ -239,7 +239,7 @@ body, .main-content, .form-section {
   box-shadow: 0 2px 8px 0 rgba(102, 126, 234, 0.13);
 }
 
-.feature i {
+.feature svg {
   font-size: 2rem;
   color: #fff;
   margin: 0;
