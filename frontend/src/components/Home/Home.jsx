@@ -1,4 +1,6 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChartLine, faPiggyBank, faMobileAlt } from '@fortawesome/free-solid-svg-icons';
 
 const Home = () => {
   return (
@@ -10,21 +12,21 @@ const Home = () => {
           <div className="features">
             <div className="feature">
               <div className="feature-icon-bg">
-                <i className="fas fa-chart-line"></i>
+                <FontAwesomeIcon icon={faChartLine} />
               </div>
               <h3>Track Expenses</h3>
               <p>Monitor your spending patterns</p>
             </div>
             <div className="feature">
               <div className="feature-icon-bg">
-                <i className="fas fa-piggy-bank"></i>
+                <FontAwesomeIcon icon={faPiggyBank} />
               </div>
               <h3>Save Money</h3>
               <p>Set and achieve savings goals</p>
             </div>
             <div className="feature">
               <div className="feature-icon-bg">
-                <i className="fas fa-mobile-alt"></i>
+                <FontAwesomeIcon icon={faMobileAlt} />
               </div>
               <h3>Easy to Use</h3>
               <p>Simple and intuitive interface</p>
