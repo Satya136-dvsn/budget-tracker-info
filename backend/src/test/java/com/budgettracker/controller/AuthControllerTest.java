@@ -44,7 +44,7 @@ public class AuthControllerTest {
     public void testSignup() throws Exception {
         setup();
         
-        AuthRequest authRequest = new AuthRequest("testuser", "test@example.com", "password123");
+        AuthRequest authRequest = new AuthRequest("testuser", "test@example.com", "password123", "USER");
         
         mockMvc.perform(post("/api/auth/signup")
                 .contentType(MediaType.APPLICATION_JSON)

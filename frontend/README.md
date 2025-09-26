@@ -1,90 +1,16 @@
-# Budget Tracker Frontend
+# React + Vite
 
-Modern React frontend for the Budget Tracker application.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## 🚧 Status: Coming Soon
+Currently, two official plugins are available:
 
-This directory is prepared for the React frontend implementation using Vite.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## 📋 Planned Tech Stack
+## React Compiler
 
-- **Framework**: React 18 with TypeScript
-- **Build Tool**: Vite
-- **Styling**: CSS Modules + Material-UI/Chakra UI
-- **State Management**: React Context API or Redux Toolkit
-- **HTTP Client**: Axios or Fetch API
-- **Routing**: React Router v6
-- **Forms**: React Hook Form + Yup validation
-- **Testing**: Jest + React Testing Library
+The React Compiler is not enabled on this template. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## 🎯 Planned Features
+## Expanding the ESLint configuration
 
-- ✅ Modern responsive design
-- ✅ User authentication (login/register/logout)
-- ✅ Role-based UI (User/Admin)
-- ✅ Dashboard with budget overview
-- ✅ Expense tracking and categorization
-- ✅ Income management
-- ✅ Budget goals and alerts
-- ✅ Data visualization with charts
-- ✅ Profile management
-- ✅ Progressive Web App (PWA) support
-
-## 🚀 Getting Started (Once Implemented)
-
-### Prerequisites
-- Node.js 18+
-- npm or yarn
-
-### Setup
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-### Build for Production
-```bash
-npm run build
-```
-
-## 🔗 API Integration
-
-The frontend will communicate with the Spring Boot backend via RESTful APIs:
-- Backend URL: `http://localhost:8080`
-- Authentication: JWT Bearer tokens
-- CORS: Already configured in backend
-
-## 📁 Planned Project Structure
-
-```
-frontend/
-├── public/
-│   ├── index.html
-│   └── favicon.ico
-├── src/
-│   ├── components/         # Reusable UI components
-│   ├── pages/             # Page components
-│   ├── hooks/             # Custom React hooks  
-│   ├── services/          # API service functions
-│   ├── contexts/          # React Context providers
-│   ├── utils/             # Utility functions
-│   ├── styles/            # Global styles
-│   ├── types/             # TypeScript type definitions
-│   └── App.tsx
-├── package.json
-├── vite.config.ts
-└── tsconfig.json
-```
-
-## 🎨 Design System
-
-- **Colors**: Primary blue theme with accessibility support
-- **Typography**: Clean, modern font stack
-- **Components**: Consistent design patterns
-- **Responsive**: Mobile-first approach
-- **Dark Mode**: Optional theme support
-
----
-
-**To implement**: Run `npm create vite@latest . -- --template react-ts` in this directory to get started.
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
