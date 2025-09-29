@@ -1,6 +1,8 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChartLine } from '@fortawesome/free-solid-svg-icons';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -21,24 +23,24 @@ const Navbar = () => {
   };
 
   return (
-    <div className="navbar-outer">
-      <nav className="navbar boxed-navbar">
-        <div className="nav-brand" onClick={handleNavBrandClick} style={{ cursor: 'pointer' }}>
-          <i className="fas fa-chart-bar"></i>
-          <h1>Budget Tracker</h1>
+    <nav className="clean-navbar">
+      <div className="navbar-container">
+        <div className="navbar-brand" onClick={handleNavBrandClick}>
+          <FontAwesomeIcon icon={faChartLine} />
+          <span>Budget Tracker</span>
         </div>
-        <div className="nav-menu">
+        <div className="navbar-links">
           {!isAuthenticated ? (
             <>
               <button 
-                className="btn btn-outline" 
+                className="nav-btn nav-btn-outline" 
                 onClick={() => navigate('/signin')}
                 disabled={location.pathname === '/signin'}
               >
                 Sign In
               </button>
               <button 
-                className="btn btn-primary" 
+                className="nav-btn nav-btn-primary" 
                 onClick={() => navigate('/signup')}
                 disabled={location.pathname === '/signup'}
               >
@@ -48,37 +50,25 @@ const Navbar = () => {
           ) : (
             <>
               <button 
-                className={`btn ${location.pathname === '/dashboard' ? 'btn-primary' : 'btn-outline'}`}
+                className={`nav-btn ${location.pathname === '/dashboard' ? 'nav-btn-active' : 'nav-btn-ghost'}`}
                 onClick={() => navigate('/dashboard')}
               >
-                <i className="fas fa-tachometer-alt"></i> Dashboard
+                Dashboard
               </button>
               <button 
-                className={`btn ${location.pathname === '/transactions' ? 'btn-primary' : 'btn-outline'}`}
-                onClick={() => navigate('/transactions')}
-              >
-                <i className="fas fa-exchange-alt"></i> Transactions
-              </button>
-              <button 
-                className={`btn ${location.pathname === '/budget' ? 'btn-primary' : 'btn-outline'}`}
-                onClick={() => navigate('/budget')}
-              >
-                <i className="fas fa-calculator"></i> Budget
-              </button>
-              <button 
-                className={`btn ${location.pathname === '/profile' ? 'btn-primary' : 'btn-outline'}`}
+                className={`nav-btn ${location.pathname === '/profile' ? 'nav-btn-active' : 'nav-btn-ghost'}`}
                 onClick={() => navigate('/profile')}
               >
-                <i className="fas fa-user"></i> Profile
+                Profile
               </button>
-              <button className="btn btn-outline" onClick={handleLogout}>
-                <i className="fas fa-sign-out-alt"></i> Logout
+              <button className="nav-btn nav-btn-ghost" onClick={handleLogout}>
+                Logout
               </button>
             </>
           )}
         </div>
-      </nav>
-    </div>
+      </div>
+    </nav>
   );
 };
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useAlert } from '../../hooks/useAlert';
@@ -49,109 +49,90 @@ const SignUp = () => {
       <div className="auth-container">
         <div className="auth-left">
           <div className="welcome-content">
-            <h1 style={{fontWeight: 700, fontSize: '2.5rem', marginBottom: '1.2rem'}}>Join Budget Tracker Today!</h1>
-            <p style={{fontSize: '1.15rem', marginBottom: '2.5rem'}}>Take control of your financial future with our comprehensive budgeting tools.</p>
+            <h1>Join Budget Tracker!</h1>
+            <p>Start your journey to financial freedom today</p>
             <div className="benefits-list">
               <div className="benefit-item">
-                <i className="fas fa-chart-pie"></i>
+                <i className="fas fa-piggy-bank"></i>
                 <div>
-                  <b>Smart Analytics</b>
-                  <div style={{fontSize: '1rem', color: '#bfc4e0'}}>Get detailed insights into your spending patterns</div>
+                  <b>Smart Budgeting</b>
+                  <div style={{fontSize: '0.9rem', color: 'rgba(255,255,255,0.8)'}}>Create and manage budgets that work for you</div>
                 </div>
               </div>
               <div className="benefit-item">
-                <i className="fas fa-bullseye"></i>
+                <i className="fas fa-chart-bar"></i>
                 <div>
-                  <b>Goal Setting</b>
-                  <div style={{fontSize: '1rem', color: '#bfc4e0'}}>Set and track your savings and spending goals</div>
+                  <b>Detailed Analytics</b>
+                  <div style={{fontSize: '0.9rem', color: 'rgba(255,255,255,0.8)'}}>Understand your spending patterns with insights</div>
                 </div>
               </div>
               <div className="benefit-item">
-                <i className="fas fa-shield-alt"></i>
+                <i className="fas fa-target"></i>
                 <div>
-                  <b>Secure & Private</b>
-                  <div style={{fontSize: '1rem', color: '#bfc4e0'}}>Your financial data is protected with bank-level security</div>
-                </div>
-              </div>
-              <div className="benefit-item">
-                <i className="fas fa-mobile-alt"></i>
-                <div>
-                  <b>Always Accessible</b>
-                  <div style={{fontSize: '1rem', color: '#bfc4e0'}}>Access your budget anywhere, anytime</div>
+                  <b>Goal Tracking</b>
+                  <div style={{fontSize: '0.9rem', color: 'rgba(255,255,255,0.8)'}}>Set and achieve your financial goals faster</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div className="auth-right">
-          <div className="form-container">
-            <h2 style={{textAlign: 'center', fontWeight: 700, fontSize: '2rem', marginBottom: '2rem'}}><i className="fas fa-user-plus"></i> Sign Up</h2>
+          <div className="auth-form">
+            <h2>Create Account</h2>
+            <p>Fill in the details below to get started</p>
+            
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label htmlFor="username">Username</label>
-                     <input
-                       type="text"
-                       id="username"
-                       name="username"
-                       value={formData.username}
-                       onChange={handleChange}
-                       required
-                       disabled={loading}
-                       style={{}}
-                     />
+                <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  value={formData.username}
+                  onChange={handleChange}
+                  required
+                  placeholder="Choose a username"
+                />
               </div>
+              
               <div className="form-group">
-                <label htmlFor="email">Email</label>
-                     <input
-                       type="email"
-                       id="email"
-                       name="email"
-                       value={formData.email}
-                       onChange={handleChange}
-                       required
-                       disabled={loading}
-                       style={{}}
-                     />
+                <label htmlFor="email">Email Address</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  placeholder="Enter your email address"
+                />
               </div>
+              
               <div className="form-group">
                 <label htmlFor="password">Password</label>
-                     <input
-                       type="password"
-                       id="password"
-                       name="password"
-                       value={formData.password}
-                       onChange={handleChange}
-                       required
-                       disabled={loading}
-                       style={{}}
-                     />
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                  placeholder="Create a strong password"
+                />
               </div>
-              <div className="form-group role-group">
-                <label htmlFor="role">Role</label>
-                <div className="custom-select-wrapper">
-                  <select
-                    id="role"
-                    name="role"
-                    value={formData.role}
-                    onChange={handleChange}
-                    disabled={loading}
-                    className="custom-role-select"
-                  >
-                    <option value="USER">User</option>
-                    <option value="ADMIN">Admin</option>
-                  </select>
-                  <span className="select-icon"><i className="fas fa-user-tag"></i></span>
-                </div>
-              </div>
-              <button type="submit" className="btn btn-primary btn-full" disabled={loading} style={{marginTop: '0.5rem', fontWeight: 600, fontSize: '1.1rem', letterSpacing: '0.5px'}}>
-                {loading ? 'Signing Up...' : 'Sign Up'}
+              
+              <button type="submit" className="submit-btn" disabled={loading}>
+                {loading ? 'Creating Account...' : 'Create Account'}
               </button>
             </form>
-            <p className="form-switch" style={{marginTop: '1.5rem'}}>Already have an account? <Link to="/signin" style={{color: '#4d6eea', border: '1.5px solid #4d6eea', borderRadius: '6px', padding: '4px 12px', marginLeft: '8px'}}>Sign In here</Link></p>
+            
+            <div className="auth-links">
+              Already have an account? <Link to="/signin">Sign in here</Link>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
   );
 };
 

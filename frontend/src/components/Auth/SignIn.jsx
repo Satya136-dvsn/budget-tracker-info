@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useAlert } from '../../hooks/useAlert';
@@ -37,85 +37,76 @@ const SignIn = () => {
       <div className="auth-container">
         <div className="auth-left">
           <div className="welcome-content">
-            <h1 style={{fontWeight: 700, fontSize: '2.5rem', marginBottom: '1.2rem'}}>Welcome Back!</h1>
-            <p style={{fontSize: '1.15rem', marginBottom: '2.5rem'}}>Continue your financial journey with Budget Tracker</p>
+            <h1>Welcome Back!</h1>
+            <p>Continue your financial journey with Budget Tracker</p>
             <div className="benefits-list">
               <div className="benefit-item">
                 <i className="fas fa-chart-line"></i>
                 <div>
                   <b>Track Progress</b>
-                  <div style={{fontSize: '1rem', color: '#bfc4e0'}}>Monitor your financial goals and achievements</div>
+                  <div style={{fontSize: '0.9rem', color: 'rgba(255,255,255,0.8)'}}>Monitor your financial goals and achievements</div>
                 </div>
               </div>
               <div className="benefit-item">
-                <i className="fas fa-wallet"></i>
+                <i className="fas fa-shield-alt"></i>
                 <div>
-                  <b>Manage Expenses</b>
-                  <div style={{fontSize: '1rem', color: '#bfc4e0'}}>Keep track of every dollar spent and saved</div>
+                  <b>Secure & Private</b>
+                  <div style={{fontSize: '0.9rem', color: 'rgba(255,255,255,0.8)'}}>Your financial data is encrypted and protected</div>
                 </div>
               </div>
               <div className="benefit-item">
-                <i className="fas fa-lightbulb"></i>
+                <i className="fas fa-mobile-alt"></i>
                 <div>
-                  <b>Smart Insights</b>
-                  <div style={{fontSize: '1rem', color: '#bfc4e0'}}>Get personalized recommendations for better budgeting</div>
+                  <b>Access Anywhere</b>
+                  <div style={{fontSize: '0.9rem', color: 'rgba(255,255,255,0.8)'}}>Manage your budget on any device, anytime</div>
                 </div>
-              </div>
-            </div>
-            <div className="stats" style={{marginTop: '2.5rem', display: 'flex', justifyContent: 'space-between', gap: '1.5rem'}}>
-              <div className="stat">
-                <b style={{fontSize: '1.3rem'}}>Welcome</b>
-                <div style={{fontSize: '1rem', color: '#bfc4e0'}}>Back!</div>
-              </div>
-              <div className="stat">
-                <b style={{fontSize: '1.3rem'}}>Secure</b>
-                <div style={{fontSize: '1rem', color: '#bfc4e0'}}>Login</div>
-              </div>
-              <div className="stat">
-                <b style={{fontSize: '1.3rem'}}>Easy</b>
-                <div style={{fontSize: '1rem', color: '#bfc4e0'}}>Access</div>
               </div>
             </div>
           </div>
         </div>
         <div className="auth-right">
-          <div className="form-container">
-            <h2 style={{textAlign: 'center', fontWeight: 700, fontSize: '2rem', marginBottom: '2rem'}}><i className="fas fa-sign-in-alt"></i> Sign In</h2>
+          <div className="auth-form">
+            <h2>Sign In</h2>
+            <p>Enter your credentials to access your account</p>
+            
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label htmlFor="username">Username</label>
-                     <input
-                       type="text"
-                       id="username"
-                       name="username"
-                       value={formData.username}
-                       onChange={handleChange}
-                       required
-                       disabled={loading}
-                       style={{}}
-                     />
+                <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  value={formData.username}
+                  onChange={handleChange}
+                  required
+                  placeholder="Enter your username"
+                />
               </div>
+              
               <div className="form-group">
                 <label htmlFor="password">Password</label>
-                     <input
-                       type="password"
-                       id="password"
-                       name="password"
-                       value={formData.password}
-                       onChange={handleChange}
-                       required
-                       disabled={loading}
-                       style={{}}
-                     />
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                  placeholder="Enter your password"
+                />
+                <div className="forgot-password">
+                  <Link to="/forgot-password">Forgot your password?</Link>
+                </div>
               </div>
-              <button className="btn btn-primary btn-full" type="submit" disabled={loading} style={{background: '#6d7eea', border: 'none'}}>
+              
+              <button type="submit" className="submit-btn" disabled={loading}>
                 {loading ? 'Signing In...' : 'Sign In'}
               </button>
             </form>
-            <div style={{textAlign: 'center', marginTop: '1rem'}}>
-              <Link to="/forgot-password" style={{color: '#4d6eea', fontSize: '1rem'}}>Forgot Password?</Link>
+            
+            <div className="auth-links">
+              Don't have an account? <Link to="/signup">Sign up here</Link>
             </div>
-            <p className="form-switch" style={{marginTop: '1.5rem'}}>Don't have an account? <Link to="/signup" style={{color: '#4d6eea', border: '1.5px solid #4d6eea', borderRadius: '6px', padding: '4px 12px', marginLeft: '8px'}}>Sign Up here</Link></p>
           </div>
         </div>
       </div>

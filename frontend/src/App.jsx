@@ -9,9 +9,12 @@ import SignUp from './components/Auth/SignUp';
 import ForgotPassword from './components/Auth/ForgotPassword';
 import Dashboard from './components/Dashboard/Dashboard';
 import Profile from './components/Profile/Profile';
-import Trends from './components/Trends/Trends';
+import MonthlySpending from './components/Trends/MonthlySpending';
+import CategoryAnalysis from './components/Trends/CategoryAnalysis';
+import SavingsGrowth from './components/Trends/SavingsGrowth';
 import Alert from './components/Common/Alert';
 import './styles/App.css';
+import './styles/override.css';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -83,11 +86,31 @@ function AppContent() {
           } 
         />
         <Route 
-          path="/trends" 
+          path="/trends/monthly-spending" 
           element={
             <div className="container">
               <ProtectedRoute>
-                <Trends />
+                <MonthlySpending />
+              </ProtectedRoute>
+            </div>
+          } 
+        />
+        <Route 
+          path="/trends/category-analysis" 
+          element={
+            <div className="container">
+              <ProtectedRoute>
+                <CategoryAnalysis />
+              </ProtectedRoute>
+            </div>
+          } 
+        />
+        <Route 
+          path="/trends/savings-growth" 
+          element={
+            <div className="container">
+              <ProtectedRoute>
+                <SavingsGrowth />
               </ProtectedRoute>
             </div>
           } 

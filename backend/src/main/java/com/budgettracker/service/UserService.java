@@ -75,4 +75,17 @@ public class UserService implements UserDetailsService {
     public java.util.List<User> getAllUsers() {
         return userRepository.findAll();
     }
+    
+    public boolean verifyPassword(String username, String rawPassword) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found with username: " + username));
+        return passwordEncoder.matches(rawPassword, user.getPassword());
+    }
+    
+    public void changePassword(String username, String newPassword) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found with username: " + username));
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+    }
 }

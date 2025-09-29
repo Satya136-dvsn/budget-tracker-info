@@ -158,4 +158,59 @@ public class AuthController {
                 .body("Error: " + e.getMessage());
         }
     }
+    
+    @PostMapping("/change-password")
+    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequest request) {
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String username = authentication.getName();
+            
+            System.out.println("Password change attempt for user: " + username);
+            
+            User user = userService.findByUsername(username);
+            if (user == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("User not found");
+            }
+            
+            // Verify current password
+            if (!userService.verifyPassword(user, request.getCurrentPassword())) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Current password is incorrect");
+            }
+            
+            // Update password
+            userService.changePassword(user, request.getNewPassword());
+            
+            System.out.println("Password changed successfully for user: " + username);
+            return ResponseEntity.ok("Password changed successfully");
+            
+        } catch (Exception e) {
+            System.err.println("Password change error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Error changing password: " + e.getMessage());
+        }
+    }
+    
+    // Inner class for change password request
+    public static class ChangePasswordRequest {
+        private String currentPassword;
+        private String newPassword;
+        
+        public String getCurrentPassword() {
+            return currentPassword;
+        }
+        
+        public void setCurrentPassword(String currentPassword) {
+            this.currentPassword = currentPassword;
+        }
+        
+        public String getNewPassword() {
+            return newPassword;
+        }
+        
+        public void setNewPassword(String newPassword) {
+            this.newPassword = newPassword;
+        }
+    }
 }
