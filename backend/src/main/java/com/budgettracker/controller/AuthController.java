@@ -16,6 +16,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/auth")
 @CrossOrigin(origins = "*")
@@ -167,20 +169,22 @@ public class AuthController {
             
             System.out.println("Password change attempt for user: " + username);
             
-            User user = userService.findByUsername(username);
-            if (user == null) {
+            Optional<User> userOptional = userService.findByUsername(username);
+            if (userOptional.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("User not found");
             }
             
+            User user = userOptional.get();
+            
             // Verify current password
-            if (!userService.verifyPassword(user, request.getCurrentPassword())) {
+            if (!userService.verifyPassword(user.getUsername(), request.getCurrentPassword())) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("Current password is incorrect");
             }
             
             // Update password
-            userService.changePassword(user, request.getNewPassword());
+            userService.changePassword(user.getUsername(), request.getNewPassword());
             
             System.out.println("Password changed successfully for user: " + username);
             return ResponseEntity.ok("Password changed successfully");

@@ -878,6 +878,12 @@ body, html, div, section {
     color: white;
 }
 
+.stat-icon .emoji-icon {
+    font-size: 2rem;
+    line-height: 1;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
 .stat-card.primary .stat-icon {
     background: linear-gradient(135deg, #10b981 0%, #059669 100%);
 }
@@ -1094,6 +1100,34 @@ body, html, div, section {
     font-weight: 500;
 }
 
+.health-action {
+    margin-top: 1.5rem;
+}
+
+.detailed-analysis-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 1rem 1.5rem;
+    border-radius: 16px;
+    font-weight: 600;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+}
+
+.detailed-analysis-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+    background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+}
+
 .action-buttons {
     display: flex;
     flex-direction: column;
@@ -1159,6 +1193,12 @@ body, html, div, section {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     font-size: 1.1rem;
+}
+
+.trend-icon .emoji-icon {
+    font-size: 1.2rem;
+    line-height: 1;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
 }
 
 .trend-info h4 {
@@ -3100,26 +3140,112 @@ body, html, div, section {
     margin-bottom: 2rem;
 }
 
+@media (max-width: 768px) {
+    .category-analysis-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .pie-chart-container {
+        height: 350px;
+    }
+    
+    .pie-chart {
+        max-width: 400px;
+        max-height: 400px;
+    }
+    
+    .pie-tooltip rect {
+        width: 120px !important;
+        height: 45px !important;
+    }
+    
+    .tooltip-category-name {
+        font-size: 10px !important;
+    }
+    
+    .tooltip-percentage {
+        font-size: 12px !important;
+    }
+}
+
 .pie-chart-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 400px;
+    height: 450px;
+    width: 100%;
 }
 
 .pie-chart {
     width: 100%;
     height: 100%;
-    max-width: 400px;
+    max-width: 500px;
+    max-height: 500px;
 }
 
 .pie-segment {
     transition: all 0.3s ease;
+    transform-origin: center;
 }
 
 .pie-segment:hover {
     transform: scale(1.05);
     filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2)) !important;
+}
+
+/* Enhanced tooltip styles */
+.pie-tooltip {
+    pointer-events: none;
+    animation: tooltip-fade-in 0.2s ease-out;
+}
+
+/* Elbow line animations */
+.pie-segment + g line {
+    animation: line-draw 0.3s ease-out;
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    animation-fill-mode: forwards;
+}
+
+@keyframes line-draw {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes tooltip-fade-in {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        filter: drop-shadow(0 4px 12px rgba(0,0,0,0.15));
+    }
+    50% {
+        filter: drop-shadow(0 6px 16px rgba(0,0,0,0.25));
+    }
+}
+
+.pie-tooltip rect {
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.tooltip-category-name {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    letter-spacing: 0.5px;
+}
+
+.tooltip-percentage {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    letter-spacing: 0.5px;
 }
 
 .pie-center-text {
@@ -3283,4 +3409,629 @@ body, html, div, section {
     font-weight: 700;
     margin-bottom: 0.5rem;
     font-size: 1.25rem;
+}
+
+/* Modern Navbar Styles */
+.modern-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.95));
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(139, 92, 246, 0.15);
+    box-shadow: 0 4px 20px rgba(139, 92, 246, 0.08);
+    height: 70px;
+    box-sizing: border-box;
+}
+
+.modern-navbar .navbar-container {
+    height: 100%;
+    padding: 0 2rem;
+}
+
+.modern-navbar .navbar-brand {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(59, 130, 246, 0.1));
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    border-radius: 12px;
+    padding: 0.5rem 1rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease;
+}
+
+.modern-navbar .navbar-brand:hover {
+    transform: translateY(-2px);
+}
+
+.brand-icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.brand-emoji {
+    font-size: 1.2rem;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.brand-text {
+    font-size: 1.25rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.brand-glow {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.6s ease;
+}
+
+.modern-navbar .navbar-brand:hover .brand-glow {
+    left: 100%;
+}
+
+.modern-nav-btn {
+    padding: 0.75rem 1.25rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.025em;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.modern-nav-btn .btn-icon {
+    font-size: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.modern-nav-btn:hover .btn-icon {
+    transform: scale(1.1);
+}
+
+.nav-btn-signin {
+    background: linear-gradient(135deg, rgba(249, 115, 22, 0.05), rgba(234, 88, 12, 0.05));
+    border: 1px solid rgba(249, 115, 22, 0.2);
+    color: #f97316;
+}
+
+.nav-btn-signin:hover {
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(249, 115, 22, 0.3);
+}
+
+.nav-btn-signup {
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    color: white;
+    box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
+}
+
+.nav-btn-signup:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(249, 115, 22, 0.4);
+}
+
+.btn-shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s ease;
+}
+
+.nav-btn-signup:hover .btn-shine {
+    left: 100%;
+}
+
+.modern-nav-btn.nav-btn-ghost {
+    background: transparent;
+    color: #64748b;
+    border: 1px solid transparent;
+}
+
+.modern-nav-btn.nav-btn-ghost:hover {
+    background: rgba(139, 92, 246, 0.1);
+    color: #8b5cf6;
+    border-color: rgba(139, 92, 246, 0.2);
+}
+
+.modern-nav-btn.nav-btn-active {
+    background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+    color: white;
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+}
+
+.nav-btn-logout {
+    background: transparent;
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.nav-btn-logout:hover {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(239, 68, 68, 0.3);
+}
+
+/* Enhanced Hero Button Styles */
+.hero-primary-btn {
+    background: linear-gradient(135deg, #f97316, #ea580c) !important;
+    color: white !important;
+    padding: 1rem 2rem !important;
+    font-size: 1.1rem !important;
+    font-weight: 700 !important;
+    border-radius: 16px !important;
+    box-shadow: 0 8px 25px rgba(249, 115, 22, 0.4);
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.hero-primary-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(249, 115, 22, 0.5);
+}
+
+.hero-primary-btn .btn-icon {
+    font-size: 1.2rem;
+    animation: pulse 2s infinite;
+}
+
+.hero-primary-btn .btn-arrow {
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+}
+
+.hero-primary-btn:hover .btn-arrow {
+    transform: translateX(4px);
+}
+
+.hero-signin-btn {
+    background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(234, 88, 12, 0.1)) !important;
+    border: 2px solid rgba(249, 115, 22, 0.4) !important;
+    color: #f97316 !important;
+    padding: 1rem 2rem !important;
+    font-size: 1.1rem !important;
+    font-weight: 700 !important;
+    border-radius: 16px !important;
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.hero-signin-btn:hover {
+    background: linear-gradient(135deg, #f97316, #ea580c) !important;
+    color: white !important;
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(249, 115, 22, 0.4);
+    border-color: transparent !important;
+}
+
+.btn-shimmer {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.8s ease;
+}
+
+.hero-signin-btn:hover .btn-shimmer {
+    left: 100%;
+}
+
+.feature-emoji {
+    font-size: 1.5rem;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* Update hero padding for new navbar height */
+.hero {
+    padding-top: 7rem !important;
+}
+
+/* Reports Page Styles */
+.reports-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 2rem;
+}
+
+.reports-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 1.5rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.report-nav {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 1rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.report-nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    background: transparent;
+    color: #64748b;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.report-nav-btn:hover {
+    background: #f1f5f9;
+    color: #1e293b;
+}
+
+.report-nav-btn.active {
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+    color: white;
+    border-color: #f97316;
+}
+
+.report-container {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.report-header-info {
+    margin-bottom: 2rem;
+    text-align: center;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.report-header-info h2 {
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+    font-size: 1.75rem;
+}
+
+.report-header-info p {
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+.report-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.report-stat-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    border-radius: 12px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+.report-stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.report-stat-card.income {
+    border-left: 4px solid #10b981;
+}
+
+.report-stat-card.expense {
+    border-left: 4px solid #f59e0b;
+}
+
+.report-stat-card.savings {
+    border-left: 4px solid #3b82f6;
+}
+
+.report-stat-card.rate {
+    border-left: 4px solid #8b5cf6;
+}
+
+.report-stat-card .stat-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+}
+
+.report-stat-card .stat-icon .emoji-icon {
+    font-size: 1.5rem;
+}
+
+.stat-info h3 {
+    margin: 0 0 0.5rem 0;
+    color: #64748b;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-info .stat-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1e293b;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.stat-info .stat-period {
+    color: #64748b;
+    font-size: 0.85rem;
+}
+
+.report-insights {
+    margin-top: 2rem;
+}
+
+.insights-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+}
+
+.insights-list li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #e2e8f0;
+    color: #4b5563;
+    line-height: 1.5;
+}
+
+.insights-list li:last-child {
+    border-bottom: none;
+}
+
+/* Monthly Chart Styles */
+.monthly-chart {
+    text-align: center;
+}
+
+.monthly-chart h3 {
+    margin-bottom: 2rem;
+    color: #1e293b;
+}
+
+.chart-bars {
+    display: flex;
+    justify-content: space-around;
+    align-items: end;
+    height: 200px;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: #f8fafc;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+}
+
+.month-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.bar-container {
+    display: flex;
+    gap: 4px;
+    align-items: end;
+    height: 150px;
+}
+
+.income-bar, .expense-bar {
+    width: 20px;
+    border-radius: 4px 4px 0 0;
+    min-height: 10px;
+    transition: all 0.3s ease;
+}
+
+.income-bar {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.expense-bar {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+}
+
+.month-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #64748b;
+}
+
+.chart-legend {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.legend-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+}
+
+.legend-color.income {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.legend-color.expense {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+}
+
+/* Category Report Styles */
+.category-report h3 {
+    margin-bottom: 2rem;
+    color: #1e293b;
+    text-align: center;
+}
+
+.category-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.category-bar-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: #f8fafc;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.category-info {
+    min-width: 180px;
+    display: flex;
+    flex-direction: column;
+}
+
+.category-name {
+    font-weight: 600;
+    color: #1e293b;
+    font-size: 0.9rem;
+}
+
+.category-amount {
+    color: #64748b;
+    font-size: 0.85rem;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 8px;
+    background: #e2e8f0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.category-percentage {
+    min-width: 40px;
+    text-align: right;
+    font-weight: 600;
+    color: #1e293b;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .reports-page {
+        padding: 1rem;
+    }
+    
+    .reports-header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+    
+    .report-nav {
+        flex-direction: column;
+    }
+    
+    .report-stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .chart-bars {
+        height: 150px;
+    }
+    
+    .bar-container {
+        height: 100px;
+    }
+    
+    .category-bar-item {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+    }
+    
+    .category-info {
+        min-width: auto;
+        flex-direction: row;
+        justify-content: space-between;
+    }
 }

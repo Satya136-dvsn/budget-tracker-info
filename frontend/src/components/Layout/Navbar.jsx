@@ -1,8 +1,6 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChartLine } from '@fortawesome/free-solid-svg-icons';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -23,46 +21,55 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="clean-navbar">
+    <nav className="modern-navbar">
       <div className="navbar-container">
         <div className="navbar-brand" onClick={handleNavBrandClick}>
-          <FontAwesomeIcon icon={faChartLine} />
-          <span>Budget Tracker</span>
+          <div className="brand-icon">
+            <span className="brand-emoji">💰</span>
+          </div>
+          <span className="brand-text">Budget Tracker</span>
+          <div className="brand-glow"></div>
         </div>
         <div className="navbar-links">
           {!isAuthenticated ? (
             <>
               <button 
-                className="nav-btn nav-btn-outline" 
+                className="modern-nav-btn nav-btn-signin" 
                 onClick={() => navigate('/signin')}
                 disabled={location.pathname === '/signin'}
               >
-                Sign In
+                <span className="btn-text">Sign In</span>
+                <div className="btn-gradient"></div>
               </button>
               <button 
-                className="nav-btn nav-btn-primary" 
+                className="modern-nav-btn nav-btn-signup" 
                 onClick={() => navigate('/signup')}
                 disabled={location.pathname === '/signup'}
               >
-                Sign Up
+                <span className="btn-icon">✨</span>
+                <span className="btn-text">Get Started</span>
+                <div className="btn-shine"></div>
               </button>
             </>
           ) : (
             <>
               <button 
-                className={`nav-btn ${location.pathname === '/dashboard' ? 'nav-btn-active' : 'nav-btn-ghost'}`}
+                className={`modern-nav-btn ${location.pathname === '/dashboard' ? 'nav-btn-active' : 'nav-btn-ghost'}`}
                 onClick={() => navigate('/dashboard')}
               >
-                Dashboard
+                <span className="btn-icon">🏠</span>
+                <span className="btn-text">Home</span>
               </button>
               <button 
-                className={`nav-btn ${location.pathname === '/profile' ? 'nav-btn-active' : 'nav-btn-ghost'}`}
+                className={`modern-nav-btn ${location.pathname === '/profile' ? 'nav-btn-active' : 'nav-btn-ghost'}`}
                 onClick={() => navigate('/profile')}
               >
-                Profile
+                <span className="btn-icon">👤</span>
+                <span className="btn-text">Profile</span>
               </button>
-              <button className="nav-btn nav-btn-ghost" onClick={handleLogout}>
-                Logout
+              <button className="modern-nav-btn nav-btn-logout" onClick={handleLogout}>
+                <span className="btn-icon">🚪</span>
+                <span className="btn-text">Logout</span>
               </button>
             </>
           )}

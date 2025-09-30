@@ -22,10 +22,14 @@ const SignIn = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      await login(formData);
+      console.log('Attempting login with:', formData);
+      const response = await login(formData);
+      console.log('Login response:', response);
       showAlert('Login successful!', 'success');
+      console.log('Navigating to dashboard...');
       navigate('/dashboard');
     } catch (error) {
+      console.error('Login error:', error);
       showAlert(`Login failed: ${error.message}`, 'error');
     } finally {
       setLoading(false);

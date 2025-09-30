@@ -102,29 +102,49 @@ const Dashboard = () => {
   // Enhanced Financial Health Calculations
   const debtToIncomeRatio = user.monthlyIncome ? ((user.monthlyDebt || 0) / user.monthlyIncome * 100).toFixed(1) : 0;
   const emergencyFundMonths = user.monthlyIncome ? (user.currentSavings / user.monthlyIncome).toFixed(1) : 0;
+  const netWorthGrowth = 5.2; // Sample data - should come from API
+  const creditUtilization = 25; // Sample data - should come from API
   
-  // Financial Health Score (0-100)
+  // Enhanced Financial Health Score (0-100) with more factors
   const calculateHealthScore = () => {
     let score = 0;
     
-    // Savings rate (40% weight)
-    if (savingsRate >= 20) score += 40;
-    else if (savingsRate >= 15) score += 32;
-    else if (savingsRate >= 10) score += 24;
-    else if (savingsRate >= 5) score += 16;
-    else score += 8;
+    // Savings rate (25% weight)
+    if (savingsRate >= 20) score += 25;
+    else if (savingsRate >= 15) score += 20;
+    else if (savingsRate >= 10) score += 15;
+    else if (savingsRate >= 5) score += 10;
+    else score += 5;
     
-    // Expense ratio (30% weight)
-    if (expenseRatio <= 50) score += 30;
-    else if (expenseRatio <= 70) score += 24;
-    else if (expenseRatio <= 85) score += 18;
-    else score += 10;
+    // Expense ratio (20% weight)
+    if (expenseRatio <= 50) score += 20;
+    else if (expenseRatio <= 70) score += 16;
+    else if (expenseRatio <= 85) score += 12;
+    else score += 6;
     
-    // Emergency fund (30% weight)
-    if (emergencyFundMonths >= 6) score += 30;
-    else if (emergencyFundMonths >= 3) score += 24;
-    else if (emergencyFundMonths >= 1) score += 18;
-    else score += 10;
+    // Emergency fund (20% weight)
+    if (emergencyFundMonths >= 6) score += 20;
+    else if (emergencyFundMonths >= 3) score += 16;
+    else if (emergencyFundMonths >= 1) score += 12;
+    else score += 6;
+    
+    // Debt-to-income ratio (15% weight)
+    if (debtToIncomeRatio <= 10) score += 15;
+    else if (debtToIncomeRatio <= 20) score += 12;
+    else if (debtToIncomeRatio <= 36) score += 8;
+    else score += 4;
+    
+    // Net worth growth (10% weight)
+    if (netWorthGrowth >= 10) score += 10;
+    else if (netWorthGrowth >= 5) score += 8;
+    else if (netWorthGrowth >= 0) score += 6;
+    else score += 2;
+    
+    // Credit utilization (10% weight)
+    if (creditUtilization <= 10) score += 10;
+    else if (creditUtilization <= 30) score += 8;
+    else if (creditUtilization <= 50) score += 6;
+    else score += 3;
     
     return Math.min(score, 100);
   };
@@ -152,7 +172,7 @@ const Dashboard = () => {
         <div className="dashboard-stats">
           <div className="stat-card primary">
             <div className="stat-icon">
-              <i className="fas fa-dollar-sign"></i>
+              <span className="emoji-icon">💵</span>
             </div>
             <div className="stat-content">
               <h3>Monthly Income</h3>
@@ -163,7 +183,7 @@ const Dashboard = () => {
           
           <div className="stat-card warning">
             <div className="stat-icon">
-              <i className="fas fa-shopping-cart"></i>
+              <span className="emoji-icon">🛒</span>
             </div>
             <div className="stat-content">
               <h3>Target Expenses</h3>
@@ -174,7 +194,7 @@ const Dashboard = () => {
           
           <div className="stat-card success">
             <div className="stat-icon">
-              <i className="fas fa-piggy-bank"></i>
+              <span className="emoji-icon">🏦</span>
             </div>
             <div className="stat-content">
               <h3>Current Savings</h3>
@@ -197,7 +217,7 @@ const Dashboard = () => {
                 <i className="fas fa-target"></i>
                 Set Goal
               </button>
-              <button className="action-btn" onClick={() => showAlert('Reports feature coming soon!', 'info')}>
+              <button className="action-btn" onClick={() => navigate('/reports')}>
                 <i className="fas fa-chart-bar"></i>
                 View Reports
               </button>
@@ -209,7 +229,7 @@ const Dashboard = () => {
             <div className="trends-preview">
               <div className="trend-item" onClick={() => navigate('/trends/monthly-spending')}>
                 <div className="trend-icon">
-                  <i className="fas fa-chart-line"></i>
+                  <span className="emoji-icon">📈</span>
                 </div>
                 <div className="trend-info">
                   <h4>Monthly Spending</h4>
@@ -218,7 +238,7 @@ const Dashboard = () => {
               </div>
               <div className="trend-item" onClick={() => navigate('/trends/category-analysis')}>
                 <div className="trend-icon">
-                  <i className="fas fa-chart-pie"></i>
+                  <span className="emoji-icon">🥧</span>
                 </div>
                 <div className="trend-info">
                   <h4>Category Analysis</h4>
@@ -227,7 +247,7 @@ const Dashboard = () => {
               </div>
               <div className="trend-item" onClick={() => navigate('/trends/savings-growth')}>
                 <div className="trend-icon">
-                  <i className="fas fa-chart-bar"></i>
+                  <span className="emoji-icon">📊</span>
                 </div>
                 <div className="trend-info">
                   <h4>Savings Growth</h4>
@@ -235,10 +255,6 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
-            <button className="view-trends-btn" onClick={() => navigate('/trends/monthly-spending')}>
-              <i className="fas fa-arrow-right"></i>
-              View All Trends
-            </button>
           </div>
         </div>
 
@@ -302,6 +318,15 @@ const Dashboard = () => {
                 {expenseRatio > 70 && <li>Consider reducing non-essential expenses</li>}
                 {debtToIncomeRatio > 20 && <li>Focus on paying down high-interest debt</li>}
               </ul>
+            </div>
+            
+            <div className="health-action">
+              <button 
+                className="detailed-analysis-btn"
+                onClick={() => navigate('/financial-health')}
+              >
+                📊 View Detailed Analysis
+              </button>
             </div>
           </div>
         </div>

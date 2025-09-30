@@ -9,12 +9,15 @@ import SignUp from './components/Auth/SignUp';
 import ForgotPassword from './components/Auth/ForgotPassword';
 import Dashboard from './components/Dashboard/Dashboard';
 import Profile from './components/Profile/Profile';
+import Reports from './components/Reports/Reports';
+import FinancialHealthAnalysis from './components/FinancialHealth/FinancialHealthAnalysis';
 import MonthlySpending from './components/Trends/MonthlySpending';
 import CategoryAnalysis from './components/Trends/CategoryAnalysis';
 import SavingsGrowth from './components/Trends/SavingsGrowth';
 import Alert from './components/Common/Alert';
 import './styles/App.css';
 import './styles/override.css';
+import './components/FinancialHealth/FinancialHealthAnalysis.css';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -83,6 +86,24 @@ function AppContent() {
                 <Profile />
               </ProtectedRoute>
             </div>
+          } 
+        />
+        <Route 
+          path="/reports" 
+          element={
+            <div className="container">
+              <ProtectedRoute>
+                <Reports />
+              </ProtectedRoute>
+            </div>
+          } 
+        />
+        <Route 
+          path="/financial-health" 
+          element={
+            <ProtectedRoute>
+              <FinancialHealthAnalysis />
+            </ProtectedRoute>
           } 
         />
         <Route 
