@@ -1,68 +1,185 @@
-# Budget Tracker - Full Stack Application
+# 💰 Budget Tracker - Full Stack Application
 
-A modern full-stack budget tracking application with Spring Boot backend and React frontend.
+## 🎯 Project Overview
+A comprehensive budget tracking application built with Spring Boot backend and React frontend, featuring JWT authentication, role-based access control, and modern UI design.
 
-## 📁 Project Structure
+## ✅ **MILESTONE 1 COMPLETED** - Authentication & User Management
+
+### � **Authentication System**
+- ✅ JWT-based authentication with role differentiation (USER/ADMIN)
+- ✅ User registration and login system
+- ✅ Password encryption with BCrypt
+- ✅ Token-based session management
+- ✅ Role-based access control (RBAC)
+
+### 👤 **User Management**
+- ✅ User profile management with financial data
+- ✅ Enhanced profile editing (income, savings, expenses)
+- ✅ User account creation and authentication
+- ✅ Profile data persistence and updates
+
+### 👨‍💼 **Admin Features**
+- ✅ Complete admin dashboard with user statistics
+- ✅ User management interface (view all users, user details)
+- ✅ Admin-only API endpoints with proper authorization
+- ✅ Dashboard analytics (total users, active users, admin count)
+
+### 🎨 **Frontend Features**
+- ✅ Modern React application with Vite
+- ✅ Role-based UI components and navigation
+- ✅ Professional glassmorphism design
+- ✅ Mobile responsive layout
+- ✅ Protected routes and admin access control
+- ✅ Enhanced forms and user experience
+
+## 🚀 **Technology Stack**
+
+### Backend
+- **Framework**: Spring Boot 3.5.3
+- **Security**: Spring Security with JWT
+- **Database**: MySQL 8.0 with JPA/Hibernate
+- **Build Tool**: Maven
+- **Java Version**: 24.0.1
+
+### Frontend  
+- **Framework**: React 18 with Vite 7.1.7
+- **Styling**: Custom CSS with glassmorphism effects
+- **HTTP Client**: Axios for API communication
+- **Routing**: React Router for navigation
+- **State Management**: React Context API
+
+## 📁 **Project Structure**
 
 ```
 budget-tracker-project/
-├── backend/                    # Spring Boot REST API
+├── backend/
+│   ├── src/main/java/com/budgettracker/
+│   │   ├── controller/
+│   │   │   ├── AuthController.java
+│   │   │   ├── UserProfileController.java
+│   │   │   └── AdminController.java ✨
+│   │   ├── security/
+│   │   ├── model/
+│   │   ├── repository/
+│   │   └── service/
+│   └── pom.xml
+├── frontend/
 │   ├── src/
-│   │   ├── main/java/com/budgettracker/
-│   │   └── test/
-│   ├── pom.xml
-│   └── README.md
-├── frontend/                   # React + Vite Frontend (Coming Soon)
-│   ├── src/
-│   ├── package.json
-│   └── README.md
-├── docker-compose.yml          # Docker orchestration (Coming Soon)
-├── .gitignore
-└── README.md
+│   │   ├── components/
+│   │   │   ├── Auth/ (SignIn, SignUp, ForgotPassword)
+│   │   │   ├── Dashboard/
+│   │   │   ├── Admin/ ✨
+│   │   │   │   └── AdminDashboard.jsx
+│   │   │   ├── Profile/
+│   │   │   │   └── ProfileNew.jsx ✨
+│   │   │   └── Layout/
+│   │   ├── utils/
+│   │   │   └── RoleBasedAccess.jsx ✨
+│   │   ├── contexts/
+│   │   ├── services/
+│   │   └── styles/
+│   └── package.json
 ```
 
-## 🚀 Quick Start
+## 📋 **API Endpoints**
+
+### Authentication
+- `POST /api/auth/register` - User registration
+- `POST /api/auth/login` - User login
+
+### User Profile
+- `GET /api/user/profile` - Get user profile
+- `PUT /api/user/profile` - Update user profile
+
+### Admin (Admin Role Required)
+- `GET /api/admin/users` - Get all users
+- `GET /api/admin/users/{id}` - Get user by ID
+- `GET /api/admin/dashboard-stats` - Get dashboard statistics
+
+## 🧪 **Testing Status**
+- ✅ All API endpoints tested with Postman
+- ✅ Authentication and authorization validated
+- ✅ Role-based access control verified
+- ✅ User profile CRUD operations confirmed
+- ✅ Admin features tested and working
+
+## 🚀 **Getting Started**
 
 ### Prerequisites
-- Java 21+
-- Maven 3.9+
-- Node.js 18+ (for frontend)
-- MySQL 8.0+
+- Java 17+ (Currently using Java 24.0.1)
+- Node.js 18+
+- MySQL 8.0
+- Maven 3.6+
 
-### Backend Setup (Spring Boot)
+### Backend Setup
+```bash
+cd backend
+mvn spring-boot:run
+# Server runs on http://localhost:8080
+```
 
-1. **Navigate to backend directory**
-   ```bash
-   cd backend
-   ```
+### Frontend Setup
+```bash
+cd frontend
+npm install
+npm run dev
+# Server runs on http://localhost:5173
+```
 
-2. **Configure database**
-   - Update `src/main/resources/application.properties` with your MySQL credentials
-   - Run the database setup scripts
+### Database Configuration
+Update `backend/src/main/resources/application.properties` with your MySQL credentials:
+```properties
+spring.datasource.url=jdbc:mysql://127.0.0.1:3306/budget_tracker
+spring.datasource.username=your_username
+spring.datasource.password=your_password
+```
 
-3. **Run the application**
-   ```bash
-   mvn spring-boot:run
-   ```
-   - Backend will be available at `http://localhost:8080`
+## 📱 **Demo Accounts**
+- **Regular User**: `testuser1` / `password123`
+- **Admin User**: `admin` / `admin123` (requires role update in database)
 
-### Frontend Setup (React - Coming Soon)
+## 🎯 **Next Phase: Milestone 2**
 
-1. **Navigate to frontend directory**
-   ```bash
-   cd frontend
-   ```
+### 📊 **Expense & Income Tracking** (Coming Next)
+- Transaction management (Add/Edit/Delete)
+- Category-based expense organization
+- Income tracking and management
+- Financial reporting and analytics
+- Budget vs actual spending comparison
+- Data visualization with charts
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+### 📈 **Planned Features**
+- Monthly/yearly financial reports
+- Category-wise expense breakdown
+- Budget alerts and notifications
+- Export functionality (PDF/CSV)
+- Advanced filtering and search
+- Financial insights and recommendations
 
-3. **Start development server**
-   ```bash
-   npm run dev
-   ```
-   - Frontend will be available at `http://localhost:5173`
+## 🎨 **UI Features**
+- Modern glassmorphism design
+- Responsive layout for all devices
+- Role-based navigation and components
+- Professional color schemes and animations
+- Intuitive user experience
+
+## 📈 **Project Milestones**
+
+- [x] **Milestone 1**: Authentication & User Management ✅
+- [ ] **Milestone 2**: Expense & Income Tracking
+- [ ] **Milestone 3**: Reporting & Analytics
+- [ ] **Milestone 4**: Advanced Features & Optimization
+
+## 🤝 **Contributing**
+This is a learning project demonstrating full-stack development with modern technologies. Feel free to explore the codebase and suggest improvements!
+
+## 📄 **License**
+This project is for educational purposes and portfolio demonstration.
+
+---
+
+**Last Updated**: October 1, 2025  
+**Status**: Milestone 1 Complete ✅ | Milestone 2 In Progress 🚧
 
 ## 🔧 Features
 
