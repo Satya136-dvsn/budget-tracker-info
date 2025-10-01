@@ -1,11 +1,13 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import { useRoles } from '../../utils/RoleBasedAccess';
 
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { isAuthenticated, logout } = useAuth();
+  const { isAdmin } = useRoles();
 
   const handleNavBrandClick = () => {
     if (isAuthenticated) {
@@ -60,6 +62,18 @@ const Navbar = () => {
                 <span className="btn-icon">🏠</span>
                 <span className="btn-text">Home</span>
               </button>
+              
+              {/* Admin-only navigation */}
+              {isAdmin() && (
+                <button 
+                  className={`modern-nav-btn ${location.pathname === '/admin' ? 'nav-btn-active' : 'nav-btn-ghost'}`}
+                  onClick={() => navigate('/admin')}
+                >
+                  <span className="btn-icon">👑</span>
+                  <span className="btn-text">Admin</span>
+                </button>
+              )}
+              
               <button 
                 className={`modern-nav-btn ${location.pathname === '/profile' ? 'nav-btn-active' : 'nav-btn-ghost'}`}
                 onClick={() => navigate('/profile')}

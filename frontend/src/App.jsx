@@ -9,6 +9,8 @@ import SignUp from './components/Auth/SignUp';
 import ForgotPassword from './components/Auth/ForgotPassword';
 import Dashboard from './components/Dashboard/Dashboard';
 import Profile from './components/Profile/Profile';
+import ProfileNew from './components/Profile/ProfileNew';
+import AdminDashboard from './components/Admin/AdminDashboard';
 import Reports from './components/Reports/Reports';
 import FinancialHealthAnalysis from './components/FinancialHealth/FinancialHealthAnalysis';
 import MonthlySpending from './components/Trends/MonthlySpending';
@@ -23,6 +25,21 @@ import './components/FinancialHealth/FinancialHealthAnalysis.css';
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated } = useAuth();
   return isAuthenticated ? children : <Navigate to="/signin" />;
+};
+
+// Admin Protected Route Component
+const AdminRoute = ({ children }) => {
+  const { isAuthenticated, user } = useAuth();
+  
+  if (!isAuthenticated) {
+    return <Navigate to="/signin" />;
+  }
+  
+  if (user?.role !== 'ADMIN') {
+    return <Navigate to="/dashboard" />;
+  }
+  
+  return children;
 };
 
 // Public Route Component (redirect to dashboard if already authenticated)
@@ -83,8 +100,18 @@ function AppContent() {
           element={
             <div className="container">
               <ProtectedRoute>
-                <Profile />
+                <ProfileNew />
               </ProtectedRoute>
+            </div>
+          } 
+        />
+        <Route 
+          path="/admin" 
+          element={
+            <div className="container">
+              <AdminRoute>
+                <AdminDashboard />
+              </AdminRoute>
             </div>
           } 
         />

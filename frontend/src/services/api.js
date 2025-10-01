@@ -102,6 +102,19 @@ class ApiService {
     return this.makeRequest(`/api/user/profile/${userId}`, 'PUT', profileData);
   }
 
+  // Admin endpoints
+  async getAllUsers() {
+    return this.makeRequest('/api/admin/users', 'GET');
+  }
+
+  async getAdminDashboardStats() {
+    return this.makeRequest('/api/admin/dashboard/stats', 'GET');
+  }
+
+  async getUserByIdAdmin(userId) {
+    return this.makeRequest(`/api/admin/users/${userId}`, 'GET');
+  }
+
   // Health check
   async healthCheck() {
     return this.makeRequest('/health', 'GET');
