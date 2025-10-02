@@ -21,11 +21,16 @@ const SignIn = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    
+    console.log('Sign-in attempt with:', formData);
+    
     try {
-      await login(formData);
+      const response = await login(formData);
+      console.log('Login successful:', response);
       showAlert('Login successful!', 'success');
       navigate('/dashboard');
     } catch (error) {
+      console.error('Login failed:', error);
       showAlert(`Login failed: ${error.message}`, 'error');
     } finally {
       setLoading(false);

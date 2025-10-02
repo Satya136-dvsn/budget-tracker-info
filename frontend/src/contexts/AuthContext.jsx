@@ -40,15 +40,20 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (credentials) => {
     try {
+      console.log('AuthContext: Attempting login with credentials:', credentials);
       const response = await apiService.login(credentials);
+      console.log('AuthContext: Login response received:', response);
+      
       if (response.token) {
         setToken(response.token);
         setUser(response);
         localStorage.setItem('authToken', response.token);
+        console.log('AuthContext: Login successful, token stored');
         return response;
       }
       throw new Error('Invalid credentials');
     } catch (error) {
+      console.error('AuthContext: Login failed:', error);
       throw error;
     }
   };
