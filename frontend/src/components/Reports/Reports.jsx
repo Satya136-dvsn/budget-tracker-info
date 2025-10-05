@@ -262,27 +262,7 @@ const Reports = () => {
         </div>
         <div className="header-actions">
           <select 
-            className="period-selector"
-            style={{
-              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.95))',
-              border: '2px solid rgba(102, 126, 234, 0.2)',
-              padding: '0.65rem 1.2rem',
-              borderRadius: '12px',
-              color: '#374151',
-              fontWeight: '500',
-              cursor: 'pointer',
-              fontSize: '0.9rem',
-              minWidth: '140px',
-              boxShadow: '0 4px 12px rgba(102, 126, 234, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
-              WebkitAppearance: 'none',
-              MozAppearance: 'none',
-              appearance: 'none',
-              backgroundImage: `linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.95)), url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23667eea' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`,
-              backgroundPosition: '0 0, right 0.75rem center',
-              backgroundRepeat: 'no-repeat, no-repeat',
-              backgroundSize: '100% 100%, 1.2rem',
-              paddingRight: '2.5rem'
-            }}
+            className="professional-dropdown professional-dropdown-premium"
             value={selectedPeriod}
             onChange={(e) => setSelectedPeriod(e.target.value)}
           >

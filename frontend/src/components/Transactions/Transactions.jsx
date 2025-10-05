@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useAlert } from '../../hooks/useAlert';
 import { apiService } from '../../services/api';
 import './Transactions.css';
 
 const Transactions = () => {
+  const navigate = useNavigate();
   const { user } = useAuth();
   const { showAlert } = useAlert();
   const [transactions, setTransactions] = useState([]);
@@ -229,9 +231,14 @@ const Transactions = () => {
   return (
     <div className="transactions-container">
       <div className="transactions-header">
-        <div className="header-content">
-          <h1>💳 Transaction Management</h1>
-          <p>Track and manage all your income and expenses</p>
+        <div className="header-left">
+          <button className="back-btn" onClick={() => navigate('/dashboard')} title="Back to Dashboard">
+            ←
+          </button>
+          <div className="header-content">
+            <h1>💳 Transaction Management</h1>
+            <p>Track and manage all your income and expenses</p>
+          </div>
         </div>
         <button className="add-transaction-btn" onClick={openAddModal}>
           <i className="fas fa-plus"></i> Add Transaction
@@ -274,7 +281,10 @@ const Transactions = () => {
       <div className="filters-section">
         <div className="filter-group">
           <label>Type</label>
-          <select value={filterType} onChange={(e) => setFilterType(e.target.value)}>
+          <select 
+            value={filterType} 
+            onChange={(e) => setFilterType(e.target.value)}
+          >
             <option value="ALL">All Types</option>
             <option value="INCOME">Income</option>
             <option value="EXPENSE">Expense</option>
@@ -282,7 +292,10 @@ const Transactions = () => {
         </div>
         <div className="filter-group">
           <label>Category</label>
-          <select value={filterCategory} onChange={(e) => setFilterCategory(e.target.value)}>
+          <select 
+            value={filterCategory} 
+            onChange={(e) => setFilterCategory(e.target.value)}
+          >
             <option value="">All Categories</option>
             {categories.map((cat) => (
               <option key={cat.id} value={cat.name}>
@@ -293,7 +306,10 @@ const Transactions = () => {
         </div>
         <div className="filter-group">
           <label>Sort By</label>
-          <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+          <select 
+            value={sortBy} 
+            onChange={(e) => setSortBy(e.target.value)}
+          >
             <option value="date-desc">Date (Newest)</option>
             <option value="date-asc">Date (Oldest)</option>
             <option value="amount-desc">Amount (High to Low)</option>
@@ -400,8 +416,8 @@ const Transactions = () => {
           <div className="modal-content transaction-modal" onClick={e => e.stopPropagation()}>
             <div className="modal-header">
               <h3>{editingTransaction ? 'Edit Transaction' : 'Add New Transaction'}</h3>
-              <button className="close-btn" onClick={() => setShowModal(false)}>
-                <i className="fas fa-times"></i>
+              <button className="close-btn" onClick={() => setShowModal(false)} title="Close">
+                ×
               </button>
             </div>
             <form onSubmit={handleSubmit} className="transaction-form">

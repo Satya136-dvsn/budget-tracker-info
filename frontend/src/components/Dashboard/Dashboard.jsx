@@ -3,6 +3,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useAlert } from '../../hooks/useAlert';
 import { useNavigate } from 'react-router-dom';
 import { apiService } from '../../services/api';
+import './Dashboard.css';
 
 const Dashboard = () => {
   const { user, loadUserProfile } = useAuth();
@@ -478,8 +479,8 @@ const Dashboard = () => {
             <div className="modal-content" onClick={e => e.stopPropagation()}>
               <div className="modal-header">
                 <h3>Add New Expense</h3>
-                <button className="close-btn" onClick={() => setShowExpenseModal(false)}>
-                  <i className="fas fa-times"></i>
+                <button className="close-btn" onClick={() => setShowExpenseModal(false)} title="Close">
+                  ×
                 </button>
               </div>
               <form onSubmit={handleAddExpense} className="expense-form">
@@ -501,6 +502,7 @@ const Dashboard = () => {
                   <select
                     id="category"
                     name="category"
+                    className="professional-dropdown"
                     value={expenseForm.category}
                     onChange={handleExpenseInputChange}
                     required
@@ -567,8 +569,8 @@ const Dashboard = () => {
             <div className="modal-content" onClick={e => e.stopPropagation()}>
               <div className="modal-header">
                 <h3>Set New Goal</h3>
-                <button className="close-btn" onClick={() => setShowGoalModal(false)}>
-                  <i className="fas fa-times"></i>
+                <button className="close-btn" onClick={() => setShowGoalModal(false)} title="Close">
+                  ×
                 </button>
               </div>
               <form onSubmit={handleSetGoal} className="goal-form">
