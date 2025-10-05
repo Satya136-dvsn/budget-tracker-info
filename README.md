@@ -138,19 +138,25 @@ spring.datasource.password=your_password
 - **Regular User**: `testuser1` / `password123`
 - **Admin User**: `admin` / `admin123` (requires role update in database)
 
-## 🎯 **Next Phase: Milestone 2**
+## 🔄 **MILESTONE 2 IN PROGRESS** - Expense & Income Tracking (70% Complete)
 
-### 📊 **Expense & Income Tracking** (Coming Next)
-- Transaction management (Add/Edit/Delete)
-- Category-based expense organization
-- Income tracking and management
-- Financial reporting and analytics
-- Budget vs actual spending comparison
-- Data visualization with charts
+### ✅ **Completed Features**
+- ✅ Backend transaction APIs (100% complete - all 20+ endpoints)
+- ✅ Reports page integration with live data
+- ✅ Financial summary display (income, expenses, balance)
+- ✅ Category-based expense/income breakdown
+- ✅ API service layer extension
+- ✅ Authentication flow fixes and CORS configuration
+- ✅ Real-time financial metrics calculation
 
-### 📈 **Planned Features**
-- Monthly/yearly financial reports
-- Category-wise expense breakdown
+### 🚧 **In Progress**
+- 🔄 Dashboard expense form backend integration
+- 🔄 Transaction management page (CRUD operations)
+- 🔄 Dynamic category loading in forms
+- 🔄 Transaction history display
+
+### 📈 **Upcoming Features**
+- Monthly/yearly financial reports with charts
 - Budget alerts and notifications
 - Export functionality (PDF/CSV)
 - Advanced filtering and search
@@ -165,8 +171,12 @@ spring.datasource.password=your_password
 
 ## 📈 **Project Milestones**
 
-- [x] **Milestone 1**: Authentication & User Management ✅
-- [ ] **Milestone 2**: Expense & Income Tracking
+- [x] **Milestone 1**: Authentication & User Management ✅ (100%)
+- [x] **Milestone 2**: Expense & Income Tracking 🔄 (70% - Backend 100%, Frontend 50%)
+  - [x] Backend APIs (Transaction CRUD, Reports, Summaries)
+  - [x] Reports Page Integration
+  - [ ] Dashboard Transaction Form Integration
+  - [ ] Transaction Management Page
 - [ ] **Milestone 3**: Reporting & Analytics
 - [ ] **Milestone 4**: Advanced Features & Optimization
 
@@ -178,8 +188,14 @@ This project is for educational purposes and portfolio demonstration.
 
 ---
 
-**Last Updated**: October 1, 2025  
-**Status**: Milestone 1 Complete ✅ | Milestone 2 In Progress 🚧
+**Last Updated**: October 5, 2025  
+**Status**: Milestone 1 Complete ✅ (100%) | Milestone 2 In Progress 🚧 (70%)  
+**Recent Updates**: 
+- ✅ Reports page connected to backend APIs
+- ✅ Authentication & CORS fixes completed
+- ✅ Financial summary and breakdown integration
+- ✅ Dashboard UI enhancements (purple theme)
+- 🔄 Next: Dashboard form integration & Transaction management page
 
 ## 🔧 Features
 
