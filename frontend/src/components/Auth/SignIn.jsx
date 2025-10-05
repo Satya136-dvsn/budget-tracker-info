@@ -22,17 +22,26 @@ const SignIn = () => {
     e.preventDefault();
     setLoading(true);
     
-    console.log('Sign-in attempt with:', formData);
+    console.log('SignIn: Form submitted with:', formData);
     
     try {
+      console.log('SignIn: Calling login...');
       const response = await login(formData);
-      console.log('Login successful:', response);
+      console.log('SignIn: Login response:', response);
+      console.log('SignIn: Token from response:', response?.token);
+      
       showAlert('Login successful!', 'success');
-      navigate('/dashboard');
+      
+      // Wait a bit longer to ensure state updates
+      console.log('SignIn: Waiting before navigation...');
+      setTimeout(() => {
+        console.log('SignIn: Navigating to dashboard...');
+        navigate('/dashboard', { replace: true });
+      }, 200);
     } catch (error) {
-      console.error('Login failed:', error);
+      console.error('SignIn: Login failed:', error);
+      console.error('SignIn: Error details:', error.message, error.stack);
       showAlert(`Login failed: ${error.message}`, 'error');
-    } finally {
       setLoading(false);
     }
   };

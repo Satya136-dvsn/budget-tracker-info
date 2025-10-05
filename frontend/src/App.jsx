@@ -46,8 +46,10 @@ const AdminRoute = ({ children }) => {
 
 // Public Route Component (redirect to dashboard if already authenticated)
 const PublicRoute = ({ children }) => {
-  const { isAuthenticated } = useAuth();
-  return !isAuthenticated ? children : <Navigate to="/dashboard" />;
+  const { isAuthenticated, loading } = useAuth();
+  // Don't redirect while auth is still loading
+  if (loading) return <div style={{ padding: '2rem' }}>Loading...</div>;
+  return !isAuthenticated ? children : <Navigate to="/dashboard" replace />;
 };
 
 function AppContent() {

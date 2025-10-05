@@ -73,136 +73,179 @@ const Reports = () => {
     return () => { mounted = false; };
   }, [selectedPeriod, loading, token, isAuthenticated]);
 
-  const renderSummaryReport = () => (
-    <div className="report-content">
-      {!reportsData.summary ? (
-        <div className="no-data">No summary data available.</div>
-      ) : (
-      <div className="report-stats-grid">
-        <div className="report-stat-card income">
-          <div className="stat-icon">
-            <span className="emoji-icon">💰</span>
-          </div>
-          <div className="stat-info">
-            <h3>Total Income</h3>
-            <span className="stat-value">{formatCurrency(reportsData.summary.totalIncome)}</span>
-            <span className="stat-period">Last 6 months</span>
-          </div>
+  const renderSummaryReport = () => {
+    if (!reportsData.summary) {
+      return (
+        <div className="report-content">
+          <div className="no-data">No summary data available.</div>
         </div>
+      );
+    }
 
-        <div className="report-stat-card expense">
-          <div className="stat-icon">
-            <span className="emoji-icon">💸</span>
-          </div>
-          <div className="stat-info">
-            <h3>Total Expenses</h3>
-            <span className="stat-value">{formatCurrency(reportsData.summary.totalExpenses)}</span>
-            <span className="stat-period">Last 6 months</span>
-          </div>
-        </div>
+    const summary = reportsData.summary;
+    const totalIncome = Number(summary.totalIncome) || 0;
+    const totalExpenses = Number(summary.totalExpenses) || 0;
+    const balance = Number(summary.balance) || 0;
+    const savingsRate = totalIncome > 0 ? ((balance / totalIncome) * 100).toFixed(1) : 0;
+    
+    // Get top expense category from categories data
+    const topCategory = reportsData.categories && reportsData.categories.length > 0
+      ? reportsData.categories[0].category
+      : 'N/A';
 
-        <div className="report-stat-card savings">
-          <div className="stat-icon">
-            <span className="emoji-icon">🏦</span>
-          </div>
-          <div className="stat-info">
-            <h3>Total Savings</h3>
-            <span className="stat-value">{formatCurrency(reportsData.summary.totalSavings)}</span>
-            <span className="stat-period">{reportsData.summary.savingsRate}% savings rate</span>
-          </div>
-        </div>
-
-        <div className="report-stat-card rate">
-          <div className="stat-icon">
-            <span className="emoji-icon">📈</span>
-          </div>
-          <div className="stat-info">
-            <h3>Budget Performance</h3>
-            <span className="stat-value">{reportsData.summary.budgetVariance > 0 ? '+' : ''}{reportsData.summary.budgetVariance}%</span>
-            <span className="stat-period">vs planned budget</span>
-          </div>
-        </div>
-        </div>
-      )}
-
-      <div className="report-insights">
-        <div className="insight-card">
-          <h3>💡 Key Insights</h3>
-          <ul className="insights-list">
-            <li>Your savings rate of {reportsData.summary?.savingsRate ?? 0}% is above the recommended 15%</li>
-            <li>Highest spending category: {reportsData.summary?.topExpenseCategory ?? '—'}</li>
-            <li>You're {Math.abs(reportsData.summary?.budgetVariance ?? 0)}% {(reportsData.summary?.budgetVariance ?? 0) > 0 ? 'over' : 'under'} your planned budget</li>
-            <li>Consider setting up automatic savings to maintain consistency</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  );
-
-  const renderMonthlyReport = () => (
-    <div className="report-content">
-      <div className="monthly-chart">
-        <h3>📊 Monthly Income vs Expenses</h3>
-        <div className="chart-bars">
-          {reportsData.monthly.map((month, index) => (
-            <div key={index} className="month-bar">
-              <div className="bar-container">
-                <div 
-                  className="income-bar" 
-                  style={{ height: `${(month.income / 5000) * 100}%` }}
-                  title={`Income: ${formatCurrency(month.income)}`}
-                ></div>
-                <div 
-                  className="expense-bar" 
-                  style={{ height: `${(month.expenses / 5000) * 100}%` }}
-                  title={`Expenses: ${formatCurrency(month.expenses)}`}
-                ></div>
-              </div>
-              <span className="month-label">{month.month}</span>
+    return (
+      <div className="report-content">
+        <div className="report-stats-grid">
+          <div className="report-stat-card income">
+            <div className="stat-icon">
+              <span className="emoji-icon">💰</span>
             </div>
-          ))}
-        </div>
-        <div className="chart-legend">
-          <div className="legend-item">
-            <div className="legend-color income"></div>
-            <span>Income</span>
-          </div>
-          <div className="legend-item">
-            <div className="legend-color expense"></div>
-            <span>Expenses</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
-  const renderCategoryReport = () => (
-    <div className="report-content">
-      <div className="category-report">
-        <h3>🥧 Expense Categories Breakdown</h3>
-        <div className="category-bars">
-          {reportsData.categories.map((category, index) => (
-            <div key={index} className="category-bar-item">
-              <div className="category-info">
-                <span className="category-name">{category.name}</span>
-                <span className="category-amount">{formatCurrency(category.amount)}</span>
-              </div>
-              <div className="progress-bar">
-                <div 
-                  className="progress-fill" 
-                  style={{ 
-                    width: `${category.percentage}%`,
-                    backgroundColor: `hsl(${index * 60}, 70%, 60%)`
-                  }}
-                ></div>
-              </div>
-              <span className="category-percentage">{category.percentage}%</span>
+            <div className="stat-info">
+              <h3>Total Income</h3>
+              <span className="stat-value">{formatCurrency(totalIncome)}</span>
+              <span className="stat-period">All time</span>
             </div>
-          ))}
+          </div>
+
+          <div className="report-stat-card expense">
+            <div className="stat-icon">
+              <span className="emoji-icon">💸</span>
+            </div>
+            <div className="stat-info">
+              <h3>Total Expenses</h3>
+              <span className="stat-value">{formatCurrency(totalExpenses)}</span>
+              <span className="stat-period">All time</span>
+            </div>
+          </div>
+
+          <div className="report-stat-card savings">
+            <div className="stat-icon">
+              <span className="emoji-icon">🏦</span>
+            </div>
+            <div className="stat-info">
+              <h3>Current Balance</h3>
+              <span className="stat-value">{formatCurrency(balance)}</span>
+              <span className="stat-period">{savingsRate}% savings rate</span>
+            </div>
+          </div>
+
+          <div className="report-stat-card rate">
+            <div className="stat-icon">
+              <span className="emoji-icon">�</span>
+            </div>
+            <div className="stat-info">
+              <h3>Transactions</h3>
+              <span className="stat-value">{summary.transactionCount || 0}</span>
+              <span className="stat-period">Total recorded</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="report-insights">
+          <div className="insight-card">
+            <h3>💡 Key Insights</h3>
+            <ul className="insights-list">
+              <li>Your savings rate of {savingsRate}% {savingsRate >= 15 ? 'is above' : 'is below'} the recommended 15%</li>
+              <li>Highest spending category: {topCategory}</li>
+              <li>Total balance: {formatCurrency(balance)}</li>
+              <li>Track your spending regularly to maintain financial health</li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  };
+
+  const renderMonthlyReport = () => {
+    // For now, show a summary since we don't have monthly breakdown data yet
+    if (!reportsData.summary) {
+      return (
+        <div className="report-content">
+          <div className="no-data">No monthly data available.</div>
+        </div>
+      );
+    }
+
+    const summary = reportsData.summary;
+    const totalIncome = Number(summary.totalIncome) || 0;
+    const totalExpenses = Number(summary.totalExpenses) || 0;
+
+    return (
+      <div className="report-content">
+        <div className="monthly-chart">
+          <h3>📊 Overall Financial Overview</h3>
+          <p style={{ color: '#666', marginBottom: '2rem' }}>
+            Monthly breakdown feature coming soon. Here's your overall financial summary:
+          </p>
+          <div className="report-stats-grid" style={{ marginTop: '2rem' }}>
+            <div className="report-stat-card income">
+              <div className="stat-icon">
+                <span className="emoji-icon">💰</span>
+              </div>
+              <div className="stat-info">
+                <h3>Total Income</h3>
+                <span className="stat-value">{formatCurrency(totalIncome)}</span>
+              </div>
+            </div>
+            <div className="report-stat-card expense">
+              <div className="stat-icon">
+                <span className="emoji-icon">💸</span>
+              </div>
+              <div className="stat-info">
+                <h3>Total Expenses</h3>
+                <span className="stat-value">{formatCurrency(totalExpenses)}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const renderCategoryReport = () => {
+    if (!reportsData.categories || reportsData.categories.length === 0) {
+      return (
+        <div className="report-content">
+          <div className="no-data">No category data available.</div>
+        </div>
+      );
+    }
+
+    // Calculate total and percentages
+    const total = reportsData.categories.reduce((sum, cat) => sum + Number(cat.amount || 0), 0);
+    const categoriesWithPercentage = reportsData.categories.map(cat => ({
+      ...cat,
+      percentage: total > 0 ? ((Number(cat.amount) / total) * 100).toFixed(1) : 0
+    }));
+
+    return (
+      <div className="report-content">
+        <div className="category-report">
+          <h3>🥧 Expense Categories Breakdown</h3>
+          <div className="category-bars">
+            {categoriesWithPercentage.map((category, index) => (
+              <div key={index} className="category-bar-item">
+                <div className="category-info">
+                  <span className="category-name">{category.category || 'Uncategorized'}</span>
+                  <span className="category-amount">{formatCurrency(category.amount)}</span>
+                </div>
+                <div className="progress-bar">
+                  <div 
+                    className="progress-fill" 
+                    style={{ 
+                      width: `${category.percentage}%`,
+                      backgroundColor: `hsl(${index * 60}, 70%, 60%)`
+                    }}
+                  ></div>
+                </div>
+                <span className="category-percentage">{category.percentage}%</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="reports-page">

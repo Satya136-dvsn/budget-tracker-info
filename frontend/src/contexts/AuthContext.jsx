@@ -19,12 +19,17 @@ export const AuthProvider = ({ children }) => {
   const isAuthenticated = !!token && !!user;
 
   useEffect(() => {
-    if (token) {
+    // Only load profile if we have a token but no user data (e.g., page refresh)
+    if (token && !user) {
       loadUserProfile();
-    } else {
+    } else if (!token) {
+      setLoading(false);
+    } else if (token && user) {
+      // We have both token and user, so we're authenticated
       setLoading(false);
     }
-  }, [token]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token, user]);
 
   const loadUserProfile = async () => {
     try {
@@ -43,17 +48,34 @@ export const AuthProvider = ({ children }) => {
       console.log('AuthContext: Attempting login with credentials:', credentials);
       const response = await apiService.login(credentials);
       console.log('AuthContext: Login response received:', response);
+      console.log('AuthContext: Response has token?', !!response?.token);
+      console.log('AuthContext: Response has id?', !!response?.id);
       
       if (response.token) {
-        setToken(response.token);
-        setUser(response);
+        // Store token first
+        console.log('AuthContext: Storing token in localStorage...');
         localStorage.setItem('authToken', response.token);
-        console.log('AuthContext: Login successful, token stored');
+        
+        console.log('AuthContext: Setting token state...');
+        setToken(response.token);
+        
+        // Set user data from login response
+        console.log('AuthContext: Setting user state...', response);
+        setUser(response);
+        
+        // Mark loading as false since we have everything we need
+        console.log('AuthContext: Setting loading to false...');
+        setLoading(false);
+        
+        console.log('AuthContext: Login successful, token and user stored');
+        console.log('AuthContext: isAuthenticated should be:', !!response.token && !!response);
         return response;
       }
-      throw new Error('Invalid credentials');
+      throw new Error('Invalid credentials - no token in response');
     } catch (error) {
       console.error('AuthContext: Login failed:', error);
+      console.error('AuthContext: Error type:', error.constructor.name);
+      console.error('AuthContext: Error message:', error.message);
       throw error;
     }
   };

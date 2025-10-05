@@ -227,31 +227,52 @@ const Dashboard = () => {
           <div className="insight-card">
             <h3>View Trends</h3>
             <div className="trends-preview">
-              <div className="trend-item" onClick={() => navigate('/trends/monthly-spending')}>
+              <div 
+                className="trend-item" 
+                onClick={() => navigate('/trends/monthly-spending')}
+                style={{
+                  background: 'linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%)',
+                  border: '1px solid #d8b4fe'
+                }}
+              >
                 <div className="trend-icon">
                   <span className="emoji-icon">📈</span>
                 </div>
                 <div className="trend-info">
-                  <h4>Monthly Spending</h4>
-                  <p>Track your spending patterns over time</p>
+                  <h4 style={{ color: '#6b21a8' }}>Monthly Spending</h4>
+                  <p style={{ color: '#7c3aed' }}>Track your spending patterns over time</p>
                 </div>
               </div>
-              <div className="trend-item" onClick={() => navigate('/trends/category-analysis')}>
+              <div 
+                className="trend-item" 
+                onClick={() => navigate('/trends/category-analysis')}
+                style={{
+                  background: 'linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%)',
+                  border: '1px solid #d8b4fe'
+                }}
+              >
                 <div className="trend-icon">
                   <span className="emoji-icon">🥧</span>
                 </div>
                 <div className="trend-info">
-                  <h4>Category Analysis</h4>
-                  <p>See where your money goes</p>
+                  <h4 style={{ color: '#6b21a8' }}>Category Analysis</h4>
+                  <p style={{ color: '#7c3aed' }}>See where your money goes</p>
                 </div>
               </div>
-              <div className="trend-item" onClick={() => navigate('/trends/savings-growth')}>
+              <div 
+                className="trend-item" 
+                onClick={() => navigate('/trends/savings-growth')}
+                style={{
+                  background: 'linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%)',
+                  border: '1px solid #d8b4fe'
+                }}
+              >
                 <div className="trend-icon">
                   <span className="emoji-icon">📊</span>
                 </div>
                 <div className="trend-info">
-                  <h4>Savings Growth</h4>
-                  <p>Monitor your savings progress</p>
+                  <h4 style={{ color: '#6b21a8' }}>Savings Growth</h4>
+                  <p style={{ color: '#7c3aed' }}>Monitor your savings progress</p>
                 </div>
               </div>
             </div>

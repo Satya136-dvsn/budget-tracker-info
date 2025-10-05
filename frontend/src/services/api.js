@@ -20,10 +20,17 @@ class ApiService {
     }
 
     const token = this.getToken();
+    console.log('API: Getting headers, token exists?', !!token);
+    console.log('API: Token (first 20 chars):', token ? token.substring(0, 20) + '...' : 'NO TOKEN');
+    
     if (token) {
       headers['Authorization'] = `Bearer ${token}`;
+      console.log('API: Added Authorization header');
+    } else {
+      console.warn('API: NO TOKEN - Request will be unauthenticated!');
     }
 
+    console.log('API: Final headers:', headers);
     return headers;
   }
 
@@ -130,17 +137,24 @@ class ApiService {
     return this.makeRequest('/api/transactions/summary', 'GET');
   }
 
-  // period could be values like '3months', '6months', '1year', 'all'
+  // Get monthly breakdown - returns array of monthly summaries
   async getMonthlyFinancialSummary(period = '6months') {
-    return this.makeRequest(`/api/transactions/monthly?period=${encodeURIComponent(period)}`, 'GET');
+    // For now, return the overall summary as we need to implement proper monthly aggregation
+    // TODO: Implement backend endpoint that aggregates by month for the given period
+    return this.makeRequest('/api/transactions/summary', 'GET');
   }
 
   async getExpenseBreakdown() {
-    return this.makeRequest('/api/transactions/breakdown?type=expense', 'GET');
+    return this.makeRequest('/api/transactions/breakdown/expenses', 'GET');
+  }
+
+  async getIncomeBreakdown() {
+    return this.makeRequest('/api/transactions/breakdown/income', 'GET');
   }
 
   async getCategoryBreakdown() {
-    return this.makeRequest('/api/transactions/categories/breakdown', 'GET');
+    // Use expense breakdown for now
+    return this.makeRequest('/api/transactions/breakdown/expenses', 'GET');
   }
 }
 
