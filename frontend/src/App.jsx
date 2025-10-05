@@ -9,7 +9,6 @@ import SignUp from './components/Auth/SignUp';
 import ForgotPassword from './components/Auth/ForgotPassword';
 import Dashboard from './components/Dashboard/Dashboard';
 import Profile from './components/Profile/Profile';
-import ProfileNew from './components/Profile/ProfileNew';
 import AdminDashboard from './components/Admin/AdminDashboard';
 import Reports from './components/Reports/Reports';
 import FinancialHealthAnalysis from './components/FinancialHealth/FinancialHealthAnalysis';
@@ -100,7 +99,7 @@ function AppContent() {
           element={
             <div className="container">
               <ProtectedRoute>
-                <ProfileNew />
+                <Profile />
               </ProtectedRoute>
             </div>
           } 

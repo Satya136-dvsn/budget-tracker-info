@@ -102,6 +102,64 @@ class ApiService {
     return this.makeRequest(`/api/user/profile/${userId}`, 'PUT', profileData);
   }
 
+  // Transaction endpoints
+  async createTransaction(transactionData) {
+    return this.makeRequest('/api/transactions', 'POST', transactionData);
+  }
+
+  async getUserTransactions() {
+    return this.makeRequest('/api/transactions', 'GET');
+  }
+
+  async getTransactionById(id) {
+    return this.makeRequest(`/api/transactions/${id}`, 'GET');
+  }
+
+  async updateTransaction(id, transactionData) {
+    return this.makeRequest(`/api/transactions/${id}`, 'PUT', transactionData);
+  }
+
+  async deleteTransaction(id) {
+    return this.makeRequest(`/api/transactions/${id}`, 'DELETE');
+  }
+
+  async getTransactionsByType(type) {
+    return this.makeRequest(`/api/transactions/type/${type}`, 'GET');
+  }
+
+  async getExpenseBreakdown() {
+    return this.makeRequest('/api/transactions/breakdown/expenses', 'GET');
+  }
+
+  async getIncomeBreakdown() {
+    return this.makeRequest('/api/transactions/breakdown/income', 'GET');
+  }
+
+  async getFinancialSummary() {
+    return this.makeRequest('/api/transactions/summary', 'GET');
+  }
+
+  async getMonthlyFinancialSummary(year, month) {
+    return this.makeRequest(`/api/transactions/summary/${year}/${month}`, 'GET');
+  }
+
+  async getRecentTransactions(limit = 10) {
+    return this.makeRequest(`/api/transactions/recent?limit=${limit}`, 'GET');
+  }
+
+  // Category endpoints
+  async getAllCategories() {
+    return this.makeRequest('/api/categories', 'GET');
+  }
+
+  async getIncomeCategories() {
+    return this.makeRequest('/api/categories/income', 'GET');
+  }
+
+  async getExpenseCategories() {
+    return this.makeRequest('/api/categories/expense', 'GET');
+  }
+
   // Admin endpoints
   async getAllUsers() {
     return this.makeRequest('/api/admin/users', 'GET');

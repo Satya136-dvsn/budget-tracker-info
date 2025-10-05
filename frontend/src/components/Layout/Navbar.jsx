@@ -59,7 +59,6 @@ const Navbar = () => {
                 className={`modern-nav-btn ${location.pathname === '/dashboard' ? 'nav-btn-active' : 'nav-btn-ghost'}`}
                 onClick={() => navigate('/dashboard')}
               >
-                <span className="btn-icon">🏠</span>
                 <span className="btn-text">Home</span>
               </button>
               
@@ -78,11 +77,9 @@ const Navbar = () => {
                 className={`modern-nav-btn ${location.pathname === '/profile' ? 'nav-btn-active' : 'nav-btn-ghost'}`}
                 onClick={() => navigate('/profile')}
               >
-                <span className="btn-icon">👤</span>
                 <span className="btn-text">Profile</span>
               </button>
               <button className="modern-nav-btn nav-btn-logout" onClick={handleLogout}>
-                <span className="btn-icon">🚪</span>
                 <span className="btn-text">Logout</span>
               </button>
             </>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useAlert } from '../../hooks/useAlert';
+import { apiService } from '../../services/api';
 import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
@@ -15,6 +16,7 @@ const Dashboard = () => {
     description: '',
     date: new Date().toISOString().split('T')[0]
   });
+  const [categories, setCategories] = useState([]);
   const [goalForm, setGoalForm] = useState({
     title: '',
     targetAmount: '',
@@ -26,12 +28,36 @@ const Dashboard = () => {
     if (!user) {
       loadUserProfile();
     }
+    // load categories for dropdown
+    const loadCategories = async () => {
+  // start loading (no local loading indicator needed here)
+      try {
+        const res = await apiService.getExpenseCategories();
+        // API returns array of category objects; fallback to default list
+        if (Array.isArray(res)) {
+          setCategories(res.map(c => c.name || c));
+        }
+      } catch (err) {
+        console.warn('Failed to load categories', err);
+      }
+    };
+
+    loadCategories();
   }, [user, loadUserProfile]);
 
   const handleAddExpense = async (e) => {
     e.preventDefault();
     try {
-      // API call would go here
+      const transactionData = {
+        title: expenseForm.description || 'Expense',
+        description: expenseForm.description,
+        amount: parseFloat(expenseForm.amount),
+        type: 'EXPENSE',
+        category: expenseForm.category,
+        transactionDate: new Date(expenseForm.date).toISOString()
+      };
+
+      await apiService.createTransaction(transactionData);
       showAlert('Expense added successfully!', 'success');
       setShowExpenseModal(false);
       setExpenseForm({
@@ -41,7 +67,7 @@ const Dashboard = () => {
         date: new Date().toISOString().split('T')[0]
       });
     } catch (error) {
-      showAlert('Failed to add expense', 'error');
+      showAlert(`Failed to add expense: ${error.message || error}`, 'error');
     }
   };
 
@@ -57,8 +83,8 @@ const Dashboard = () => {
         currentAmount: '',
         deadline: ''
       });
-    } catch (error) {
-      showAlert('Failed to set goal', 'error');
+    } catch (err) {
+      showAlert(`Failed to set goal: ${err?.message || err}`, 'error');
     }
   };
 
@@ -364,14 +390,22 @@ const Dashboard = () => {
                     onChange={handleExpenseInputChange}
                     required
                   >
-                    <option value="food">Food & Dining</option>
-                    <option value="transportation">Transportation</option>
-                    <option value="shopping">Shopping</option>
-                    <option value="entertainment">Entertainment</option>
-                    <option value="bills">Bills & Utilities</option>
-                    <option value="healthcare">Healthcare</option>
-                    <option value="education">Education</option>
-                    <option value="other">Other</option>
+                    {categories && categories.length > 0 ? (
+                      categories.map((c, idx) => (
+                        <option key={idx} value={c}>{c}</option>
+                      ))
+                    ) : (
+                      <>
+                        <option value="Food & Dining">Food & Dining</option>
+                        <option value="Transportation">Transportation</option>
+                        <option value="Shopping">Shopping</option>
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="Bills & Utilities">Bills & Utilities</option>
+                        <option value="Healthcare">Healthcare</option>
+                        <option value="Education">Education</option>
+                        <option value="Other">Other</option>
+                      </>
+                    )}
                   </select>
                 </div>
                 <div className="form-group">
