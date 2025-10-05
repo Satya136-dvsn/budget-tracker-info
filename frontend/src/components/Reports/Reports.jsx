@@ -1,42 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useAlert } from '../../hooks/useAlert';
+import { apiService } from '../../services/api';
 
 const Reports = () => {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { token, loading, isAuthenticated } = useAuth();
   const { showAlert } = useAlert();
   const [selectedPeriod, setSelectedPeriod] = useState('6months');
   const [selectedReportType, setSelectedReportType] = useState('summary');
 
-  // Sample data - replace with actual API data
-  const reportsData = {
-    summary: {
-      totalIncome: 15000,
-      totalExpenses: 12500,
-      totalSavings: 2500,
-      savingsRate: 16.7,
-      topExpenseCategory: 'Food & Dining',
-      budgetVariance: -8.5
-    },
-    monthly: [
-      { month: 'Jan', income: 5000, expenses: 4200, savings: 800 },
-      { month: 'Feb', income: 5000, expenses: 4100, savings: 900 },
-      { month: 'Mar', income: 5000, expenses: 4200, savings: 800 },
-      { month: 'Apr', income: 5000, expenses: 4000, savings: 1000 },
-      { month: 'May', income: 5000, expenses: 4300, savings: 700 },
-      { month: 'Jun', income: 5000, expenses: 4100, savings: 900 }
-    ],
-    categories: [
-      { name: 'Food & Dining', amount: 3750, percentage: 30 },
-      { name: 'Transportation', amount: 2675, percentage: 21.4 },
-      { name: 'Bills & Utilities', amount: 2340, percentage: 18.7 },
-      { name: 'Shopping', amount: 1950, percentage: 15.6 },
-      { name: 'Entertainment', amount: 1260, percentage: 10.1 },
-      { name: 'Other', amount: 525, percentage: 4.2 }
-    ]
-  };
+  // live API-backed data
+  const [reportsData, setReportsData] = useState({
+    summary: null,
+    monthly: [],
+    categories: []
+  });
+  const [loadingData, setLoadingData] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleDownloadReport = (format) => {
     showAlert(`Downloading ${selectedReportType} report as ${format.toUpperCase()}...`, 'success');
@@ -55,8 +37,47 @@ const Reports = () => {
     }).format(amount || 0);
   };
 
+  useEffect(() => {
+    let mounted = true;
+
+    const fetchReports = async () => {
+      // Wait until auth finished loading and we have a token
+      if (loading) return;
+      if (!token && !isAuthenticated) return; // nothing to fetch when not auth'd
+
+      setLoadingData(true);
+      setError(null);
+      try {
+        const [summary, monthly, categories] = await Promise.all([
+          apiService.getFinancialSummary(),
+          apiService.getMonthlyFinancialSummary(selectedPeriod),
+          apiService.getExpenseBreakdown()
+        ]);
+
+        if (!mounted) return;
+        setReportsData({
+          summary: summary || null,
+          monthly: monthly || [],
+          categories: categories || []
+        });
+      } catch (err) {
+        console.error('Failed to load reports data', err);
+        setError(err.message || 'Failed to load reports');
+      } finally {
+        if (mounted) setLoadingData(false);
+      }
+    };
+
+    fetchReports();
+
+    return () => { mounted = false; };
+  }, [selectedPeriod, loading, token, isAuthenticated]);
+
   const renderSummaryReport = () => (
     <div className="report-content">
+      {!reportsData.summary ? (
+        <div className="no-data">No summary data available.</div>
+      ) : (
       <div className="report-stats-grid">
         <div className="report-stat-card income">
           <div className="stat-icon">
@@ -101,15 +122,16 @@ const Reports = () => {
             <span className="stat-period">vs planned budget</span>
           </div>
         </div>
-      </div>
+        </div>
+      )}
 
       <div className="report-insights">
         <div className="insight-card">
           <h3>💡 Key Insights</h3>
           <ul className="insights-list">
-            <li>Your savings rate of {reportsData.summary.savingsRate}% is above the recommended 15%</li>
-            <li>Highest spending category: {reportsData.summary.topExpenseCategory}</li>
-            <li>You're {Math.abs(reportsData.summary.budgetVariance)}% {reportsData.summary.budgetVariance > 0 ? 'over' : 'under'} your planned budget</li>
+            <li>Your savings rate of {reportsData.summary?.savingsRate ?? 0}% is above the recommended 15%</li>
+            <li>Highest spending category: {reportsData.summary?.topExpenseCategory ?? '—'}</li>
+            <li>You're {Math.abs(reportsData.summary?.budgetVariance ?? 0)}% {(reportsData.summary?.budgetVariance ?? 0) > 0 ? 'over' : 'under'} your planned budget</li>
             <li>Consider setting up automatic savings to maintain consistency</li>
           </ul>
         </div>
@@ -273,9 +295,15 @@ const Reports = () => {
           <p>Generated on {new Date().toLocaleDateString()}</p>
         </div>
 
-        {selectedReportType === 'summary' && renderSummaryReport()}
-        {selectedReportType === 'monthly' && renderMonthlyReport()}
-        {selectedReportType === 'category' && renderCategoryReport()}
+        {loadingData && <div className="reports-loading">Loading reports...</div>}
+        {error && <div className="reports-error">Error: {error}</div>}
+        {!loadingData && !error && (
+          <>
+            {selectedReportType === 'summary' && renderSummaryReport()}
+            {selectedReportType === 'monthly' && renderMonthlyReport()}
+            {selectedReportType === 'category' && renderCategoryReport()}
+          </>
+        )}
       </div>
     </div>
   );

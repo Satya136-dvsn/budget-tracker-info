@@ -23,7 +23,9 @@ import './components/FinancialHealth/FinancialHealthAnalysis.css';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, loading } = useAuth();
+  // If auth is still loading, render a small placeholder to avoid redirect loops
+  if (loading) return <div style={{ padding: '2rem' }}>Checking authentication...</div>;
   return isAuthenticated ? children : <Navigate to="/signin" />;
 };
 

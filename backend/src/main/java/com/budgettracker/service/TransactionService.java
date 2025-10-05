@@ -31,9 +31,9 @@ public class TransactionService {
     private UserRepository userRepository;
     
     // Create new transaction
-    public TransactionResponse createTransaction(TransactionRequest request, String userEmail) {
-        User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        public TransactionResponse createTransaction(TransactionRequest request, String username) {
+                User user = userRepository.findByUsername(username)
+                                .orElseThrow(() -> new RuntimeException("User not found"));
         
         Transaction transaction = new Transaction();
         transaction.setUser(user);
@@ -48,9 +48,9 @@ public class TransactionService {
     }
     
     // Get all transactions for user
-    public List<TransactionResponse> getUserTransactions(String userEmail) {
-        User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        public List<TransactionResponse> getUserTransactions(String username) {
+                User user = userRepository.findByUsername(username)
+                                .orElseThrow(() -> new RuntimeException("User not found"));
         
         List<Transaction> transactions = transactionRepository.findByUserOrderByTransactionDateDesc(user);
         return transactions.stream()
@@ -59,9 +59,9 @@ public class TransactionService {
     }
     
     // Get transaction by ID
-    public Optional<TransactionResponse> getTransactionById(Long id, String userEmail) {
-        User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        public Optional<TransactionResponse> getTransactionById(Long id, String username) {
+                User user = userRepository.findByUsername(username)
+                                .orElseThrow(() -> new RuntimeException("User not found"));
         
         return transactionRepository.findById(id)
                 .filter(transaction -> transaction.getUser().getId().equals(user.getId()))
@@ -69,9 +69,9 @@ public class TransactionService {
     }
     
     // Update transaction
-    public TransactionResponse updateTransaction(Long id, TransactionRequest request, String userEmail) {
-        User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        public TransactionResponse updateTransaction(Long id, TransactionRequest request, String username) {
+                User user = userRepository.findByUsername(username)
+                                .orElseThrow(() -> new RuntimeException("User not found"));
         
         Transaction transaction = transactionRepository.findById(id)
                 .filter(t -> t.getUser().getId().equals(user.getId()))
@@ -88,9 +88,9 @@ public class TransactionService {
     }
     
     // Delete transaction
-    public void deleteTransaction(Long id, String userEmail) {
-        User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        public void deleteTransaction(Long id, String username) {
+                User user = userRepository.findByUsername(username)
+                                .orElseThrow(() -> new RuntimeException("User not found"));
         
         Transaction transaction = transactionRepository.findById(id)
                 .filter(t -> t.getUser().getId().equals(user.getId()))
@@ -100,9 +100,9 @@ public class TransactionService {
     }
     
     // Get transactions by type
-    public List<TransactionResponse> getTransactionsByType(String type, String userEmail) {
-        User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        public List<TransactionResponse> getTransactionsByType(String type, String username) {
+                User user = userRepository.findByUsername(username)
+                                .orElseThrow(() -> new RuntimeException("User not found"));
         
         Transaction.TransactionType transactionType = Transaction.TransactionType.valueOf(type);
         List<Transaction> transactions = transactionRepository.findByUserAndTypeOrderByTransactionDateDesc(user, transactionType);
@@ -113,9 +113,9 @@ public class TransactionService {
     }
     
     // Get transactions by category
-    public List<TransactionResponse> getTransactionsByCategory(String category, String userEmail) {
-        User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        public List<TransactionResponse> getTransactionsByCategory(String category, String username) {
+                User user = userRepository.findByUsername(username)
+                                .orElseThrow(() -> new RuntimeException("User not found"));
         
         List<Transaction> transactions = transactionRepository.findByUserAndCategoryOrderByTransactionDateDesc(user, category);
         return transactions.stream()
@@ -124,9 +124,9 @@ public class TransactionService {
     }
     
     // Get transactions within date range
-    public List<TransactionResponse> getTransactionsByDateRange(LocalDateTime startDate, LocalDateTime endDate, String userEmail) {
-        User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        public List<TransactionResponse> getTransactionsByDateRange(LocalDateTime startDate, LocalDateTime endDate, String username) {
+                User user = userRepository.findByUsername(username)
+                                .orElseThrow(() -> new RuntimeException("User not found"));
         
         List<Transaction> transactions = transactionRepository.findByUserAndTransactionDateBetweenOrderByTransactionDateDesc(
                 user, startDate, endDate);
@@ -137,9 +137,9 @@ public class TransactionService {
     }
     
     // Get financial summary
-    public Map<String, Object> getFinancialSummary(String userEmail) {
-        User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        public Map<String, Object> getFinancialSummary(String username) {
+                User user = userRepository.findByUsername(username)
+                                .orElseThrow(() -> new RuntimeException("User not found"));
         
         Map<String, Object> summary = new HashMap<>();
         
@@ -156,9 +156,9 @@ public class TransactionService {
     }
     
     // Get monthly financial summary
-    public Map<String, Object> getMonthlyFinancialSummary(int year, int month, String userEmail) {
-        User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        public Map<String, Object> getMonthlyFinancialSummary(int year, int month, String username) {
+                User user = userRepository.findByUsername(username)
+                                .orElseThrow(() -> new RuntimeException("User not found"));
         
         LocalDateTime startDate = LocalDateTime.of(year, month, 1, 0, 0);
         LocalDateTime endDate = startDate.plusMonths(1).minusSeconds(1);
@@ -179,9 +179,9 @@ public class TransactionService {
     }
     
     // Get expense breakdown by category
-    public List<Map<String, Object>> getExpenseBreakdown(String userEmail) {
-        User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        public List<Map<String, Object>> getExpenseBreakdown(String username) {
+                User user = userRepository.findByUsername(username)
+                                .orElseThrow(() -> new RuntimeException("User not found"));
         
         List<Object[]> breakdown = transactionRepository.getExpenseBreakdownByCategory(user);
         
@@ -196,9 +196,9 @@ public class TransactionService {
     }
     
     // Get income breakdown by category
-    public List<Map<String, Object>> getIncomeBreakdown(String userEmail) {
-        User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        public List<Map<String, Object>> getIncomeBreakdown(String username) {
+                User user = userRepository.findByUsername(username)
+                                .orElseThrow(() -> new RuntimeException("User not found"));
         
         List<Object[]> breakdown = transactionRepository.getIncomeBreakdownByCategory(user);
         
@@ -213,9 +213,9 @@ public class TransactionService {
     }
     
     // Get recent transactions (last N transactions)
-    public List<TransactionResponse> getRecentTransactions(int limit, String userEmail) {
-        User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        public List<TransactionResponse> getRecentTransactions(int limit, String username) {
+                User user = userRepository.findByUsername(username)
+                                .orElseThrow(() -> new RuntimeException("User not found"));
         
         List<Transaction> transactions = transactionRepository.findRecentTransactions(user, limit);
         return transactions.stream()
@@ -224,9 +224,9 @@ public class TransactionService {
     }
     
     // Get transaction statistics
-    public Map<String, Object> getTransactionStatistics(String userEmail) {
-        User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        public Map<String, Object> getTransactionStatistics(String username) {
+                User user = userRepository.findByUsername(username)
+                                .orElseThrow(() -> new RuntimeException("User not found"));
         
         Map<String, Object> stats = new HashMap<>();
         

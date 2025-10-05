@@ -9,10 +9,15 @@ class ApiService {
     return localStorage.getItem('authToken');
   }
 
-  getHeaders() {
-    const headers = {
-      'Content-Type': 'application/json'
-    };
+  // Only include Content-Type for requests that send a body to avoid
+  // unnecessary CORS preflight on simple GETs which can cause 403s if
+  // the backend CORS isn't configured for the header.
+  getHeaders(method = 'GET') {
+    const headers = {};
+
+    if (method === 'POST' || method === 'PUT' || method === 'PATCH') {
+      headers['Content-Type'] = 'application/json';
+    }
 
     const token = this.getToken();
     if (token) {
@@ -25,7 +30,7 @@ class ApiService {
   async makeRequest(endpoint, method = 'GET', data = null) {
     const config = {
       method,
-      headers: this.getHeaders()
+      headers: this.getHeaders(method)
     };
 
     if (data && (method === 'POST' || method === 'PUT')) {
@@ -52,7 +57,7 @@ class ApiService {
           } else if (typeof errorObj === 'string') {
             errorMessage = errorObj;
           }
-        } catch (e) {
+        } catch {
           errorMessage = responseText || `HTTP ${response.status} error`;
         }
         
@@ -118,6 +123,24 @@ class ApiService {
   // Health check
   async healthCheck() {
     return this.makeRequest('/health', 'GET');
+  }
+
+  // Transactions / Reports endpoints
+  async getFinancialSummary() {
+    return this.makeRequest('/api/transactions/summary', 'GET');
+  }
+
+  // period could be values like '3months', '6months', '1year', 'all'
+  async getMonthlyFinancialSummary(period = '6months') {
+    return this.makeRequest(`/api/transactions/monthly?period=${encodeURIComponent(period)}`, 'GET');
+  }
+
+  async getExpenseBreakdown() {
+    return this.makeRequest('/api/transactions/breakdown?type=expense', 'GET');
+  }
+
+  async getCategoryBreakdown() {
+    return this.makeRequest('/api/transactions/categories/breakdown', 'GET');
   }
 }
 
