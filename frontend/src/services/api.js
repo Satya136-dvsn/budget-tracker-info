@@ -9,10 +9,12 @@ class ApiService {
     return localStorage.getItem('authToken');
   }
 
-  getHeaders() {
-    const headers = {
-      'Content-Type': 'application/json'
-    };
+  getHeaders(includeContentType = true) {
+    const headers = {};
+
+    if (includeContentType) {
+      headers['Content-Type'] = 'application/json';
+    }
 
     const token = this.getToken();
     if (token) {
@@ -23,12 +25,15 @@ class ApiService {
   }
 
   async makeRequest(endpoint, method = 'GET', data = null) {
+    // Only include Content-Type for requests with body to avoid CORS preflight
+    const includeContentType = (method === 'POST' || method === 'PUT' || method === 'PATCH') && data !== null;
+    
     const config = {
       method,
-      headers: this.getHeaders()
+      headers: this.getHeaders(includeContentType)
     };
 
-    if (data && (method === 'POST' || method === 'PUT')) {
+    if (data && (method === 'POST' || method === 'PUT' || method === 'PATCH')) {
       config.body = JSON.stringify(data);
     }
 
