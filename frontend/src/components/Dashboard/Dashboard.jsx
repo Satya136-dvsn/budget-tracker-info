@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useAlert } from '../../hooks/useAlert';
 import { useNavigate } from 'react-router-dom';
+import { apiService } from '../../services/api';
 
 const Dashboard = () => {
   const { user, loadUserProfile } = useAuth();
@@ -9,9 +10,12 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [showExpenseModal, setShowExpenseModal] = useState(false);
   const [showGoalModal, setShowGoalModal] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [recentTransactions, setRecentTransactions] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [expenseForm, setExpenseForm] = useState({
     amount: '',
-    category: 'food',
+    category: '',
     description: '',
     date: new Date().toISOString().split('T')[0]
   });
@@ -28,20 +32,76 @@ const Dashboard = () => {
     }
   }, [user, loadUserProfile]);
 
+  // Load categories and recent transactions when user is available
+  useEffect(() => {
+    if (user) {
+      loadDashboardData();
+    }
+  }, [user]);
+
+  const loadDashboardData = async () => {
+    setLoading(true);
+    try {
+      const [expenseCategories, transactions] = await Promise.all([
+        apiService.getExpenseCategories(),
+        apiService.getUserTransactions()
+      ]);
+      
+      setCategories(expenseCategories || []);
+      // Get the 5 most recent transactions
+      const sortedTransactions = transactions.sort((a, b) => 
+        new Date(b.transactionDate) - new Date(a.transactionDate)
+      );
+      setRecentTransactions(sortedTransactions.slice(0, 5));
+    } catch (error) {
+      console.error('Failed to load dashboard data:', error);
+      // Don't show error alert, just log it
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleAddExpense = async (e) => {
     e.preventDefault();
+    
+    // Validate form
+    if (!expenseForm.amount || !expenseForm.category || !expenseForm.description) {
+      showAlert('Please fill in all required fields', 'error');
+      return;
+    }
+
+    setLoading(true);
     try {
-      // API call would go here
+      const transactionData = {
+        title: expenseForm.description,
+        description: expenseForm.description,
+        amount: parseFloat(expenseForm.amount),
+        type: 'EXPENSE',
+        category: expenseForm.category,
+        transactionDate: new Date(expenseForm.date).toISOString()
+      };
+
+      await apiService.createTransaction(transactionData);
       showAlert('Expense added successfully!', 'success');
+      
+      // Reset form and close modal
       setShowExpenseModal(false);
       setExpenseForm({
         amount: '',
-        category: 'food',
+        category: '',
         description: '',
         date: new Date().toISOString().split('T')[0]
       });
-    } catch (error) {
-      showAlert('Failed to add expense', 'error');
+
+      // Reload dashboard data to show the new transaction
+      loadDashboardData();
+      // Reload user profile to update financial stats
+      loadUserProfile();
+    } catch (err) {
+      console.error('Error adding expense:', err);
+      showAlert(`Failed to add expense: ${err.message || 'Unknown error'}`, 'error');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -57,7 +117,8 @@ const Dashboard = () => {
         currentAmount: '',
         deadline: ''
       });
-    } catch (error) {
+    } catch (err) {
+      console.error('Error setting goal:', err);
       showAlert('Failed to set goal', 'error');
     }
   };
@@ -352,6 +413,65 @@ const Dashboard = () => {
           </div>
         </div>
 
+        {/* Recent Transactions Section */}
+        <div className="dashboard-section">
+          <div className="section-header">
+            <h3>Recent Transactions</h3>
+            <button 
+              className="view-all-btn"
+              onClick={() => navigate('/transactions')}
+            >
+              View All
+            </button>
+          </div>
+          <div className="transactions-list">
+            {loading ? (
+              <div className="loading-transactions">
+                <div className="spinner-small"></div>
+                <p>Loading transactions...</p>
+              </div>
+            ) : recentTransactions.length > 0 ? (
+              recentTransactions.map((transaction) => (
+                <div key={transaction.id} className="transaction-item">
+                  <div className="transaction-icon">
+                    <span className={transaction.type === 'EXPENSE' ? 'expense-icon' : 'income-icon'}>
+                      {transaction.type === 'EXPENSE' ? '📤' : '📥'}
+                    </span>
+                  </div>
+                  <div className="transaction-details">
+                    <div className="transaction-title">{transaction.title}</div>
+                    <div className="transaction-meta">
+                      <span className="transaction-category">{transaction.category}</span>
+                      <span className="transaction-date">
+                        {new Date(transaction.transactionDate).toLocaleDateString('en-US', {
+                          month: 'short',
+                          day: 'numeric',
+                          year: 'numeric'
+                        })}
+                      </span>
+                    </div>
+                  </div>
+                  <div className={`transaction-amount ${transaction.type.toLowerCase()}`}>
+                    {transaction.type === 'EXPENSE' ? '-' : '+'}
+                    {formatCurrency(transaction.amount)}
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="no-transactions">
+                <span className="empty-icon">📊</span>
+                <p>No transactions yet</p>
+                <button 
+                  className="add-first-transaction-btn"
+                  onClick={() => setShowExpenseModal(true)}
+                >
+                  Add Your First Expense
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+
         {/* Add Expense Modal */}
         {showExpenseModal && (
           <div className="modal-overlay" onClick={() => setShowExpenseModal(false)}>
@@ -385,14 +505,25 @@ const Dashboard = () => {
                     onChange={handleExpenseInputChange}
                     required
                   >
-                    <option value="food">Food & Dining</option>
-                    <option value="transportation">Transportation</option>
-                    <option value="shopping">Shopping</option>
-                    <option value="entertainment">Entertainment</option>
-                    <option value="bills">Bills & Utilities</option>
-                    <option value="healthcare">Healthcare</option>
-                    <option value="education">Education</option>
-                    <option value="other">Other</option>
+                    <option value="">Select a category</option>
+                    {categories.length > 0 ? (
+                      categories.map((cat) => (
+                        <option key={cat.id} value={cat.name}>
+                          {cat.name}
+                        </option>
+                      ))
+                    ) : (
+                      <>
+                        <option value="Food & Dining">Food & Dining</option>
+                        <option value="Transportation">Transportation</option>
+                        <option value="Shopping">Shopping</option>
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="Bills & Utilities">Bills & Utilities</option>
+                        <option value="Healthcare">Healthcare</option>
+                        <option value="Education">Education</option>
+                        <option value="Other">Other</option>
+                      </>
+                    )}
                   </select>
                 </div>
                 <div className="form-group">

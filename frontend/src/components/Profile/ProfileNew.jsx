@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useAlert } from '../../hooks/useAlert';
 import { apiService } from '../../services/api';
+import './ProfileNew.css';
 
 const ProfileNew = () => {
   const { user, updateUser } = useAuth();

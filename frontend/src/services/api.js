@@ -138,6 +138,7 @@ class ApiService {
   }
 
   // Get monthly breakdown - returns array of monthly summaries
+  // eslint-disable-next-line no-unused-vars
   async getMonthlyFinancialSummary(period = '6months') {
     // For now, return the overall summary as we need to implement proper monthly aggregation
     // TODO: Implement backend endpoint that aggregates by month for the given period
@@ -155,6 +156,44 @@ class ApiService {
   async getCategoryBreakdown() {
     // Use expense breakdown for now
     return this.makeRequest('/api/transactions/breakdown/expenses', 'GET');
+  }
+
+  // Transaction Management
+  async createTransaction(transactionData) {
+    return this.makeRequest('/api/transactions', 'POST', transactionData);
+  }
+
+  async getUserTransactions() {
+    return this.makeRequest('/api/transactions', 'GET');
+  }
+
+  async getTransactionById(id) {
+    return this.makeRequest(`/api/transactions/${id}`, 'GET');
+  }
+
+  async updateTransaction(id, transactionData) {
+    return this.makeRequest(`/api/transactions/${id}`, 'PUT', transactionData);
+  }
+
+  async deleteTransaction(id) {
+    return this.makeRequest(`/api/transactions/${id}`, 'DELETE');
+  }
+
+  async getTransactionsByType(type) {
+    return this.makeRequest(`/api/transactions/type/${type}`, 'GET');
+  }
+
+  // Category Management
+  async getExpenseCategories() {
+    return this.makeRequest('/api/categories/expense', 'GET');
+  }
+
+  async getIncomeCategories() {
+    return this.makeRequest('/api/categories/income', 'GET');
+  }
+
+  async getAllCategories() {
+    return this.makeRequest('/api/categories', 'GET');
   }
 }
 

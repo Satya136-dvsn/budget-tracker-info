@@ -12,6 +12,7 @@ import Profile from './components/Profile/Profile';
 import ProfileNew from './components/Profile/ProfileNew';
 import AdminDashboard from './components/Admin/AdminDashboard';
 import Reports from './components/Reports/Reports';
+import Transactions from './components/Transactions/Transactions';
 import FinancialHealthAnalysis from './components/FinancialHealth/FinancialHealthAnalysis';
 import MonthlySpending from './components/Trends/MonthlySpending';
 import CategoryAnalysis from './components/Trends/CategoryAnalysis';
@@ -95,6 +96,16 @@ function AppContent() {
             <div className="container">
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            </div>
+          } 
+        />
+        <Route 
+          path="/transactions" 
+          element={
+            <div className="container">
+              <ProtectedRoute>
+                <Transactions />
               </ProtectedRoute>
             </div>
           } 
