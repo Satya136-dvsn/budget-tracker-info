@@ -192,7 +192,7 @@ const Export = () => {
                 disabled={loading}
                 className="export-btn pdf"
               >
-                {loading ? 'Exporting...' : 'Export PDF'}
+                {loading ? '⏳ Exporting...' : '📄 Export PDF'}
               </button>
             </div>
             
@@ -206,7 +206,7 @@ const Export = () => {
                 disabled={loading}
                 className="export-btn csv"
               >
-                {loading ? 'Exporting...' : 'Export CSV'}
+                {loading ? '⏳ Exporting...' : '📊 Export CSV'}
               </button>
             </div>
           </div>
@@ -228,7 +228,7 @@ const Export = () => {
                 disabled={loading}
                 className="export-btn analytics"
               >
-                {loading ? 'Generating...' : 'Export Analytics'}
+                {loading ? '⏳ Generating...' : '📈 Export Analytics'}
               </button>
             </div>
           </div>

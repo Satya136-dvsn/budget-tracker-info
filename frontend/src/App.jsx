@@ -222,18 +222,7 @@ function AppContent() {
             </div>
           } 
         />
-        <Route 
-          path="/insights" 
-          element={
-            <div className="container">
-              <ProtectedRoute>
-                <ErrorBoundary>
-                  <FinancialInsights />
-                </ErrorBoundary>
-              </ProtectedRoute>
-            </div>
-          } 
-        />
+
         <Route 
           path="/trends" 
           element={

@@ -16,7 +16,7 @@ import java.time.format.DateTimeFormatter;
 
 @RestController
 @RequestMapping("/api/export")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:5174"})
 public class ExportController {
 
     @Autowired

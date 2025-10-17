@@ -1,30 +1,69 @@
-﻿import React, { useState } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import { apiService } from '../../services/api';
 import './FinancialHealthAnalysis.css';
 
 const FinancialHealthAnalysis = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [selectedTimeframe, setSelectedTimeframe] = useState('current');
+  const [activeTab, setActiveTab] = useState('overview');
+  const [insights, setInsights] = useState(null);
+  const [spendingPatterns, setSpendingPatterns] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Enhanced financial calculations
-  const monthlyIncome = user?.monthlyIncome || 5000;
-  const currentSavings = user?.currentSavings || 15000;
-  const targetExpenses = user?.targetExpenses || 3500;
-  const monthlyDebt = user?.monthlyDebt || 800;
+  useEffect(() => {
+    if (user) {
+      fetchInsightsData();
+    }
+  }, [user]);
+
+  const fetchInsightsData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      const [insightsData, patternsData] = await Promise.all([
+        apiService.getFinancialInsights(),
+        apiService.getSpendingPatterns()
+      ]);
+      
+      setInsights(insightsData);
+      setSpendingPatterns(patternsData);
+    } catch (error) {
+      console.error('Error fetching insights:', error);
+      setError('Failed to load financial insights');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Enhanced financial calculations using real data
+  const monthlyIncome = user?.monthlyIncome || 0;
+  const currentSavings = user?.currentSavings || 0;
+  const targetExpenses = user?.targetExpenses || 0;
+  const monthlyDebt = user?.monthlyDebt || 0;
   
   const savingsRate = monthlyIncome ? ((currentSavings / monthlyIncome) * 100).toFixed(1) : 0;
   const expenseRatio = monthlyIncome ? ((targetExpenses / monthlyIncome) * 100).toFixed(1) : 0;
   const debtToIncomeRatio = monthlyIncome ? ((monthlyDebt / monthlyIncome) * 100).toFixed(1) : 0;
   const emergencyFundMonths = monthlyIncome ? (currentSavings / monthlyIncome).toFixed(1) : 0;
   
-  // Additional metrics
-  const creditScore = 742; // Sample data
-  const creditUtilization = 18; // Sample data
-  const netWorthGrowth = 8.5; // Sample data
-  const budgetAdherence = 87; // Sample data
-  const investmentDiversification = 72; // Sample data
+  // Format currency in Indian Rupees
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR'
+    }).format(amount);
+  };
+
+  // Additional metrics - use real data when available
+  const creditScore = insights?.creditScore || 0;
+  const creditUtilization = insights?.creditUtilization || 0;
+  const netWorthGrowth = insights?.netWorthGrowth || 0;
+  const budgetAdherence = insights?.budgetAdherence || 0;
 
   // Enhanced scoring algorithm
   const calculateDetailedHealthScore = () => {
@@ -257,6 +296,128 @@ const FinancialHealthAnalysis = () => {
 
   const recommendations = getRecommendations();
 
+  // Community tips data
+  const communityTips = [
+    {
+      id: 1,
+      title: "50/30/20 Rule",
+      description: "Allocate 50% for needs, 30% for wants, and 20% for savings and debt repayment.",
+      category: "Budgeting",
+      likes: 245,
+      author: "Financial Expert",
+      icon: "💰"
+    },
+    {
+      id: 2,
+      title: "Emergency Fund Priority",
+      description: "Build an emergency fund covering 3-6 months of expenses before investing.",
+      category: "Savings",
+      likes: 189,
+      author: "Community Member",
+      icon: "🛡️"
+    },
+    {
+      id: 3,
+      title: "Track Small Expenses",
+      description: "Small daily expenses like coffee can add up to significant amounts over time.",
+      category: "Spending",
+      likes: 156,
+      author: "Budget Coach",
+      icon: "☕"
+    },
+    {
+      id: 4,
+      title: "Automate Savings",
+      description: "Set up automatic transfers to savings accounts to build wealth consistently.",
+      category: "Automation",
+      likes: 203,
+      author: "Financial Advisor",
+      icon: "🤖"
+    },
+    {
+      id: 5,
+      title: "Review Monthly Subscriptions",
+      description: "Cancel unused subscriptions and negotiate better rates for services you use.",
+      category: "Spending",
+      likes: 178,
+      author: "Money Saver",
+      icon: "📱"
+    },
+    {
+      id: 6,
+      title: "Invest in Index Funds",
+      description: "Low-cost index funds provide diversified exposure to the market with minimal fees.",
+      category: "Investment",
+      likes: 234,
+      author: "Investment Advisor",
+      icon: "📈"
+    }
+  ];
+
+  if (loading) {
+    return (
+      <div className="financial-health-page">
+        <div className="health-header">
+          <div className="header-left">
+            <button className="back-btn" onClick={() => navigate('/dashboard')}>
+              <span style={{ fontSize: '1rem' }}>&#8592;</span>
+            </button>
+            <div className="header-title">
+              <h1>💚 Financial Health Analysis</h1>
+              <p>Loading your financial insights...</p>
+            </div>
+          </div>
+        </div>
+        <div className="health-content">
+          <div className="insight-card full-width" style={{ textAlign: 'center', padding: '3rem' }}>
+            <div className="loading-spinner"></div>
+            <p>Analyzing your financial data...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="financial-health-page">
+        <div className="health-header">
+          <div className="header-left">
+            <button className="back-btn" onClick={() => navigate('/dashboard')}>
+              <span style={{ fontSize: '1rem' }}>&#8592;</span>
+            </button>
+            <div className="header-title">
+              <h1>💚 Financial Health Analysis</h1>
+              <p>Error loading insights</p>
+            </div>
+          </div>
+        </div>
+        <div className="health-content">
+          <div className="insight-card full-width error-card">
+            <div style={{ textAlign: 'center', padding: '2rem' }}>
+              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>⚠️</div>
+              <h3 style={{ color: '#ef4444', marginBottom: '1rem' }}>Unable to Load Insights</h3>
+              <p style={{ color: '#64748b', marginBottom: '2rem' }}>{error}</p>
+              <button 
+                onClick={fetchInsightsData}
+                style={{
+                  background: '#ef4444',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '8px',
+                  padding: '0.75rem 1.5rem',
+                  cursor: 'pointer'
+                }}
+              >
+                🔄 Retry
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="financial-health-page">
       {/* Header */}
@@ -284,8 +445,33 @@ const FinancialHealthAnalysis = () => {
         </div>
       </div>
       <div className="health-content">
-        {/* Overall Score */}
-        <div className="health-score-card">
+        {/* Tab Navigation */}
+        <div className="tab-navigation">
+          <button 
+            className={`tab-btn ${activeTab === 'overview' ? 'active' : ''}`}
+            onClick={() => setActiveTab('overview')}
+          >
+            📊 Overview
+          </button>
+          <button 
+            className={`tab-btn ${activeTab === 'patterns' ? 'active' : ''}`}
+            onClick={() => setActiveTab('patterns')}
+          >
+            📈 Patterns
+          </button>
+          <button 
+            className={`tab-btn ${activeTab === 'community' ? 'active' : ''}`}
+            onClick={() => setActiveTab('community')}
+          >
+            👥 Community Tips
+          </button>
+        </div>
+
+        {/* Overview Tab */}
+        {activeTab === 'overview' && (
+          <>
+            {/* Overall Score */}
+            <div className="health-score-card">
           <div className="score-display">
             <div className="score-circle-large">
               <div className="score-number-large">
@@ -392,11 +578,111 @@ const FinancialHealthAnalysis = () => {
               <p>Track your financial health score progress over time</p>
               <p>View monthly comparisons and improvement patterns</p>
               <button className="placeholder-btn" onClick={() => alert('Feature coming soon!')}>
-                Enable Tracking
+                🚀 Enable Tracking
               </button>
             </div>
           </div>
         </div>
+        </>
+        )}
+
+        {/* Patterns Tab */}
+        {activeTab === 'patterns' && spendingPatterns && (
+          <>
+            {/* Spending by Day of Week */}
+            {spendingPatterns.dayOfWeekSpending && (
+              <div className="insight-card">
+                <h3>📅 Spending by Day of Week</h3>
+                <div className="day-spending-chart">
+                  {spendingPatterns.dayOfWeekSpending.map((day, index) => {
+                    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                    const maxAmount = Math.max(...spendingPatterns.dayOfWeekSpending.map(d => d.totalAmount));
+                    return (
+                      <div key={index} className="day-bar">
+                        <div className="day-label">{dayNames[day.dayOfWeek - 1]}</div>
+                        <div className="day-bar-container">
+                          <div 
+                            className="day-bar-fill"
+                            style={{
+                              height: `${(day.totalAmount / maxAmount) * 100}%`
+                            }}
+                          ></div>
+                        </div>
+                        <div className="day-amount">{formatCurrency(day.totalAmount)}</div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Largest Transactions */}
+            {spendingPatterns.largestTransactions && (
+              <div className="insight-card">
+                <h3>💳 Largest Transactions</h3>
+                <div className="large-transactions-list">
+                  {spendingPatterns.largestTransactions.slice(0, 5).map((transaction, index) => (
+                    <div key={index} className="large-transaction-item">
+                      <div className="transaction-info">
+                        <span className="transaction-title">{transaction.title}</span>
+                        <span className="transaction-category">{transaction.category}</span>
+                      </div>
+                      <div className="transaction-amount">{formatCurrency(transaction.amount)}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Category Distribution */}
+            {spendingPatterns.categoryDistribution && (
+              <div className="insight-card">
+                <h3>🥧 Category Distribution</h3>
+                <div className="category-distribution">
+                  {spendingPatterns.categoryDistribution.slice(0, 6).map((category, index) => (
+                    <div key={index} className="distribution-item">
+                      <div className="distribution-info">
+                        <span className="distribution-category">{category.category}</span>
+                        <span className="distribution-percentage">{parseFloat(category.percentage).toFixed(1)}%</span>
+                      </div>
+                      <div className="distribution-amount">{formatCurrency(category.totalAmount)}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </>
+        )}
+
+        {/* Community Tips Tab */}
+        {activeTab === 'community' && (
+          <div className="insight-card">
+            <h3>👥 Community Financial Tips</h3>
+            <p style={{ color: '#64748b', marginBottom: '2rem' }}>
+              Learn from the community's best financial practices and tips
+            </p>
+            <div className="community-tips-grid">
+              {communityTips.map((tip) => (
+                <div key={tip.id} className="tip-card">
+                  <div className="tip-header">
+                    <div className="tip-icon">{tip.icon}</div>
+                    <div>
+                      <h4>{tip.title}</h4>
+                      <span className="tip-category">{tip.category}</span>
+                    </div>
+                  </div>
+                  <p className="tip-description">{tip.description}</p>
+                  <div className="tip-footer">
+                    <span className="tip-author">by {tip.author}</span>
+                    <div className="tip-likes">
+                      <span>👍 {tip.likes}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
