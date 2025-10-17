@@ -1,5 +1,4 @@
 package com.budgettracker.service;
-
 import com.budgettracker.dto.TransactionRequest;
 import com.budgettracker.dto.TransactionResponse;
 import com.budgettracker.model.Transaction;
@@ -522,4 +521,41 @@ public class TransactionService {
             return basicInsights;
         }
     }
-}
+}    
+    /
+/ Sync user profile with transaction totals
+    public Map<String, Object> syncUserProfileWithTransactions(String username) {
+        try {
+            User user = userRepository.findByUsername(username)
+                    .orElseThrow(() -> new RuntimeException("User not found: " + username));
+            
+            // Calculate totals from transactions
+            BigDecimal totalIncome = transactionRepository.calculateTotalIncome(user);
+            BigDecimal totalExpenses = transactionRepository.calculateTotalExpenses(user);
+            
+            // Ensure values are not null
+            if (totalIncome == null) totalIncome = BigDecimal.ZERO;
+            if (totalExpenses == null) totalExpenses = BigDecimal.ZERO;
+            
+            // Update user profile with calculated totals
+            user.setMonthlyIncome(totalIncome);
+            user.setTargetExpenses(totalExpenses);
+            user.setCurrentSavings(totalIncome.subtract(totalExpenses));
+            
+            userRepository.save(user);
+            
+            Map<String, Object> result = new HashMap<>();
+            result.put("success", true);
+            result.put("message", "Profile synced with transaction totals");
+            result.put("totalIncome", totalIncome);
+            result.put("totalExpenses", totalExpenses);
+            result.put("currentSavings", totalIncome.subtract(totalExpenses));
+            
+            return result;
+        } catch (Exception e) {
+            Map<String, Object> result = new HashMap<>();
+            result.put("success", false);
+            result.put("message", "Failed to sync profile: " + e.getMessage());
+            return result;
+        }
+    }

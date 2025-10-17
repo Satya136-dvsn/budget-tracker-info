@@ -2,6 +2,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useAlert } from '../../hooks/useAlert';
+import './Auth.css';
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
@@ -56,21 +57,21 @@ const SignIn = () => {
             <p>Continue your financial journey with Budget Tracker</p>
             <div className="benefits-list">
               <div className="benefit-item">
-                <i className="fas fa-chart-line"></i>
+                <span style={{fontSize: '1.5rem'}}>📈</span>
                 <div>
                   <b>Track Progress</b>
                   <div style={{fontSize: '0.9rem', color: 'rgba(255,255,255,0.8)'}}>Monitor your financial goals and achievements</div>
                 </div>
               </div>
               <div className="benefit-item">
-                <i className="fas fa-shield-alt"></i>
+                <span style={{fontSize: '1.5rem'}}>🔒</span>
                 <div>
                   <b>Secure & Private</b>
                   <div style={{fontSize: '0.9rem', color: 'rgba(255,255,255,0.8)'}}>Your financial data is encrypted and protected</div>
                 </div>
               </div>
               <div className="benefit-item">
-                <i className="fas fa-mobile-alt"></i>
+                <span style={{fontSize: '1.5rem'}}>📱</span>
                 <div>
                   <b>Access Anywhere</b>
                   <div style={{fontSize: '0.9rem', color: 'rgba(255,255,255,0.8)'}}>Manage your budget on any device, anytime</div>

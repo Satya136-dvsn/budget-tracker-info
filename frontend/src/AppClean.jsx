@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { AlertProvider } from './hooks/useAlert';
 import CleanSidebar from './components/Layout/CleanSidebar';
-import CleanHome from './components/Home/CleanHome';
+import Home from './components/Home/Home';
 import SignIn from './components/Auth/SignIn';
 import SignUp from './components/Auth/SignUp';
 import ForgotPassword from './components/Auth/ForgotPassword';
-import CleanDashboard from './components/Dashboard/CleanDashboard';
+import Dashboard from './components/Dashboard/Dashboard';
 import ProfileNew from './components/Profile/ProfileNew';
 import AdminDashboard from './components/Admin/AdminDashboard';
 import Reports from './components/Reports/Reports';
@@ -16,9 +16,9 @@ import Budget from './components/Budget/Budget';
 import SavingsGoals from './components/SavingsGoals/SavingsGoals';
 import FinancialHealthAnalysis from './components/FinancialHealth/FinancialHealthAnalysis';
 import CleanTrends from './components/Trends/CleanTrends';
-import MonthlySpendingResponsive from './components/Trends/MonthlySpendingResponsive';
+import CleanMonthlySpending from './components/Trends/CleanMonthlySpending';
 import CleanCategoryAnalysis from './components/Trends/CleanCategoryAnalysis';
-import SavingsGrowthResponsive from './components/Trends/SavingsGrowthResponsive';
+import CleanSavingsGrowth from './components/Trends/CleanSavingsGrowth';
 import Export from './components/Export/Export';
 import FinancialInsights from './components/Insights/FinancialInsights';
 import Alert from './components/Common/Alert';
@@ -57,25 +57,19 @@ const PublicRoute = ({ children }) => {
 function AppContent() {
   const { isAuthenticated } = useAuth();
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const location = useLocation();
-  
-  // Check if we're on the home page
-  const isHomePage = location.pathname === '/';
 
   return (
     <div className="app-container">
       <CleanSidebar 
         collapsed={sidebarCollapsed} 
-        onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
+        onToggle={setSidebarCollapsed}
         isAuthenticated={isAuthenticated}
       />
       
-      <main className={isHomePage ? 'main-content-full' : `main-content ${sidebarCollapsed ? 'sidebar-collapsed' : 'sidebar-expanded'}`}>
+      <main className={`main-content ${sidebarCollapsed ? 'sidebar-collapsed' : 'sidebar-expanded'}`}>
         <Alert />
         <Routes>
-          <Route path="/" element={
-            isAuthenticated ? <Navigate to="/dashboard" replace /> : <CleanHome />
-          } />
+          <Route path="/" element={<Home />} />
           
           {/* Auth Routes */}
           <Route path="/signin" element={
@@ -90,7 +84,7 @@ function AppContent() {
           
           {/* Protected Routes */}
           <Route path="/dashboard" element={
-            <ProtectedRoute><CleanDashboard /></ProtectedRoute>
+            <ProtectedRoute><Dashboard /></ProtectedRoute>
           } />
           <Route path="/transactions" element={
             <ProtectedRoute><Transactions /></ProtectedRoute>
@@ -122,7 +116,7 @@ function AppContent() {
           <Route path="/trends/monthly-spending" element={
             <ProtectedRoute>
               <ErrorBoundary>
-                <MonthlySpendingResponsive />
+                <CleanMonthlySpending />
               </ErrorBoundary>
             </ProtectedRoute>
           } />
@@ -136,7 +130,7 @@ function AppContent() {
           <Route path="/trends/savings-growth" element={
             <ProtectedRoute>
               <ErrorBoundary>
-                <SavingsGrowthResponsive />
+                <CleanSavingsGrowth />
               </ErrorBoundary>
             </ProtectedRoute>
           } />
@@ -160,7 +154,7 @@ function AppContent() {
   );
 }
 
-function App() {
+function AppClean() {
   return (
     <AuthProvider>
       <AlertProvider>
@@ -172,4 +166,4 @@ function App() {
   );
 }
 
-export default App;
+export default AppClean;

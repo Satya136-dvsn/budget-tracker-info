@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAlert } from '../../hooks/useAlert';
+import './Auth.css';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -38,32 +39,34 @@ const ForgotPassword = () => {
             
             <div className="benefits-list">
               <div className="benefit-item">
-                <i className="fas fa-shield-alt"></i>
+                <span style={{fontSize: '1.5rem'}}>🔒</span>
                 <div>
-                  <h4>Secure Process</h4>
-                  <p>Your password reset is protected with advanced security</p>
+                  <b>Secure Process</b>
+                  <div style={{fontSize: '0.9rem', color: 'rgba(255,255,255,0.8)'}}>Your password reset is protected with advanced security</div>
                 </div>
               </div>
               <div className="benefit-item">
-                <i className="fas fa-envelope"></i>
+                <span style={{fontSize: '1.5rem'}}>📧</span>
                 <div>
-                  <h4>Email Verification</h4>
-                  <p>We'll send you a secure link to reset your password</p>
+                  <b>Email Verification</b>
+                  <div style={{fontSize: '0.9rem', color: 'rgba(255,255,255,0.8)'}}>We'll send you a secure link to reset your password</div>
                 </div>
               </div>
               <div className="benefit-item">
-                <i className="fas fa-clock"></i>
+                <span style={{fontSize: '1.5rem'}}>⚡</span>
                 <div>
-                  <h4>Quick Recovery</h4>
-                  <p>Get back to managing your budget in just a few minutes</p>
+                  <b>Quick Recovery</b>
+                  <div style={{fontSize: '0.9rem', color: 'rgba(255,255,255,0.8)'}}>Get back to managing your budget in just a few minutes</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div className="auth-right">
-          <div className="form-container">
-            <h2><i className="fas fa-key"></i> Reset Password</h2>
+          <div className="auth-form">
+            <h2>🔑 Reset Password</h2>
+            <p>Enter your email address to receive a password reset link</p>
+            
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label htmlFor="email">Email Address</label>
@@ -80,15 +83,16 @@ const ForgotPassword = () => {
               </div>
               <button 
                 type="submit" 
-                className="btn btn-primary btn-full"
+                className="submit-btn"
                 disabled={loading}
               >
                 {loading ? 'Sending...' : 'Send Reset Link'}
               </button>
             </form>
-            <p className="form-switch">
+            
+            <div className="auth-links">
               Remember your password? <Link to="/signin">Sign In here</Link>
-            </p>
+            </div>
           </div>
         </div>
       </div>

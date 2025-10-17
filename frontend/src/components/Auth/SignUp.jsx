@@ -2,6 +2,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useAlert } from '../../hooks/useAlert';
+import './Auth.css';
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -53,21 +54,21 @@ const SignUp = () => {
             <p>Start your journey to financial freedom today</p>
             <div className="benefits-list">
               <div className="benefit-item">
-                <i className="fas fa-piggy-bank"></i>
+                <span style={{fontSize: '1.5rem'}}>🐷</span>
                 <div>
                   <b>Smart Budgeting</b>
                   <div style={{fontSize: '0.9rem', color: 'rgba(255,255,255,0.8)'}}>Create and manage budgets that work for you</div>
                 </div>
               </div>
               <div className="benefit-item">
-                <i className="fas fa-chart-bar"></i>
+                <span style={{fontSize: '1.5rem'}}>📊</span>
                 <div>
                   <b>Detailed Analytics</b>
                   <div style={{fontSize: '0.9rem', color: 'rgba(255,255,255,0.8)'}}>Understand your spending patterns with insights</div>
                 </div>
               </div>
               <div className="benefit-item">
-                <i className="fas fa-target"></i>
+                <span style={{fontSize: '1.5rem'}}>🎯</span>
                 <div>
                   <b>Goal Tracking</b>
                   <div style={{fontSize: '0.9rem', color: 'rgba(255,255,255,0.8)'}}>Set and achieve your financial goals faster</div>

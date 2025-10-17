@@ -3,11 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useAlert } from '../../hooks/useAlert';
 import { apiService } from '../../services/api';
+import DataMismatchExplainer from '../Common/DataMismatchExplainer';
 import './Transactions.css';
 
 const Transactions = () => {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, loadUserProfile } = useAuth();
   const { showAlert } = useAlert();
   const [transactions, setTransactions] = useState([]);
   const [filteredTransactions, setFilteredTransactions] = useState([]);
@@ -21,6 +22,7 @@ const Transactions = () => {
   const [filterCategory, setFilterCategory] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('date-desc');
+  const [dataMismatchDismissed, setDataMismatchDismissed] = useState(false);
 
   // Form state
   const [transactionForm, setTransactionForm] = useState({
@@ -178,6 +180,7 @@ const Transactions = () => {
 
       setShowModal(false);
       loadTransactions();
+      loadUserProfile(); // Sync user profile with updated transactions
     } catch (error) {
       console.error('Error saving transaction:', error);
       showAlert(`Failed to save transaction: ${error.message}`, 'error');
@@ -196,6 +199,7 @@ const Transactions = () => {
       await apiService.deleteTransaction(id);
       showAlert('Transaction deleted successfully!', 'success');
       loadTransactions();
+      loadUserProfile(); // Sync user profile with updated transactions
     } catch (error) {
       console.error('Error deleting transaction:', error);
       showAlert('Failed to delete transaction', 'error');
@@ -226,17 +230,45 @@ const Transactions = () => {
   const getCategoryOptions = () => {
     const filtered = categories.filter(cat => cat.type === transactionForm.type);
     if (filtered.length > 0) return filtered;
-    // If no categories loaded, fallback to defaults for EXPENSE
-    if (transactionForm.type === 'EXPENSE') return fallbackCategories;
+    
+    // Fallback categories based on transaction type
+    if (transactionForm.type === 'EXPENSE') {
+      return fallbackCategories;
+    } else if (transactionForm.type === 'INCOME') {
+      return [
+        { id: 'ic1', name: 'Salary', type: 'INCOME' },
+        { id: 'ic2', name: 'Freelance', type: 'INCOME' },
+        { id: 'ic3', name: 'Business', type: 'INCOME' },
+        { id: 'ic4', name: 'Investment', type: 'INCOME' },
+        { id: 'ic5', name: 'Rental', type: 'INCOME' },
+        { id: 'ic6', name: 'Gift', type: 'INCOME' },
+        { id: 'ic7', name: 'Other Income', type: 'INCOME' }
+      ];
+    }
     return [];
   };
 
-  // Calculate totals
-  const totalIncome = filteredTransactions
+  // Calculate totals from ALL transactions (not filtered)
+  const totalIncome = transactions
+    .filter(t => t.type === 'INCOME')
+    .reduce((sum, t) => {
+      const amount = typeof t.amount === 'string' ? parseFloat(t.amount) : t.amount;
+      return sum + (amount || 0);
+    }, 0);
+  
+  const totalExpenses = transactions
+    .filter(t => t.type === 'EXPENSE')
+    .reduce((sum, t) => {
+      const amount = typeof t.amount === 'string' ? parseFloat(t.amount) : t.amount;
+      return sum + (amount || 0);
+    }, 0);
+
+  // Calculate filtered totals for display context
+  const filteredIncome = filteredTransactions
     .filter(t => t.type === 'INCOME')
     .reduce((sum, t) => sum + t.amount, 0);
   
-  const totalExpenses = filteredTransactions
+  const filteredExpenses = filteredTransactions
     .filter(t => t.type === 'EXPENSE')
     .reduce((sum, t) => sum + t.amount, 0);
 
@@ -264,24 +296,48 @@ const Transactions = () => {
           </div>
         </div>
         <button className="add-transaction-btn" onClick={openAddModal}>
-          <i className="fas fa-plus"></i> Add Transaction
+          ➕ Add Transaction
         </button>
       </div>
+
+      {/* Data Mismatch Explainer */}
+      {user && !dataMismatchDismissed && (
+        (Math.abs(totalIncome - (user.monthlyIncome || 0)) > 100 || 
+         Math.abs(totalExpenses - (user.targetExpenses || 0)) > 100) && (
+          <DataMismatchExplainer
+            onUpdateProfile={() => navigate('/profile')}
+            onAddTransactions={() => setShowModal(true)}
+            onDismiss={() => setDataMismatchDismissed(true)}
+          />
+        )
+      )}
 
       {/* Summary Cards */}
       <div className="summary-cards">
         <div className="summary-card income">
           <div className="card-icon">📥</div>
           <div className="card-content">
-            <div className="card-label">Total Income</div>
+            <div className="card-label">Transaction Income</div>
             <div className="card-value">{formatCurrency(totalIncome)}</div>
+            {user && user.monthlyIncome && (
+              <div className="card-note">Profile: {formatCurrency(user.monthlyIncome)}</div>
+            )}
+            {(filterType !== 'ALL' || filterCategory || searchQuery) && (
+              <div className="card-note">Filtered: {formatCurrency(filteredIncome)}</div>
+            )}
           </div>
         </div>
         <div className="summary-card expense">
           <div className="card-icon">📤</div>
           <div className="card-content">
-            <div className="card-label">Total Expenses</div>
+            <div className="card-label">Transaction Expenses</div>
             <div className="card-value">{formatCurrency(totalExpenses)}</div>
+            {user && user.targetExpenses && (
+              <div className="card-note">Target: {formatCurrency(user.targetExpenses)}</div>
+            )}
+            {(filterType !== 'ALL' || filterCategory || searchQuery) && (
+              <div className="card-note">Filtered: {formatCurrency(filteredExpenses)}</div>
+            )}
           </div>
         </div>
         <div className="summary-card balance">
@@ -289,6 +345,9 @@ const Transactions = () => {
           <div className="card-content">
             <div className="card-label">Net Balance</div>
             <div className="card-value">{formatCurrency(totalIncome - totalExpenses)}</div>
+            {(filterType !== 'ALL' || filterCategory || searchQuery) && (
+              <div className="card-note">Filtered: {formatCurrency(filteredIncome - filteredExpenses)}</div>
+            )}
           </div>
         </div>
         <div className="summary-card count">
@@ -296,6 +355,9 @@ const Transactions = () => {
           <div className="card-content">
             <div className="card-label">Transactions</div>
             <div className="card-value">{filteredTransactions.length}</div>
+            {(filterType !== 'ALL' || filterCategory || searchQuery) && (
+              <div className="card-note">Total: {transactions.length}</div>
+            )}
           </div>
         </div>
       </div>
@@ -406,14 +468,14 @@ const Transactions = () => {
                         onClick={() => openEditModal(transaction)}
                         title="Edit"
                       >
-                        <i className="fas fa-edit"></i>
+                        ✏️
                       </button>
                       <button
                         className="delete-btn"
                         onClick={() => handleDelete(transaction.id)}
                         title="Delete"
                       >
-                        <i className="fas fa-trash"></i>
+                        🗑️
                       </button>
                     </div>
                   </td>
@@ -425,10 +487,35 @@ const Transactions = () => {
           <div className="no-transactions">
             <span className="empty-icon">📊</span>
             <h3>No transactions found</h3>
-            <p>Try adjusting your filters or add your first transaction</p>
-            <button className="add-transaction-btn" onClick={openAddModal}>
-              <i className="fas fa-plus"></i> Add Transaction
-            </button>
+            <p>
+              {transactions.length === 0 
+                ? "Start by adding your first transaction to track your finances" 
+                : "Try adjusting your filters to see more transactions"
+              }
+            </p>
+            <div className="no-transactions-actions">
+              <button className="add-transaction-btn" onClick={openAddModal}>
+                ➕ Add Transaction
+              </button>
+              {totalIncome === 0 && transactions.length > 0 && (
+                <button 
+                  className="add-income-btn" 
+                  onClick={() => {
+                    setTransactionForm({
+                      title: '',
+                      description: '',
+                      amount: '',
+                      type: 'INCOME',
+                      category: '',
+                      transactionDate: new Date().toISOString().split('T')[0]
+                    });
+                    setShowModal(true);
+                  }}
+                >
+                  💰 Add Income
+                </button>
+              )}
+            </div>
           </div>
         )}
       </div>

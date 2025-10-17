@@ -298,7 +298,7 @@ const Dashboard = () => {
             <h1>Welcome back, {user.username || 'User'}!</h1>
             <p>Here's your complete financial overview</p>
           </div>
-          <div className="dashboard-actions">
+          <div className="dashboard-header-actions">
             <button 
               className="export-btn"
               onClick={() => navigate('/export')}
@@ -306,13 +306,7 @@ const Dashboard = () => {
             >
               📊 Export Data
             </button>
-            <button 
-              className="insights-btn"
-              onClick={() => navigate('/insights')}
-              title="View Financial Insights"
-            >
-              💡 Insights
-            </button>
+
           </div>
         </div>
         
@@ -361,24 +355,21 @@ const Dashboard = () => {
                 onClick={() => setShowExpenseModal(true)}
                 title="Add a new expense transaction"
               >
-                <i className="fas fa-plus"></i>
-                Add Expense
+                ➕ Add Expense
               </button>
               <button 
                 className="action-btn" 
                 onClick={() => setShowGoalModal(true)}
                 title="Set a new savings goal"
               >
-                <i className="fas fa-target"></i>
-                Set Goal
+                🎯 Set Goal
               </button>
               <button 
                 className="action-btn" 
                 onClick={() => navigate('/financial-health')}
                 title="View detailed financial health analysis"
               >
-                <i className="fas fa-chart-line"></i>
-                View Reports
+                📊 View Reports
               </button>
             </div>
           </div>
@@ -464,8 +455,7 @@ const Dashboard = () => {
             <div className="health-breakdown">
               <div className="health-metric">
                 <div className="metric-label">
-                  <i className="fas fa-piggy-bank"></i>
-                  Savings Rate
+                  🐷 Savings Rate
                 </div>
                 <div className="metric-value">{savingsRate}%</div>
                 <div className="metric-bar">
@@ -475,8 +465,7 @@ const Dashboard = () => {
               
               <div className="health-metric">
                 <div className="metric-label">
-                  <i className="fas fa-shield-alt"></i>
-                  Emergency Fund
+                  🛡️ Emergency Fund
                 </div>
                 <div className="metric-value">{emergencyFundMonths} months</div>
                 <div className="metric-bar">
@@ -486,8 +475,7 @@ const Dashboard = () => {
               
               <div className="health-metric">
                 <div className="metric-label">
-                  <i className="fas fa-chart-pie"></i>
-                  Expense Ratio
+                  📊 Expense Ratio
                 </div>
                 <div className="metric-value">{expenseRatio}%</div>
                 <div className="metric-bar">

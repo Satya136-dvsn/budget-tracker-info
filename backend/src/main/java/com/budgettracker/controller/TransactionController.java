@@ -1,5 +1,4 @@
 package com.budgettracker.controller;
-
 import com.budgettracker.dto.TransactionRequest;
 import com.budgettracker.dto.TransactionResponse;
 import com.budgettracker.service.TransactionService;
@@ -300,4 +299,17 @@ public class TransactionController {
             return ResponseEntity.badRequest().body("Error fetching financial insights: " + e.getMessage());
         }
     }
-}
+} 
+   
+    // Sync user profile with transaction totals
+    @PostMapping("/sync-profile")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public ResponseEntity<?> syncUserProfileWithTransactions(@RequestHeader("Authorization") String token) {
+        try {
+            String username = jwtUtil.extractUsername(token.substring(7));
+            Map<String, Object> result = transactionService.syncUserProfileWithTransactions(username);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error syncing profile: " + e.getMessage());
+        }
+    }

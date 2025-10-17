@@ -1,7 +1,10 @@
-﻿import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { apiService } from '../../services/api';
+
+import { calculateFinancialHealthScore, getHealthScoreStatus } from '../../utils/financialHealthCalculator';
+import { formatCurrency } from '../../utils/currencyFormatter';
+import HealthScoreTrends from './HealthScoreTrends';
 import './FinancialHealthAnalysis.css';
 
 const FinancialHealthAnalysis = () => {
@@ -9,36 +12,18 @@ const FinancialHealthAnalysis = () => {
   const { user } = useAuth();
   const [selectedTimeframe, setSelectedTimeframe] = useState('current');
   const [activeTab, setActiveTab] = useState('overview');
-  const [insights, setInsights] = useState(null);
-  const [spendingPatterns, setSpendingPatterns] = useState(null);
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showTrendsModal, setShowTrendsModal] = useState(false);
 
   useEffect(() => {
     if (user) {
-      fetchInsightsData();
+      // No need to fetch data since we're using the centralized calculator
+      setLoading(false);
+      setError(null);
     }
   }, [user]);
-
-  const fetchInsightsData = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      
-      const [insightsData, patternsData] = await Promise.all([
-        apiService.getFinancialInsights(),
-        apiService.getSpendingPatterns()
-      ]);
-      
-      setInsights(insightsData);
-      setSpendingPatterns(patternsData);
-    } catch (error) {
-      console.error('Error fetching insights:', error);
-      setError('Failed to load financial insights');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   // Enhanced financial calculations using real data
   const monthlyIncome = user?.monthlyIncome || 0;
@@ -51,19 +36,9 @@ const FinancialHealthAnalysis = () => {
   const debtToIncomeRatio = monthlyIncome ? ((monthlyDebt / monthlyIncome) * 100).toFixed(1) : 0;
   const emergencyFundMonths = monthlyIncome ? (currentSavings / monthlyIncome).toFixed(1) : 0;
   
-  // Format currency in Indian Rupees
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('en-IN', {
-      style: 'currency',
-      currency: 'INR'
-    }).format(amount);
-  };
 
-  // Additional metrics - use real data when available
-  const creditScore = insights?.creditScore || 0;
-  const creditUtilization = insights?.creditUtilization || 0;
-  const netWorthGrowth = insights?.netWorthGrowth || 0;
-  const budgetAdherence = insights?.budgetAdherence || 0;
+
+
 
   // Enhanced scoring algorithm
   const calculateDetailedHealthScore = () => {
@@ -190,7 +165,7 @@ const FinancialHealthAnalysis = () => {
     };
   };
 
-  const healthAnalysis = calculateDetailedHealthScore();
+  const healthAnalysis = calculateFinancialHealthScore(user, []);
   
   const getScoreColor = (score) => {
     if (score >= 80) return '#10b981';
@@ -206,13 +181,13 @@ const FinancialHealthAnalysis = () => {
     return { text: 'Needs Work', emoji: '⚠️', color: '#ef4444', icon: '⚠️', status: 'Needs Work' };
   };
 
-  const status = getScoreStatus(healthAnalysis.totalScore);
+  const status = getHealthScoreStatus(healthAnalysis.score);
 
   // Improvement recommendations
   const getRecommendations = () => {
     const recommendations = [];
     
-    healthAnalysis.breakdown.forEach(factor => {
+    healthAnalysis.factors.forEach(factor => {
       if (factor.score < 60) {
         switch (factor.name) {
           case 'Savings Rate':
@@ -294,7 +269,30 @@ const FinancialHealthAnalysis = () => {
     return recommendations.slice(0, 4); // Return top 4 recommendations
   };
 
-  const recommendations = getRecommendations();
+  const recommendations = healthAnalysis.recommendations.map((rec, index) => ({
+    priority: index < 2 ? 'high' : 'medium',
+    title: `Recommendation ${index + 1}`,
+    description: rec,
+    action: 'Take action'
+  }));
+
+  const handleRecommendationAction = (recommendation, index) => {
+    // Handle different recommendation actions
+    const recText = recommendation.description.toLowerCase();
+    
+    if (recText.includes('emergency fund') || recText.includes('savings')) {
+      navigate('/savings-goals');
+    } else if (recText.includes('expense') || recText.includes('spending')) {
+      navigate('/transactions');
+    } else if (recText.includes('budget')) {
+      navigate('/budgets');
+    } else if (recText.includes('debt')) {
+      navigate('/transactions');
+    } else {
+      // Default action - show more details
+      alert(`Taking action on: ${recommendation.description}\n\nThis will help improve your financial health score.`);
+    }
+  };
 
   // Community tips data
   const communityTips = [
@@ -475,7 +473,7 @@ const FinancialHealthAnalysis = () => {
           <div className="score-display">
             <div className="score-circle-large">
               <div className="score-number-large">
-                {healthAnalysis.totalScore}
+                {healthAnalysis.score}
               </div>
               <div className="score-label-large">Financial Health Score</div>
             </div>
@@ -515,28 +513,35 @@ const FinancialHealthAnalysis = () => {
         <div className="health-factors">
           <h3>📊 Factor Breakdown</h3>
           <div className="factors-grid">
-            {healthAnalysis.breakdown.map((factor, index) => (
+            {healthAnalysis.factors.map((factor, index) => (
               <div key={index} className="factor-card">
                 <div className="factor-header">
-                  <span className="factor-icon">{factor.icon}</span>
+                  <span className="factor-icon">
+                    {factor.name === 'Savings Rate' ? '💰' :
+                     factor.name === 'Emergency Fund' ? '🛡️' :
+                     factor.name === 'Expense Control' ? '💸' :
+                     factor.name === 'Debt Management' ? '💳' :
+                     factor.name === 'Income Level' ? '📊' :
+                     factor.name === 'Financial Activity' ? '📈' : '📊'}
+                  </span>
                   <div className="factor-info">
                     <h4>{factor.name}</h4>
                     <p>{factor.description}</p>
                   </div>
                   <div className="factor-score" style={{ color: getScoreColor(factor.score) }}>
-                    {factor.score}/100
+                    {factor.score}/{factor.maxScore}
                   </div>
                 </div>
                 <div className="factor-details">
                   <div className="current-vs-target">
-                    <span>Current: <strong>{factor.current}{factor.name === 'Credit Health' ? '' : factor.name.includes('Rate') || factor.name.includes('Control') || factor.name.includes('Growth') || factor.name.includes('Discipline') ? '%' : factor.name.includes('Emergency') ? ' months' : '%'}</strong></span>
-                    <span>Target: <strong>{factor.target}{factor.name === 'Credit Health' ? '+' : factor.name.includes('Rate') || factor.name.includes('Control') || factor.name.includes('Growth') || factor.name.includes('Discipline') ? '%' : factor.name.includes('Emergency') ? ' months' : '%'}</strong></span>
+                    <span>Current: <strong>{factor.value}</strong></span>
+                    <span>Score: <strong>{factor.score}/{factor.maxScore}</strong></span>
                   </div>
                   <div className="factor-progress">
                     <div 
                       className="progress-fill" 
                       style={{ 
-                        width: `${factor.score}%`,
+                        width: `${(factor.score / factor.maxScore) * 100}%`,
                         backgroundColor: getScoreColor(factor.score)
                       }}
                     ></div>
@@ -560,7 +565,10 @@ const FinancialHealthAnalysis = () => {
                   <h4>{rec.title}</h4>
                 </div>
                 <p>{rec.description}</p>
-                <button className="rec-action-btn">
+                <button 
+                  className="rec-action-btn"
+                  onClick={() => handleRecommendationAction(rec, index)}
+                >
                   {rec.action}
                 </button>
               </div>
@@ -577,8 +585,30 @@ const FinancialHealthAnalysis = () => {
               <h4>Historical Trends Coming Soon</h4>
               <p>Track your financial health score progress over time</p>
               <p>View monthly comparisons and improvement patterns</p>
-              <button className="placeholder-btn" onClick={() => alert('Feature coming soon!')}>
-                🚀 Enable Tracking
+              <button 
+                className="placeholder-btn" 
+                onClick={() => navigate('/trends')}
+                style={{
+                  background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                  color: 'white',
+                  border: 'none',
+                  padding: '0.75rem 1.5rem',
+                  borderRadius: '12px',
+                  fontSize: '0.9rem',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.transform = 'translateY(-2px)';
+                  e.target.style.boxShadow = '0 8px 25px rgba(16, 185, 129, 0.3)';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.transform = 'translateY(0)';
+                  e.target.style.boxShadow = 'none';
+                }}
+              >
+                📈 View Trends
               </button>
             </div>
           </div>
@@ -587,71 +617,33 @@ const FinancialHealthAnalysis = () => {
         )}
 
         {/* Patterns Tab */}
-        {activeTab === 'patterns' && spendingPatterns && (
-          <>
-            {/* Spending by Day of Week */}
-            {spendingPatterns.dayOfWeekSpending && (
-              <div className="insight-card">
-                <h3>📅 Spending by Day of Week</h3>
-                <div className="day-spending-chart">
-                  {spendingPatterns.dayOfWeekSpending.map((day, index) => {
-                    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-                    const maxAmount = Math.max(...spendingPatterns.dayOfWeekSpending.map(d => d.totalAmount));
-                    return (
-                      <div key={index} className="day-bar">
-                        <div className="day-label">{dayNames[day.dayOfWeek - 1]}</div>
-                        <div className="day-bar-container">
-                          <div 
-                            className="day-bar-fill"
-                            style={{
-                              height: `${(day.totalAmount / maxAmount) * 100}%`
-                            }}
-                          ></div>
-                        </div>
-                        <div className="day-amount">{formatCurrency(day.totalAmount)}</div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-
-            {/* Largest Transactions */}
-            {spendingPatterns.largestTransactions && (
-              <div className="insight-card">
-                <h3>💳 Largest Transactions</h3>
-                <div className="large-transactions-list">
-                  {spendingPatterns.largestTransactions.slice(0, 5).map((transaction, index) => (
-                    <div key={index} className="large-transaction-item">
-                      <div className="transaction-info">
-                        <span className="transaction-title">{transaction.title}</span>
-                        <span className="transaction-category">{transaction.category}</span>
-                      </div>
-                      <div className="transaction-amount">{formatCurrency(transaction.amount)}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Category Distribution */}
-            {spendingPatterns.categoryDistribution && (
-              <div className="insight-card">
-                <h3>🥧 Category Distribution</h3>
-                <div className="category-distribution">
-                  {spendingPatterns.categoryDistribution.slice(0, 6).map((category, index) => (
-                    <div key={index} className="distribution-item">
-                      <div className="distribution-info">
-                        <span className="distribution-category">{category.category}</span>
-                        <span className="distribution-percentage">{parseFloat(category.percentage).toFixed(1)}%</span>
-                      </div>
-                      <div className="distribution-amount">{formatCurrency(category.totalAmount)}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </>
+        {activeTab === 'patterns' && (
+          <div className="insight-card">
+            <div style={{ textAlign: 'center', padding: '3rem' }}>
+              <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>📊</div>
+              <h3 style={{ color: '#64748b', marginBottom: '1rem' }}>Spending Patterns</h3>
+              <p style={{ color: '#64748b', marginBottom: '2rem' }}>
+                Detailed spending patterns and analytics will be available here. 
+                For now, check out the Analytics section for spending trends.
+              </p>
+              <button 
+                onClick={() => navigate('/trends')}
+                style={{
+                  background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '12px',
+                  padding: '0.75rem 1.5rem',
+                  fontSize: '1rem',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s'
+                }}
+              >
+                View Analytics
+              </button>
+            </div>
+          </div>
         )}
 
         {/* Community Tips Tab */}
@@ -684,6 +676,14 @@ const FinancialHealthAnalysis = () => {
           </div>
         )}
       </div>
+      
+      {/* Health Score Trends Modal */}
+      {showTrendsModal && (
+        <HealthScoreTrends 
+          user={user} 
+          onClose={() => setShowTrendsModal(false)} 
+        />
+      )}
     </div>
   );
 };
