@@ -254,13 +254,24 @@
   padding: 0.6rem 0.8rem;
   cursor: pointer;
   color: #475569;
-  font-size: 1.1rem;
+  font-size: 0.85rem;
   border-radius: 10px;
   transition: all 0.3s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 0.4rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.btn-icon i {
+  font-size: 1rem;
+}
+
+.btn-icon span {
+  font-size: 0.8rem;
 }
 
 .btn-icon:hover {

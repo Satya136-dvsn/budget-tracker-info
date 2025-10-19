@@ -177,9 +177,24 @@ const Dashboard = () => {
 
   const handleSetGoal = async (e) => {
     e.preventDefault();
+    
+    // Validate form
+    if (!goalForm.title || !goalForm.targetAmount) {
+      showAlert('Please fill in goal title and target amount', 'error');
+      return;
+    }
+
     try {
-      // API call would go here
-      showAlert('Goal set successfully!', 'success');
+      const goalData = {
+        name: goalForm.title,
+        description: `Goal created from dashboard quick action`,
+        targetAmount: parseFloat(goalForm.targetAmount),
+        targetDate: goalForm.deadline || null
+      };
+
+      await apiService.createSavingsGoal(goalData);
+      showAlert('Goal created successfully!', 'success');
+      
       setShowGoalModal(false);
       setGoalForm({
         title: '',
@@ -189,7 +204,7 @@ const Dashboard = () => {
       });
     } catch (err) {
       console.error('Error setting goal:', err);
-      showAlert('Failed to set goal', 'error');
+      showAlert(`Failed to create goal: ${err.message || 'Unknown error'}`, 'error');
     }
   };
 

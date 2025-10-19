@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAlert } from '../../hooks/useAlert';
 import { apiService } from '../../services/api';
 import { AdminOnly } from '../../utils/RoleBasedAccess';
+import ForgotPasswordModal from '../Common/ForgotPasswordModal';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -11,6 +12,8 @@ const AdminDashboard = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [resetPasswordUser, setResetPasswordUser] = useState(null);
   useEffect(() => {
     loadAdminData();
   }, []);
@@ -185,11 +188,33 @@ const AdminDashboard = () => {
                     <span>₹{selectedUser.targetExpenses?.toLocaleString() || 'Not set'}</span>
                   </div>
                 </div>
+                
+                <div className="user-actions">
+                  <button 
+                    className="reset-password-btn"
+                    onClick={() => {
+                      setResetPasswordUser(selectedUser);
+                      setShowForgotPassword(true);
+                    }}
+                  >
+                    🔐 Reset User Password
+                  </button>
+                </div>
               </div>
             )}
           </div>
         </div>
       </div>
+      
+      <ForgotPasswordModal
+        isOpen={showForgotPassword}
+        onClose={() => {
+          setShowForgotPassword(false);
+          setResetPasswordUser(null);
+        }}
+        userEmail={resetPasswordUser?.email}
+        isAdminMode={true}
+      />
     </AdminOnly>
   );
 };

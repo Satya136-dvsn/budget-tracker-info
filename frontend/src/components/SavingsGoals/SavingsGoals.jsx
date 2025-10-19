@@ -293,6 +293,7 @@ const SavingsGoals = () => {
                         title="Add Funds"
                       >
                         <i className="fas fa-plus-circle"></i>
+                        <span>Add</span>
                       </button>
                       <button 
                         className="btn-icon" 
@@ -300,6 +301,7 @@ const SavingsGoals = () => {
                         title="Withdraw"
                       >
                         <i className="fas fa-minus-circle"></i>
+                        <span>Withdraw</span>
                       </button>
                       <button 
                         className="btn-icon" 
@@ -307,6 +309,7 @@ const SavingsGoals = () => {
                         title="Mark Complete"
                       >
                         <i className="fas fa-check-circle"></i>
+                        <span>Complete</span>
                       </button>
                     </>
                   )}
@@ -317,6 +320,7 @@ const SavingsGoals = () => {
                       title="Reopen Goal"
                     >
                       <i className="fas fa-redo"></i>
+                      <span>Reopen</span>
                     </button>
                   )}
                   <button 
@@ -325,6 +329,7 @@ const SavingsGoals = () => {
                     title="Edit"
                   >
                     <i className="fas fa-edit"></i>
+                    <span>Edit</span>
                   </button>
                   <button 
                     className="btn-icon delete" 
@@ -332,6 +337,7 @@ const SavingsGoals = () => {
                     title="Delete"
                   >
                     <i className="fas fa-trash"></i>
+                    <span>Delete</span>
                   </button>
                 </div>
               </div>

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { apiService } from '../../services/api';
 import { useAlert } from '../../hooks/useAlert';
+import { useAuth } from '../../contexts/AuthContext';
 import './Budget.css';
 
 const Budget = () => {
+  const { user } = useAuth();
   const [budgets, setBudgets] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -153,7 +155,7 @@ const Budget = () => {
         <select 
           value={selectedMonth} 
           onChange={(e) => setSelectedMonth(parseInt(e.target.value))}
-          className="form-control"
+          className="professional-dropdown"
         >
           {months.map((month, index) => (
             <option key={index} value={index + 1}>{month}</option>
@@ -162,13 +164,40 @@ const Budget = () => {
         <select 
           value={selectedYear} 
           onChange={(e) => setSelectedYear(parseInt(e.target.value))}
-          className="form-control"
+          className="professional-dropdown"
         >
           {[2024, 2025, 2026].map(year => (
             <option key={year} value={year}>{year}</option>
           ))}
         </select>
       </div>
+
+      {/* Profile Integration Section */}
+      {user && (
+        <div className="profile-integration">
+          <h3>📊 Profile Integration</h3>
+          <div className="profile-budget-comparison">
+            <div className="comparison-item">
+              <label>Monthly Income (Profile):</label>
+              <span className="profile-value">₹{user.monthlyIncome?.toLocaleString('en-IN') || '0'}</span>
+            </div>
+            <div className="comparison-item">
+              <label>Target Expenses (Profile):</label>
+              <span className="profile-value">₹{user.targetExpenses?.toLocaleString('en-IN') || '0'}</span>
+            </div>
+            <div className="comparison-item">
+              <label>Total Budget (Current):</label>
+              <span className="budget-value">₹{calculateTotalBudget().toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}</span>
+            </div>
+            {user.targetExpenses && calculateTotalBudget() !== user.targetExpenses && (
+              <div className="budget-mismatch-warning">
+                ⚠️ Your total budget (₹{calculateTotalBudget().toLocaleString('en-IN')}) doesn't match your profile target expenses (₹{user.targetExpenses.toLocaleString('en-IN')}). 
+                Consider updating your profile or adjusting your budgets.
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Summary Cards */}
       <div className="budget-summary">

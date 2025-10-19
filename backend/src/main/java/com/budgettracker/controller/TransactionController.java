@@ -299,8 +299,7 @@ public class TransactionController {
             return ResponseEntity.badRequest().body("Error fetching financial insights: " + e.getMessage());
         }
     }
-} 
-   
+
     // Sync user profile with transaction totals
     @PostMapping("/sync-profile")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
@@ -313,3 +312,4 @@ public class TransactionController {
             return ResponseEntity.badRequest().body("Error syncing profile: " + e.getMessage());
         }
     }
+}

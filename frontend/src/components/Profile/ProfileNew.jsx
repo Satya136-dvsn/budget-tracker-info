@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useAlert } from '../../hooks/useAlert';
 import { apiService } from '../../services/api';
+import ForgotPasswordModal from '../Common/ForgotPasswordModal';
 import './ProfileNew.css';
 
 const ProfileNew = () => {
   const { user, updateUser } = useAuth();
   const { showAlert } = useAlert();
   const [loading, setLoading] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [formData, setFormData] = useState({
     monthlyIncome: '',
     currentSavings: '',
@@ -106,6 +108,16 @@ const ProfileNew = () => {
                 </div>
               </div>
             </div>
+            
+            <div className="account-actions">
+              <button 
+                type="button"
+                className="forgot-password-btn"
+                onClick={() => setShowForgotPassword(true)}
+              >
+                🔐 Reset Password
+              </button>
+            </div>
           </div>
 
           {/* Financial Profile Section */}
@@ -171,6 +183,12 @@ const ProfileNew = () => {
           </div>
         </div>
       </div>
+      
+      <ForgotPasswordModal
+        isOpen={showForgotPassword}
+        onClose={() => setShowForgotPassword(false)}
+        userEmail={user?.email}
+      />
     </div>
   );
 };

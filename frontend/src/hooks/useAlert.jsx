@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
+import AnimatedNotification from '../components/Common/AnimatedNotification';
 
 const AlertContext = createContext();
 
@@ -36,6 +37,10 @@ export const AlertProvider = ({ children }) => {
   return (
     <AlertContext.Provider value={value}>
       {children}
+      <AnimatedNotification 
+        alert={alert} 
+        onClose={hideAlert}
+      />
     </AlertContext.Provider>
   );
 };

@@ -56,9 +56,14 @@ public class ExportService {
                 .setTextAlignment(TextAlignment.CENTER));
 
         // Add date range
-        String dateRange = String.format("Period: %s to %s", 
-                startDate.format(DateTimeFormatter.ofPattern("MMM dd, yyyy")),
-                endDate.format(DateTimeFormatter.ofPattern("MMM dd, yyyy")));
+        String dateRange;
+        if (startDate != null && endDate != null) {
+            dateRange = String.format("Period: %s to %s", 
+                    startDate.format(DateTimeFormatter.ofPattern("MMM dd, yyyy")),
+                    endDate.format(DateTimeFormatter.ofPattern("MMM dd, yyyy")));
+        } else {
+            dateRange = "Period: All Time";
+        }
         document.add(new Paragraph(dateRange)
                 .setFontSize(12)
                 .setTextAlignment(TextAlignment.CENTER)
@@ -164,11 +169,11 @@ public class ExportService {
                 .setWidth(UnitValue.createPercentValue(100));
 
         summaryTable.addCell(new Cell().add(new Paragraph("Total Income:")).setBold());
-        summaryTable.addCell(new Cell().add(new Paragraph("$" + totalIncome.toString())));
+        summaryTable.addCell(new Cell().add(new Paragraph("₹" + totalIncome.toString())));
         summaryTable.addCell(new Cell().add(new Paragraph("Total Expenses:")).setBold());
-        summaryTable.addCell(new Cell().add(new Paragraph("$" + totalExpenses.toString())));
+        summaryTable.addCell(new Cell().add(new Paragraph("₹" + totalExpenses.toString())));
         summaryTable.addCell(new Cell().add(new Paragraph("Net Balance:")).setBold());
-        summaryTable.addCell(new Cell().add(new Paragraph("$" + balance.toString())));
+        summaryTable.addCell(new Cell().add(new Paragraph("₹" + balance.toString())));
         summaryTable.addCell(new Cell().add(new Paragraph("Total Transactions:")).setBold());
         summaryTable.addCell(new Cell().add(new Paragraph(transactionCount.toString())));
 
@@ -202,7 +207,7 @@ public class ExportService {
             table.addCell(new Cell().add(new Paragraph(transaction.getTitle())));
             table.addCell(new Cell().add(new Paragraph(transaction.getCategory())));
             table.addCell(new Cell().add(new Paragraph(transaction.getType().toString())));
-            table.addCell(new Cell().add(new Paragraph("$" + transaction.getAmount().toString())));
+            table.addCell(new Cell().add(new Paragraph("₹" + transaction.getAmount().toString())));
         }
 
         document.add(table);
@@ -229,7 +234,7 @@ public class ExportService {
 
         for (Map<String, Object> item : breakdown) {
             table.addCell(new Cell().add(new Paragraph(item.get("category").toString())));
-            table.addCell(new Cell().add(new Paragraph("$" + item.get("totalAmount").toString())));
+            table.addCell(new Cell().add(new Paragraph("₹" + item.get("totalAmount").toString())));
         }
 
         document.add(table);
@@ -245,11 +250,11 @@ public class ExportService {
                 .setWidth(UnitValue.createPercentValue(100));
 
         table.addCell(new Cell().add(new Paragraph("Total Income:")).setBold());
-        table.addCell(new Cell().add(new Paragraph("$" + summary.get("totalIncome").toString())));
+        table.addCell(new Cell().add(new Paragraph("₹" + summary.get("totalIncome").toString())));
         table.addCell(new Cell().add(new Paragraph("Total Expenses:")).setBold());
-        table.addCell(new Cell().add(new Paragraph("$" + summary.get("totalExpenses").toString())));
+        table.addCell(new Cell().add(new Paragraph("₹" + summary.get("totalExpenses").toString())));
         table.addCell(new Cell().add(new Paragraph("Balance:")).setBold());
-        table.addCell(new Cell().add(new Paragraph("$" + summary.get("balance").toString())));
+        table.addCell(new Cell().add(new Paragraph("₹" + summary.get("balance").toString())));
         table.addCell(new Cell().add(new Paragraph("Transaction Count:")).setBold());
         table.addCell(new Cell().add(new Paragraph(summary.get("transactionCount").toString())));
 
@@ -270,7 +275,7 @@ public class ExportService {
 
         for (Map<String, Object> item : breakdown) {
             table.addCell(new Cell().add(new Paragraph(item.get("category").toString())));
-            table.addCell(new Cell().add(new Paragraph("$" + item.get("totalAmount").toString())));
+            table.addCell(new Cell().add(new Paragraph("₹" + item.get("totalAmount").toString())));
         }
 
         document.add(table);
@@ -297,9 +302,9 @@ public class ExportService {
             BigDecimal net = income.subtract(expenses);
 
             table.addCell(new Cell().add(new Paragraph(month)));
-            table.addCell(new Cell().add(new Paragraph("$" + income.toString())));
-            table.addCell(new Cell().add(new Paragraph("$" + expenses.toString())));
-            table.addCell(new Cell().add(new Paragraph("$" + net.toString())));
+            table.addCell(new Cell().add(new Paragraph("₹" + income.toString())));
+            table.addCell(new Cell().add(new Paragraph("₹" + expenses.toString())));
+            table.addCell(new Cell().add(new Paragraph("₹" + net.toString())));
         }
 
         document.add(table);
