@@ -1,0 +1,117 @@
+/* Loading Spinner Styles */
+.spinner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.loading-spinner {
+  border: 3px solid #f3f4f6;
+  border-radius: 50%;
+  border-top: 3px solid #10b981;
+  animation: spin 1s linear infinite;
+}
+
+.spinner-small {
+  width: 20px;
+  height: 20px;
+  border-width: 2px;
+}
+
+.spinner-medium {
+  width: 40px;
+  height: 40px;
+  border-width: 3px;
+}
+
+.spinner-large {
+  width: 60px;
+  height: 60px;
+  border-width: 4px;
+}
+
+.spinner-message {
+  color: #64748b;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin: 0;
+  text-align: center;
+}
+
+.spinner-fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Pulse animation for skeleton loading */
+.skeleton-pulse {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Skeleton loading elements */
+.skeleton-text {
+  background: #e5e7eb;
+  border-radius: 4px;
+  height: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.skeleton-text.wide {
+  width: 100%;
+}
+
+.skeleton-text.medium {
+  width: 75%;
+}
+
+.skeleton-text.narrow {
+  width: 50%;
+}
+
+.skeleton-card {
+  background: #f9fafb;
+  border-radius: 8px;
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+}
+
+.skeleton-avatar {
+  background: #e5e7eb;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
+.skeleton-button {
+  background: #e5e7eb;
+  border-radius: 6px;
+  height: 2.5rem;
+  width: 100px;
+}

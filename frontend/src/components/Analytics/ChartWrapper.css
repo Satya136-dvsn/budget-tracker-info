@@ -1,0 +1,157 @@
+/* Chart Wrapper Styles */
+.chart-wrapper {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 1.25rem;
+  margin-bottom: 0;
+  border: 1px solid #e5e7eb;
+  transition: box-shadow 0.2s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-wrapper:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.chart-header {
+  margin-bottom: 0.875rem;
+  padding-bottom: 0.625rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.chart-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.chart-content {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  background: #f9fafb;
+  border-radius: 8px;
+  border: 2px dashed #d1d5db;
+}
+
+.chart-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  background: #fef2f2;
+  border-radius: 8px;
+  border: 2px dashed #fecaca;
+  text-align: center;
+  padding: 2rem;
+}
+
+.error-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.error-message {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #dc2626;
+  margin: 0 0 0.5rem 0;
+}
+
+.error-details {
+  font-size: 0.875rem;
+  color: #7f1d1d;
+  margin: 0 0 1.5rem 0;
+  max-width: 400px;
+  line-height: 1.5;
+}
+
+.retry-button {
+  background: #dc2626;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: background-color 0.2s ease;
+}
+
+.retry-button:hover {
+  background: #b91c1c;
+}
+
+.chart-legend-container {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #f3f4f6;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .chart-wrapper {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .chart-title {
+    font-size: 1.125rem;
+  }
+  
+  .chart-content {
+    min-height: 250px;
+  }
+  
+  .chart-loading,
+  .chart-error {
+    height: 250px;
+  }
+}
+
+@media (max-width: 480px) {
+  .chart-wrapper {
+    padding: 0.75rem;
+  }
+  
+  .chart-content {
+    min-height: 200px;
+  }
+  
+  .chart-loading,
+  .chart-error {
+    height: 200px;
+    padding: 1rem;
+  }
+  
+  .error-icon {
+    font-size: 2rem;
+  }
+  
+  .error-message {
+    font-size: 1rem;
+  }
+  
+  .error-details {
+    font-size: 0.8rem;
+  }
+}
