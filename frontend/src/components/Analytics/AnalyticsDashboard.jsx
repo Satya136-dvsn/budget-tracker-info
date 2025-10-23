@@ -334,11 +334,14 @@ const AnalyticsDashboard = () => {
           {/* Additional Filters Section */}
           <div className="dashboard-section full-width">
             <ChartWrapper
-              title="Advanced Filters"
+              title="Advanced Filters & Controls"
               isLoading={false}
               error={null}
               className="filters-card"
             >
+              <div className="filters-explanation">
+                <p>Use these controls to customize your analytics view and analyze specific time periods or budget scenarios:</p>
+              </div>
               <div className="advanced-filters">
                 <div className="filter-group">
                   <label htmlFor="date-range-start">Date Range:</label>

@@ -134,6 +134,12 @@
   position: relative;
   width: 120px;
   height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  flex-shrink: 0;
 }
 
 .score-progress {
@@ -156,18 +162,24 @@
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 2;
 }
 
 .score-number {
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: 1.8rem;
+  font-weight: 800;
   color: #1f2937;
+  line-height: 1;
+  margin: 0;
 }
 
 .score-label {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: #64748b;
   font-weight: 500;
+  margin-top: 0.25rem;
+  text-align: center;
 }
 
 .score-details {

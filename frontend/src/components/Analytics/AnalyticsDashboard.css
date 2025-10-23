@@ -70,7 +70,7 @@
 .dashboard-section.half-width {
   flex: 1;
   min-width: 0;
-  min-height: 420px;
+  min-height: 450px;
 }
 
 .dashboard-row {
@@ -155,7 +155,8 @@
 
 .score-circle {
   display: flex;
-  align-items: baseline;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
   width: 120px;
   height: 120px;
@@ -164,15 +165,23 @@
   color: white;
   font-weight: 700;
   position: relative;
+  flex-shrink: 0;
 }
 
 .score-number {
-  font-size: 2.5rem;
+  font-size: 2.2rem;
+  font-weight: 800;
+  line-height: 1;
+  margin: 0;
+  color: white;
 }
 
 .score-label {
-  font-size: 1rem;
-  opacity: 0.8;
+  font-size: 0.7rem;
+  opacity: 0.9;
+  margin-top: 0.25rem;
+  text-align: center;
+  font-weight: 600;
 }
 
 .score-trend {
@@ -459,6 +468,19 @@
   border: 1px solid #e2e8f0;
 }
 
+.filters-explanation {
+  padding: 0 1rem 0.5rem 1rem;
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 1rem;
+}
+
+.filters-explanation p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
 .advanced-filters {
   display: flex;
   flex-wrap: wrap;
@@ -626,7 +648,7 @@
   
   .dashboard-section.half-width {
     width: 100%;
-    min-height: 380px;
+    min-height: 350px;
   }
   
   .dashboard-content {
@@ -658,7 +680,7 @@
   }
   
   .dashboard-section.half-width {
-    min-height: 320px;
+    min-height: 380px;
   }
 }
   

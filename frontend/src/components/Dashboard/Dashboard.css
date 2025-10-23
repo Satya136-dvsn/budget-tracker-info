@@ -763,24 +763,27 @@ select option:checked {
     width: 120px;
     height: 120px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
     border: 4px solid #e2e8f0;
     position: relative;
     flex-shrink: 0;
+    color: white;
 }
 
 .score-number {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     font-weight: 800;
     line-height: 1;
     margin: 0;
+    color: white;
 }
 
 .score-label {
-    font-size: 0.75rem;
-    color: #64748b;
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.9);
     margin-top: 0.25rem;
     text-align: center;
+    font-weight: 600;
 }
 
 .health-status {
@@ -1365,14 +1368,15 @@ Ensure action buttons are always visible */
 .mini-chart-container {
     background: white;
     border-radius: 12px;
-    padding: 1.25rem;
+    padding: 1rem;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
     border: 1px solid #e2e8f0;
     transition: all 0.3s ease;
-    min-height: 320px;
+    min-height: 380px;
     display: flex;
     flex-direction: column;
     height: 100%;
+    overflow: hidden;
 }
 
 .mini-chart-container:hover {
@@ -1420,11 +1424,11 @@ Ensure action buttons are always visible */
 .mini-chart-wrapper {
     position: relative;
     width: 100%;
-    height: 260px;
+    height: 300px;
     overflow: hidden;
     flex: 1;
     display: flex;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
 }
 
@@ -1448,8 +1452,11 @@ Ensure action buttons are always visible */
 }
 
 .dashboard-mini-chart .chart-content {
-    min-height: 250px;
-    height: 250px;
+    min-height: 300px;
+    height: 300px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 .dashboard-mini-chart .chart-header {
@@ -1459,7 +1466,7 @@ Ensure action buttons are always visible */
 
 .dashboard-mini-chart .chart-loading,
 .dashboard-mini-chart .chart-error {
-    height: 250px;
+    height: 300px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1496,6 +1503,35 @@ Ensure action buttons are always visible */
     height: auto !important;
 }
 
+/* Ensure all chart containers have proper overflow handling */
+.chart-wrapper,
+.mini-chart-container,
+.category-chart-container,
+.budget-chart-container,
+.savings-chart-container {
+    overflow: hidden;
+}
+
+/* Fix any canvas sizing issues */
+canvas {
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+/* Specific chart container improvements */
+.dashboard-mini-chart .recharts-wrapper,
+.dashboard-mini-chart .recharts-surface {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Ensure proper chart sizing */
+.dashboard-mini-chart .recharts-responsive-container {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 280px !important;
+}
+
 /* Fix any potential overflow issues */
 .mini-chart-container * {
     box-sizing: border-box;
@@ -1517,6 +1553,14 @@ Ensure action buttons are always visible */
         grid-template-columns: 1fr;
         gap: 1.25rem;
         margin: 1.75rem 0;
+    }
+    
+    .mini-chart-container {
+        min-height: 360px;
+    }
+    
+    .mini-chart-wrapper {
+        height: 280px;
     }
 }
 
@@ -1540,7 +1584,7 @@ Ensure action buttons are always visible */
 
     .mini-chart-container {
         padding: 1rem;
-        min-height: 260px;
+        min-height: 320px;
     }
 
     .mini-chart-header {
@@ -1556,7 +1600,12 @@ Ensure action buttons are always visible */
     }
 
     .mini-chart-wrapper {
-        height: 200px;
+        height: 240px;
+    }
+    
+    .dashboard-mini-chart .chart-content {
+        min-height: 240px;
+        height: 240px;
     }
 
     .view-full-btn {

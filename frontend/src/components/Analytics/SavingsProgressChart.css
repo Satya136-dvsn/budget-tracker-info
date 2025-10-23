@@ -40,18 +40,21 @@
 .savings-progress-chart .savings-chart-container {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
   height: 100%;
+  min-height: 350px;
 }
 
 .savings-progress-chart .chart-section {
   flex: 1;
-  min-height: 300px;
+  min-height: 220px;
+  height: 220px;
 }
 
 .savings-progress-chart .goals-summary {
   border-top: 1px solid #e5e7eb;
-  padding-top: 1.5rem;
+  padding-top: 1rem;
+  flex-shrink: 0;
 }
 
 .savings-progress-chart .summary-header {
@@ -79,8 +82,8 @@
 .savings-progress-chart .goals-list {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  max-height: 300px;
+  gap: 0.75rem;
+  max-height: 200px;
   overflow-y: auto;
 }
 
