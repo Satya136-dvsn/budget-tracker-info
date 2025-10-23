@@ -70,12 +70,12 @@
 .dashboard-section.half-width {
   flex: 1;
   min-width: 0;
-  min-height: 450px;
+  min-height: 480px;
 }
 
 .dashboard-row {
   display: flex;
-  gap: 1.5rem;
+  gap: 1.75rem;
   width: 100%;
   align-items: stretch;
 }
@@ -149,8 +149,9 @@
 .score-display {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 1rem;
+  justify-content: flex-start;
+  gap: 2rem;
+  padding: 1rem 0;
 }
 
 .score-circle {
@@ -643,25 +644,30 @@
 @media (max-width: 1024px) {
   .dashboard-row {
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 1.5rem;
   }
   
   .dashboard-section.half-width {
     width: 100%;
-    min-height: 350px;
+    min-height: 400px;
   }
   
   .dashboard-content {
-    gap: 1.5rem;
+    gap: 1.75rem;
   }
   
   .advanced-filters {
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 1.5rem;
   }
   
   .filter-group {
     min-width: auto;
+  }
+  
+  .score-display {
+    justify-content: center;
+    gap: 1.5rem;
   }
 }
 
@@ -671,8 +677,15 @@
   }
   
   .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
     margin-bottom: 1.5rem;
     padding-bottom: 1rem;
+  }
+  
+  .dashboard-header h1 {
+    font-size: 1.5rem;
   }
   
   .dashboard-content {
@@ -682,21 +695,13 @@
   .dashboard-section.half-width {
     min-height: 380px;
   }
-}
   
-  .dashboard-header {
+  .score-display {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     gap: 1rem;
   }
-  
-  .dashboard-header h1 {
-    font-size: 1.5rem;
-  }
-  
-  .dashboard-content {
-    gap: 1rem;
-  }
+}
   
   .summary-stats {
     grid-template-columns: 1fr;
