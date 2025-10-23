@@ -100,6 +100,8 @@ const BudgetVsActualChart = ({
 
   const chartOptions = {
     ...defaultChartOptions,
+    responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       ...defaultChartOptions.plugins,
       title: {
@@ -328,7 +330,7 @@ const BudgetVsActualChart = ({
           </div>
           
           <div className="chart-section">
-            <div style={{ position: 'relative', height: '300px' }}>
+            <div style={{ position: 'relative', height: '100%', width: '100%' }}>
               <Bar data={chartData} options={chartOptions} />
             </div>
           </div>

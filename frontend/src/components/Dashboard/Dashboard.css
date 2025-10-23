@@ -1532,6 +1532,25 @@ canvas {
     min-height: 280px !important;
 }
 
+/* Chart.js specific fixes */
+.dashboard-mini-chart canvas {
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 280px !important;
+}
+
+/* Ensure chart containers have proper dimensions */
+.mini-chart-wrapper > div {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Fix for Chart.js responsive container */
+.dashboard-mini-chart .chartjs-render-monitor {
+    width: 100% !important;
+    height: 100% !important;
+}
+
 /* Fix any potential overflow issues */
 .mini-chart-container * {
     box-sizing: border-box;

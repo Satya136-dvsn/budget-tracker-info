@@ -172,6 +172,8 @@ const SavingsProgressChart = ({
     if (viewMode === 'progress') {
       return {
         ...defaultChartOptions,
+        responsive: true,
+        maintainAspectRatio: false,
         plugins: {
           ...defaultChartOptions.plugins,
           title: {
@@ -263,6 +265,8 @@ const SavingsProgressChart = ({
     } else {
       return {
         ...defaultChartOptions,
+        responsive: true,
+        maintainAspectRatio: false,
         plugins: {
           ...defaultChartOptions.plugins,
           title: {
@@ -381,7 +385,7 @@ const SavingsProgressChart = ({
       {chartData && progressData && (
         <div className="savings-chart-container">
           <div className="chart-section">
-            <div style={{ position: 'relative', height: '300px' }}>
+            <div style={{ position: 'relative', height: '100%', width: '100%' }}>
               {viewMode === 'progress' ? (
                 <Bar data={chartData} options={getChartOptions()} />
               ) : (

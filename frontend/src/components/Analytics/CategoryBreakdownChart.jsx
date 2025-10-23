@@ -106,6 +106,8 @@ const CategoryBreakdownChart = ({
 
   const chartOptions = {
     ...defaultChartOptions,
+    responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       ...defaultChartOptions.plugins,
       title: {
@@ -203,7 +205,7 @@ const CategoryBreakdownChart = ({
       {chartData && chartData.datasets && chartData.datasets.length > 0 && (
         <div className="category-chart-container">
           <div className="chart-section">
-            <div style={{ position: 'relative', height: '300px' }}>
+            <div style={{ position: 'relative', height: '100%', width: '100%' }}>
               <Pie data={chartData} options={chartOptions} />
             </div>
           </div>

@@ -155,4 +155,27 @@
   .error-details {
     font-size: 0.8rem;
   }
+}/* Additiona
+l Chart Rendering Improvements */
+.chart-wrapper canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.chart-content > div {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Ensure Chart.js renders properly */
+.chart-content .chartjs-render-monitor {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Fix for chart positioning */
+.chart-content > div > canvas {
+  position: relative !important;
+  width: 100% !important;
+  height: 100% !important;
 }

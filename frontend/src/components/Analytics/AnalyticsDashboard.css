@@ -760,3 +760,44 @@
     width: 100%;
   }
 }
+/* 
+Chart Rendering Fixes */
+.analytics-dashboard canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.analytics-dashboard .chart-content canvas {
+  max-width: 100% !important;
+  max-height: 100% !important;
+}
+
+/* Ensure chart containers fill their space properly */
+.dashboard-chart > div {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Fix for Chart.js responsive containers in analytics */
+.analytics-dashboard .chartjs-render-monitor {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Category breakdown chart specific fixes */
+.category-breakdown-chart .chart-section canvas {
+  max-width: 100% !important;
+  max-height: 350px !important;
+}
+
+/* Budget vs actual chart fixes */
+.budget-vs-actual-chart .chart-section canvas {
+  max-width: 100% !important;
+  max-height: 250px !important;
+}
+
+/* Savings progress chart fixes */
+.savings-progress-chart .chart-section canvas {
+  max-width: 100% !important;
+  max-height: 220px !important;
+}

@@ -120,6 +120,8 @@ const MonthlyTrendsChart = ({
 
   const chartOptions = {
     ...defaultChartOptions,
+    responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       ...defaultChartOptions.plugins,
       title: {
