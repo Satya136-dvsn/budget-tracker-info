@@ -29,6 +29,8 @@
   padding: 2.5rem !important;
   margin-bottom: 2rem !important;
   overflow: visible !important;
+  position: relative !important;
+  z-index: 1 !important;
 }
 
 /* Chart content improvements */
@@ -178,6 +180,33 @@
   .analytics-dashboard .recharts-responsive-container {
     min-height: 400px !important;
   }
+  
+  /* Mobile specific fixes */
+  .analytics-dashboard .demo-notice-content {
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 1rem !important;
+  }
+  
+  .analytics-dashboard .advanced-filters {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+  
+  .analytics-dashboard .date-range-inputs {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0.5rem !important;
+  }
+  
+  .analytics-dashboard .budget-selectors {
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+  }
+  
+  .analytics-dashboard .savings-progress-chart .savings-chart-container {
+    min-height: 650px !important;
+  }
 }
 
 @media (max-width: 480px) {
@@ -236,10 +265,61 @@
   background: #94a3b8;
 }
 
-/* Fix any potential z-index issues */
+/* Fix z-index and positioning issues */
 .analytics-dashboard .chart-wrapper {
   position: relative;
   z-index: 1;
+}
+
+/* Fix chart customization dropdown positioning */
+.analytics-dashboard .chart-customization {
+  position: relative;
+  z-index: 10;
+}
+
+.analytics-dashboard .customization-panel {
+  z-index: 9999 !important;
+  position: absolute !important;
+}
+
+/* Fix demo notice card layout */
+.analytics-dashboard .demo-notice-content {
+  flex-wrap: wrap !important;
+  padding: 1.5rem !important;
+  gap: 1rem !important;
+}
+
+.analytics-dashboard .connect-btn {
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+}
+
+/* Fix budget vs actual card overflow */
+.analytics-dashboard .budget-vs-actual-chart .summary-cards {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  overflow: visible !important;
+}
+
+/* Fix savings progress chart bottom cutoff */
+.analytics-dashboard .savings-progress-chart .savings-chart-container {
+  min-height: 600px !important;
+  overflow: visible !important;
+  padding-bottom: 2rem !important;
+}
+
+.analytics-dashboard .savings-progress-chart .goals-summary {
+  padding-bottom: 1.5rem !important;
+  overflow: visible !important;
+}
+
+/* Fix advanced filters layout */
+.analytics-dashboard .advanced-filters {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+  gap: 2rem !important;
+  padding: 1.5rem !important;
+  align-items: start !important;
 }
 
 /* Ensure proper text wrapping */

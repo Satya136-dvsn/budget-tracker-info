@@ -14,6 +14,7 @@
   width: 100%;
   box-sizing: border-box;
   overflow: visible;
+  position: relative;
 }
 
 .chart-wrapper:hover {
@@ -45,6 +46,7 @@
   flex-direction: column;
   overflow: visible;
   padding: 0.5rem;
+  z-index: 1;
 }
 
 .chart-loading {
