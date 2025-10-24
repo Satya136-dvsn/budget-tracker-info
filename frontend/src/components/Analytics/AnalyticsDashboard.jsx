@@ -11,6 +11,7 @@ import BudgetVsActualChart from './BudgetVsActualChart';
 import SavingsProgressChart from './SavingsProgressChart';
 import './AnalyticsDashboard.css';
 import './SimpleLayoutFix.css';
+import './AnalyticsLayoutFix.css';
 
 const AnalyticsDashboard = () => {
   const navigate = useNavigate();
