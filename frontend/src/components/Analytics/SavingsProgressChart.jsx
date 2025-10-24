@@ -3,6 +3,7 @@ import { Bar, Doughnut } from 'react-chartjs-2';
 import ChartWrapper from './ChartWrapper';
 import { defaultChartOptions, chartColors, getCategoryColor } from './BaseChart';
 import { apiService } from '../../services/api';
+import { formatCurrency } from '../../utils/currencyFormatter';
 import './SavingsProgressChart.css';
 
 const SavingsProgressChart = ({ 
@@ -32,24 +33,24 @@ const SavingsProgressChart = ({
         { 
           id: 1, 
           goalName: 'Emergency Fund', 
-          targetAmount: 30000, 
-          currentAmount: 18000, 
+          targetAmount: 250000, 
+          currentAmount: 150000, 
           targetDate: new Date(Date.now() + 180 * 24 * 60 * 60 * 1000).toISOString(),
           status: 'IN_PROGRESS'
         },
         { 
           id: 2, 
           goalName: 'Vacation Fund', 
-          targetAmount: 15000, 
-          currentAmount: 8500, 
+          targetAmount: 125000, 
+          currentAmount: 70000, 
           targetDate: new Date(Date.now() + 120 * 24 * 60 * 60 * 1000).toISOString(),
           status: 'IN_PROGRESS'
         },
         { 
           id: 3, 
           goalName: 'New Car', 
-          targetAmount: 25000, 
-          currentAmount: 25000, 
+          targetAmount: 2100000, 
+          currentAmount: 2100000, 
           targetDate: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
           status: 'COMPLETED'
         }
@@ -189,9 +190,9 @@ const SavingsProgressChart = ({
                 const label = context.dataset.label || '';
                 const value = context.parsed.y;
                 
-                const formatter = new Intl.NumberFormat('en-US', {
+                const formatter = new Intl.NumberFormat('en-IN', {
                   style: 'currency',
-                  currency: 'USD',
+                  currency: 'INR',
                   minimumFractionDigits: 0,
                   maximumFractionDigits: 0
                 });
@@ -218,9 +219,9 @@ const SavingsProgressChart = ({
                     return [
                       '',
                       `Progress: ${progressPercent}%`,
-                      `Target: ${new Intl.NumberFormat('en-US', {
+                      `Target: ${new Intl.NumberFormat('en-IN', {
                         style: 'currency',
-                        currency: 'USD'
+                        currency: 'INR'
                       }).format(goal.targetAmount)}`,
                       `Deadline: ${formattedDeadline}`
                     ];
@@ -251,7 +252,7 @@ const SavingsProgressChart = ({
             stacked: true,
             title: {
               display: true,
-              text: 'Amount ($)',
+              text: 'Amount (₹)',
               font: {
                 size: 12,
                 weight: '600'
@@ -285,9 +286,9 @@ const SavingsProgressChart = ({
                 const total = context.dataset.data.reduce((sum, val) => sum + val, 0);
                 const percentage = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
                 
-                const formatter = new Intl.NumberFormat('en-US', {
+                const formatter = new Intl.NumberFormat('en-IN', {
                   style: 'currency',
-                  currency: 'USD',
+                  currency: 'INR',
                   minimumFractionDigits: 0,
                   maximumFractionDigits: 0
                 });
@@ -318,10 +319,10 @@ const SavingsProgressChart = ({
     }
   };
 
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('en-US', {
+  const formatCurrencyLocal = (amount) => {
+    return new Intl.NumberFormat('en-IN', {
       style: 'currency',
-      currency: 'USD',
+      currency: 'INR',
       minimumFractionDigits: 0,
       maximumFractionDigits: 0
     }).format(amount);
@@ -431,10 +432,10 @@ const SavingsProgressChart = ({
                   <div className="goal-details">
                     <div className="goal-amounts">
                       <span className="current-amount">
-                        {formatCurrency(goal.currentAmount)}
+                        {formatCurrencyLocal(goal.currentAmount)}
                       </span>
                       <span className="target-amount">
-                        / {formatCurrency(goal.targetAmount)}
+                        / {formatCurrencyLocal(goal.targetAmount)}
                       </span>
                     </div>
                     

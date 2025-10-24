@@ -60,21 +60,21 @@ const AnalyticsDashboard = () => {
             ]
           },
           monthlyTrends: {
-            averageIncome: summaryData?.monthlyIncome || 50000,
-            averageExpenses: summaryData?.targetExpenses || 35000,
+            averageIncome: summaryData?.monthlyIncome || 415000,
+            averageExpenses: summaryData?.targetExpenses || 290000,
             trendDirection: 'stable',
             trends: [
-              { month: new Date().getMonth(), year: new Date().getFullYear(), netSavings: 15000 },
-              { month: new Date().getMonth() - 1, year: new Date().getFullYear(), netSavings: 12000 },
-              { month: new Date().getMonth() - 2, year: new Date().getFullYear(), netSavings: 18000 }
+              { month: new Date().getMonth(), year: new Date().getFullYear(), netSavings: 125000 },
+              { month: new Date().getMonth() - 1, year: new Date().getFullYear(), netSavings: 100000 },
+              { month: new Date().getMonth() - 2, year: new Date().getFullYear(), netSavings: 150000 }
             ]
           },
           savingsProgress: {
             totalGoals: 3,
             completedGoals: 1,
             overallProgressPercent: 65,
-            totalCurrentAmount: summaryData?.currentSavings || 25000,
-            totalTargetAmount: 50000
+            totalCurrentAmount: summaryData?.currentSavings || 2075000,
+            totalTargetAmount: 4150000
           }
         };
         
@@ -98,16 +98,16 @@ const AnalyticsDashboard = () => {
             ]
           },
           monthlyTrends: {
-            averageIncome: 45000,
-            averageExpenses: 32000,
+            averageIncome: 375000,
+            averageExpenses: 265000,
             trendDirection: 'stable'
           },
           savingsProgress: {
             totalGoals: 2,
             completedGoals: 0,
             overallProgressPercent: 35,
-            totalCurrentAmount: 15000,
-            totalTargetAmount: 40000
+            totalCurrentAmount: 1245000,
+            totalTargetAmount: 3320000
           }
         };
         

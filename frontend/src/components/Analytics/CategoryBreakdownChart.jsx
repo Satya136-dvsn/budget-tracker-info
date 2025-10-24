@@ -5,6 +5,7 @@ import ChartCustomization from './ChartCustomization';
 import { defaultChartOptions, chartColors, getCategoryColor } from './BaseChart';
 import { chartPreferences } from '../../services/chartPreferences';
 import { apiService } from '../../services/api';
+import { formatCurrency } from '../../utils/currencyFormatter';
 import './CategoryBreakdownChart.css';
 
 const CategoryBreakdownChart = ({ 
@@ -41,14 +42,14 @@ const CategoryBreakdownChart = ({
       setLoading(true);
       setError(null);
       
-      // Use demo data directly to avoid API errors
+      // Use demo data directly to avoid API errors (amounts in INR)
       console.log('Using demo data for category breakdown chart');
       const demoData = [
-        { categoryName: 'Food & Dining', totalAmount: 8500, transactionCount: 25 },
-        { categoryName: 'Transportation', totalAmount: 6200, transactionCount: 15 },
-        { categoryName: 'Shopping', totalAmount: 4800, transactionCount: 12 },
-        { categoryName: 'Entertainment', totalAmount: 3200, transactionCount: 8 },
-        { categoryName: 'Bills & Utilities', totalAmount: 2800, transactionCount: 6 }
+        { categoryName: 'Food & Dining', totalAmount: 25500, transactionCount: 25 },
+        { categoryName: 'Transportation', totalAmount: 18600, transactionCount: 15 },
+        { categoryName: 'Shopping', totalAmount: 14400, transactionCount: 12 },
+        { categoryName: 'Entertainment', totalAmount: 9600, transactionCount: 8 },
+        { categoryName: 'Bills & Utilities', totalAmount: 8400, transactionCount: 6 }
       ];
       
       setCategoryData(demoData);
@@ -174,9 +175,9 @@ const CategoryBreakdownChart = ({
                 : context.dataset.data.reduce((sum, val) => sum + val, 0);
               const percentage = ((value / total) * 100).toFixed(1);
               
-              const formatter = new Intl.NumberFormat('en-US', {
+              const formatter = new Intl.NumberFormat('en-IN', {
                 style: 'currency',
-                currency: 'USD',
+                currency: 'INR',
                 minimumFractionDigits: 0,
                 maximumFractionDigits: 0
               });
@@ -195,9 +196,9 @@ const CategoryBreakdownChart = ({
                   return [
                     '',
                     `Transactions: ${category.transactionCount}`,
-                    `Average: ${new Intl.NumberFormat('en-US', {
+                    `Average: ${new Intl.NumberFormat('en-IN', {
                       style: 'currency',
-                      currency: 'USD'
+                      currency: 'INR'
                     }).format(category.totalAmount / category.transactionCount)}`
                   ];
                 }
@@ -289,10 +290,10 @@ const CategoryBreakdownChart = ({
     return categoryData.reduce((sum, cat) => sum + cat.totalAmount, 0);
   };
 
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('en-US', {
+  const formatCurrencyLocal = (amount) => {
+    return new Intl.NumberFormat('en-IN', {
       style: 'currency',
-      currency: 'USD',
+      currency: 'INR',
       minimumFractionDigits: 0,
       maximumFractionDigits: 0
     }).format(amount);
@@ -331,7 +332,7 @@ const CategoryBreakdownChart = ({
             <div className="legend-header">
               <h4>Categories</h4>
               <span className="total-amount">
-                Total: {formatCurrency(getTotalSpending())}
+                Total: {formatCurrencyLocal(getTotalSpending())}
               </span>
             </div>
             
@@ -361,7 +362,7 @@ const CategoryBreakdownChart = ({
                         <span className="category-percentage">{percentage}%</span>
                       </div>
                       <div className="legend-amount">
-                        {formatCurrency(category.totalAmount)}
+                        {formatCurrencyLocal(category.totalAmount)}
                       </div>
                       {category.transactionCount && (
                         <div className="legend-count">

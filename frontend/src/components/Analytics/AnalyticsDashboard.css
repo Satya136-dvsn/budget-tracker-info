@@ -149,6 +149,14 @@
   grid-column: span 1;
 }
 
+.health-score-card .chart-wrapper {
+  min-height: 650px !important;
+}
+
+.health-score-card .chart-content {
+  min-height: 600px !important;
+}
+
 .health-score-content {
   display: flex;
   flex-direction: column;
@@ -263,27 +271,30 @@
   background: #f0f9ff;
   border: 1px solid #bae6fd;
   border-radius: 8px;
-  padding: 1rem;
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+  overflow: visible;
 }
 
 .recommendations h4 {
-  margin: 0 0 0.5rem 0;
-  font-size: 0.875rem;
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
   font-weight: 600;
   color: #0369a1;
 }
 
 .recommendations ul {
   margin: 0;
-  padding-left: 1.25rem;
+  padding-left: 1.5rem;
   list-style-type: disc;
 }
 
 .recommendations li {
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   color: #0c4a6e;
-  line-height: 1.4;
-  margin-bottom: 0.25rem;
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+  word-wrap: break-word;
 }
 
 /* Trends Summary Card */

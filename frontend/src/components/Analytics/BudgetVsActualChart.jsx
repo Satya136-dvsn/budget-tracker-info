@@ -3,6 +3,7 @@ import { Bar } from 'react-chartjs-2';
 import ChartWrapper from './ChartWrapper';
 import { defaultChartOptions, chartColors, getCategoryColor } from './BaseChart';
 import { apiService } from '../../services/api';
+import { formatCurrency } from '../../utils/currencyFormatter';
 import './BudgetVsActualChart.css';
 
 const BudgetVsActualChart = ({ 
@@ -28,13 +29,13 @@ const BudgetVsActualChart = ({
       setLoading(true);
       setError(null);
       
-      // Use demo data directly to avoid API errors
+      // Use demo data directly to avoid API errors (amounts in INR)
       console.log('Using demo data for budget analysis chart');
       const demoData = [
-        { categoryName: 'Food & Dining', budgetAmount: 10000, actualAmount: 8500, remainingAmount: 1500, progressPercentage: 85, isOverBudget: false },
-        { categoryName: 'Transportation', budgetAmount: 7000, actualAmount: 6200, remainingAmount: 800, progressPercentage: 88.6, isOverBudget: false },
-        { categoryName: 'Entertainment', budgetAmount: 3000, actualAmount: 3200, remainingAmount: -200, progressPercentage: 106.7, isOverBudget: true },
-        { categoryName: 'Shopping', budgetAmount: 5000, actualAmount: 4800, remainingAmount: 200, progressPercentage: 96, isOverBudget: false }
+        { categoryName: 'Food & Dining', budgetAmount: 30000, actualAmount: 25500, remainingAmount: 4500, progressPercentage: 85, isOverBudget: false },
+        { categoryName: 'Transportation', budgetAmount: 21000, actualAmount: 18600, remainingAmount: 2400, progressPercentage: 88.6, isOverBudget: false },
+        { categoryName: 'Entertainment', budgetAmount: 9000, actualAmount: 9600, remainingAmount: -600, progressPercentage: 106.7, isOverBudget: true },
+        { categoryName: 'Shopping', budgetAmount: 15000, actualAmount: 14400, remainingAmount: 600, progressPercentage: 96, isOverBudget: false }
       ];
       
       setBudgetData(demoData);
@@ -117,9 +118,9 @@ const BudgetVsActualChart = ({
             const label = context.dataset.label || '';
             const value = context.parsed.y;
             
-            const formatter = new Intl.NumberFormat('en-US', {
+            const formatter = new Intl.NumberFormat('en-IN', {
               style: 'currency',
-              currency: 'USD',
+              currency: 'INR',
               minimumFractionDigits: 0,
               maximumFractionDigits: 0
             });
@@ -137,9 +138,9 @@ const BudgetVsActualChart = ({
                   ? ((variance / budgetItem.budgetAmount) * 100).toFixed(1)
                   : 0;
                 
-                const formatter = new Intl.NumberFormat('en-US', {
+                const formatter = new Intl.NumberFormat('en-IN', {
                   style: 'currency',
-                  currency: 'USD',
+                  currency: 'INR',
                   minimumFractionDigits: 0,
                   maximumFractionDigits: 0
                 });
@@ -179,7 +180,7 @@ const BudgetVsActualChart = ({
         ...defaultChartOptions.scales.y,
         title: {
           display: true,
-          text: 'Amount ($)',
+          text: 'Amount (₹)',
           font: {
             size: 12,
             weight: '600'
@@ -231,10 +232,10 @@ const BudgetVsActualChart = ({
     return budgetData.filter(item => item.actualAmount > item.budgetAmount);
   };
 
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('en-US', {
+  const formatCurrencyLocal = (amount) => {
+    return new Intl.NumberFormat('en-IN', {
       style: 'currency',
-      currency: 'USD',
+      currency: 'INR',
       minimumFractionDigits: 0,
       maximumFractionDigits: 0
     }).format(amount);
@@ -290,7 +291,7 @@ const BudgetVsActualChart = ({
                 <div className="card-icon">💰</div>
                 <div className="card-content">
                   <span className="card-label">Total Budget</span>
-                  <span className="card-value">{formatCurrency(getTotalBudget())}</span>
+                  <span className="card-value">{formatCurrencyLocal(getTotalBudget())}</span>
                 </div>
               </div>
               
@@ -298,7 +299,7 @@ const BudgetVsActualChart = ({
                 <div className="card-icon">💸</div>
                 <div className="card-content">
                   <span className="card-label">Total Spent</span>
-                  <span className="card-value">{formatCurrency(getTotalActual())}</span>
+                  <span className="card-value">{formatCurrencyLocal(getTotalActual())}</span>
                 </div>
               </div>
               
@@ -309,7 +310,7 @@ const BudgetVsActualChart = ({
                 <div className="card-content">
                   <span className="card-label">Variance</span>
                   <span className="card-value">
-                    {getTotalVariance() > 0 ? '+' : ''}{formatCurrency(getTotalVariance())}
+                    {getTotalVariance() > 0 ? '+' : ''}{formatCurrencyLocal(getTotalVariance())}
                   </span>
                 </div>
               </div>
