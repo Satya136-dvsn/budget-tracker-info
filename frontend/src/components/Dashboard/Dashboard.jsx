@@ -6,6 +6,8 @@ import { apiService } from '../../services/api';
 import { calculateFinancialHealthScore, getHealthScoreStatus } from '../../utils/financialHealthCalculator';
 import MonthlyTrendsChart from '../Analytics/MonthlyTrendsChart';
 import CategoryBreakdownChart from '../Analytics/CategoryBreakdownChart';
+import PureMonthlyChart from './PureMonthlyChart';
+import PureCategoryChart from './PureCategoryChart';
 import ErrorBoundary from '../Common/ErrorBoundary';
 import './Dashboard.css';
 
@@ -523,49 +525,38 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Mini Charts Section */}
-        <div className="dashboard-mini-charts">
-          <div className="mini-chart-container">
-            <div className="mini-chart-header">
+        {/* Professional Chart Cards */}
+        <div className="professional-chart-grid">
+          <div className="chart-card">
+            <div className="chart-card-header">
               <h3>Monthly Trends</h3>
               <button 
-                className="view-full-btn"
+                className="chart-view-btn"
                 onClick={() => navigate('/analytics')}
-                title="View full analytics dashboard"
               >
                 View Full Analytics
               </button>
             </div>
-            <div className="mini-chart-wrapper">
+            <div className="pure-chart-container">
               <ErrorBoundary>
-                <MonthlyTrendsChart 
-                  months={3}
-                  height="250px"
-                  className="dashboard-mini-chart"
-                />
+                <PureMonthlyChart months={3} />
               </ErrorBoundary>
             </div>
           </div>
           
-          <div className="mini-chart-container">
-            <div className="mini-chart-header">
+          <div className="chart-card">
+            <div className="chart-card-header">
               <h3>Spending Categories</h3>
               <button 
-                className="view-full-btn"
+                className="chart-view-btn"
                 onClick={() => navigate('/analytics')}
-                title="View full analytics dashboard"
               >
                 View Details
               </button>
             </div>
-            <div className="mini-chart-wrapper">
+            <div className="pure-chart-container">
               <ErrorBoundary>
-                <CategoryBreakdownChart 
-                  startDate={new Date(new Date().setMonth(new Date().getMonth() - 1)).toISOString().split('T')[0]}
-                  endDate={new Date().toISOString().split('T')[0]}
-                  height="250px"
-                  className="dashboard-mini-chart"
-                />
+                <PureCategoryChart />
               </ErrorBoundary>
             </div>
           </div>

@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Pie } from 'react-chartjs-2';
+import React, { useState, useEffect, useRef } from 'react';
+import { Pie, Doughnut, Bar } from 'react-chartjs-2';
 import ChartWrapper from './ChartWrapper';
+import ChartCustomization from './ChartCustomization';
 import { defaultChartOptions, chartColors, getCategoryColor } from './BaseChart';
+import { chartPreferences } from '../../services/chartPreferences';
 import { apiService } from '../../services/api';
 import './CategoryBreakdownChart.css';
 
@@ -10,17 +12,29 @@ const CategoryBreakdownChart = ({
   endDate = null,
   height = '400px',
   className = '',
-  onDataLoad = null 
+  onDataLoad = null,
+  minimal = false,
+  showCustomization = true
 }) => {
   const [chartData, setChartData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedCategories, setSelectedCategories] = useState(new Set());
   const [categoryData, setCategoryData] = useState([]);
+  const [chartType, setChartType] = useState('pie');
+  const [preferences, setPreferences] = useState({});
+  const chartRef = useRef(null);
 
   useEffect(() => {
     fetchCategoryBreakdown();
+    loadPreferences();
   }, [startDate, endDate]);
+
+  const loadPreferences = () => {
+    const prefs = chartPreferences.getPreferences();
+    setPreferences(prefs);
+    setChartType(chartPreferences.getChartType('categoryBreakdown'));
+  };
 
   const fetchCategoryBreakdown = async () => {
     try {
@@ -65,7 +79,10 @@ const CategoryBreakdownChart = ({
     
     const labels = sortedCategories.map(cat => cat.categoryName);
     const data = sortedCategories.map(cat => cat.totalAmount);
-    const colors = sortedCategories.map((_, index) => getCategoryColor(index));
+    
+    // Get colors based on theme
+    const colorTheme = preferences.colors?.theme || 'default';
+    const colors = getThemeColors(colorTheme, sortedCategories.length);
     const borderColors = colors.map(color => color);
 
     return {
@@ -74,15 +91,35 @@ const CategoryBreakdownChart = ({
         {
           label: 'Spending by Category',
           data,
-          backgroundColor: colors.map(color => color + '80'), // Add transparency
+          backgroundColor: colors.map(color => color + (chartType === 'bar' ? '80' : '80')), // Add transparency
           borderColor: borderColors,
-          borderWidth: 2,
+          borderWidth: chartType === 'bar' ? 0 : 2,
           hoverBackgroundColor: colors,
           hoverBorderColor: borderColors,
-          hoverBorderWidth: 3,
+          hoverBorderWidth: chartType === 'bar' ? 0 : 3,
         }
       ]
     };
+  };
+
+  const getThemeColors = (theme, count) => {
+    let baseColors;
+    switch (theme) {
+      case 'colorful':
+        baseColors = ['#ef4444', '#f59e0b', '#22c55e', '#3b82f6', '#8b5cf6', '#ec4899', '#06b6d4', '#84cc16'];
+        break;
+      case 'monochrome':
+        baseColors = ['#374151', '#4b5563', '#6b7280', '#9ca3af', '#d1d5db', '#e5e7eb'];
+        break;
+      default:
+        baseColors = chartColors.categories;
+    }
+    
+    const colors = [];
+    for (let i = 0; i < count; i++) {
+      colors.push(baseColors[i % baseColors.length]);
+    }
+    return colors;
   };
 
   const toggleCategory = (categoryIndex) => {
@@ -104,78 +141,147 @@ const CategoryBreakdownChart = ({
     }
   };
 
-  const chartOptions = {
-    ...defaultChartOptions,
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      ...defaultChartOptions.plugins,
-      title: {
-        display: false
+  const getChartOptions = () => {
+    const displayPrefs = preferences.display || {};
+    const isPieChart = chartType === 'pie' || chartType === 'doughnut';
+    
+    const baseOptions = {
+      ...defaultChartOptions,
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: {
+        duration: displayPrefs.animationEnabled !== false ? 1000 : 0
       },
-      legend: {
-        display: false // We'll create a custom legend
-      },
-      tooltip: {
-        ...defaultChartOptions.plugins.tooltip,
-        callbacks: {
-          title: function(context) {
-            return context[0].label;
-          },
-          label: function(context) {
-            const value = context.parsed;
-            const total = context.dataset.data.reduce((sum, val) => sum + val, 0);
-            const percentage = ((value / total) * 100).toFixed(1);
-            
-            const formatter = new Intl.NumberFormat('en-US', {
-              style: 'currency',
-              currency: 'USD',
-              minimumFractionDigits: 0,
-              maximumFractionDigits: 0
-            });
-            
-            return [
-              `Amount: ${formatter.format(value)}`,
-              `Percentage: ${percentage}%`
-            ];
-          },
-          afterBody: function(context) {
-            if (context.length > 0) {
-              const categoryIndex = context[0].dataIndex;
-              const category = categoryData[categoryIndex];
+      plugins: {
+        ...defaultChartOptions.plugins,
+        title: {
+          display: false
+        },
+        legend: {
+          display: isPieChart ? (displayPrefs.showLegend !== false) : false
+        },
+        tooltip: {
+          ...defaultChartOptions.plugins.tooltip,
+          enabled: displayPrefs.showTooltips !== false,
+          callbacks: {
+            title: function(context) {
+              return context[0].label;
+            },
+            label: function(context) {
+              const value = isPieChart ? context.parsed : context.parsed.y;
+              const total = isPieChart 
+                ? context.dataset.data.reduce((sum, val) => sum + val, 0)
+                : context.dataset.data.reduce((sum, val) => sum + val, 0);
+              const percentage = ((value / total) * 100).toFixed(1);
               
-              if (category && category.transactionCount) {
-                return [
-                  '',
-                  `Transactions: ${category.transactionCount}`,
-                  `Average: ${new Intl.NumberFormat('en-US', {
-                    style: 'currency',
-                    currency: 'USD'
-                  }).format(category.totalAmount / category.transactionCount)}`
-                ];
+              const formatter = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+              });
+              
+              return [
+                `Amount: ${formatter.format(value)}`,
+                `Percentage: ${percentage}%`
+              ];
+            },
+            afterBody: function(context) {
+              if (context.length > 0) {
+                const categoryIndex = context[0].dataIndex;
+                const category = categoryData[categoryIndex];
+                
+                if (category && category.transactionCount) {
+                  return [
+                    '',
+                    `Transactions: ${category.transactionCount}`,
+                    `Average: ${new Intl.NumberFormat('en-US', {
+                      style: 'currency',
+                      currency: 'USD'
+                    }).format(category.totalAmount / category.transactionCount)}`
+                  ];
+                }
               }
+              return [];
             }
-            return [];
           }
         }
-      }
-    },
-    scales: undefined, // Remove scales for pie chart
-    maintainAspectRatio: false,
-    responsive: true,
-    interaction: {
-      intersect: true
-    },
-    elements: {
-      arc: {
-        borderWidth: 2,
-        hoverBorderWidth: 3
-      }
+      },
+      interaction: {
+        intersect: isPieChart
+      },
+      elements: isPieChart ? {
+        arc: {
+          borderWidth: 2,
+          hoverBorderWidth: 3
+        }
+      } : {}
+    };
+
+    // Add scales for bar chart
+    if (chartType === 'bar') {
+      baseOptions.scales = {
+        ...defaultChartOptions.scales,
+        x: {
+          ...defaultChartOptions.scales.x,
+          grid: {
+            display: displayPrefs.showGridLines !== false
+          }
+        },
+        y: {
+          ...defaultChartOptions.scales.y,
+          grid: {
+            display: displayPrefs.showGridLines !== false,
+            color: '#f3f4f6',
+            drawBorder: false
+          },
+          beginAtZero: true
+        }
+      };
+    } else {
+      baseOptions.scales = undefined;
     }
+
+    return baseOptions;
   };
 
   const handleRetry = () => {
     fetchCategoryBreakdown();
+  };
+
+  const handlePreferenceChange = (key, value) => {
+    if (key === 'chartType') {
+      setChartType(value);
+    }
+    loadPreferences();
+  };
+
+  const renderChart = () => {
+    if (!chartData || !chartData.datasets || chartData.datasets.length === 0) {
+      return null;
+    }
+
+    let ChartComponent;
+    switch (chartType) {
+      case 'doughnut':
+        ChartComponent = Doughnut;
+        break;
+      case 'bar':
+        ChartComponent = Bar;
+        break;
+      default:
+        ChartComponent = Pie;
+    }
+
+    const options = getChartOptions();
+
+    return (
+      <ChartComponent 
+        ref={chartRef}
+        data={chartData} 
+        options={options} 
+      />
+    );
   };
 
   const getTotalSpending = () => {
@@ -202,15 +308,26 @@ const CategoryBreakdownChart = ({
       className={`category-breakdown-chart ${className}`}
       showLegend={false}
     >
+      {showCustomization && !minimal && (
+        <div style={{ position: 'absolute', top: '10px', right: '10px', zIndex: 10 }}>
+          <ChartCustomization
+            chartRef={chartRef}
+            chartName="categoryBreakdown"
+            chartTitle="Spending by Category"
+            onPreferenceChange={handlePreferenceChange}
+          />
+        </div>
+      )}
+      
       {chartData && chartData.datasets && chartData.datasets.length > 0 && (
         <div className="category-chart-container">
           <div className="chart-section">
-            <div style={{ position: 'relative', height: '100%', width: '100%' }}>
-              <Pie data={chartData} options={chartOptions} />
+            <div style={{ position: 'relative', height: '100%', width: '100%', maxWidth: '100%', overflow: 'hidden' }}>
+              {renderChart()}
             </div>
           </div>
           
-          <div className="category-legend">
+          {!minimal && <div className="category-legend">
             <div className="legend-header">
               <h4>Categories</h4>
               <span className="total-amount">
@@ -262,7 +379,7 @@ const CategoryBreakdownChart = ({
                 <p>No spending data available for the selected period.</p>
               </div>
             )}
-          </div>
+          </div>}
         </div>
       )}
     </ChartWrapper>

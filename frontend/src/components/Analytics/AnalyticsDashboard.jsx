@@ -10,6 +10,7 @@ import CategoryBreakdownChart from './CategoryBreakdownChart';
 import BudgetVsActualChart from './BudgetVsActualChart';
 import SavingsProgressChart from './SavingsProgressChart';
 import './AnalyticsDashboard.css';
+import './SimpleLayoutFix.css';
 
 const AnalyticsDashboard = () => {
   const navigate = useNavigate();
@@ -284,7 +285,7 @@ const AnalyticsDashboard = () => {
               <CategoryBreakdownChart 
                 startDate={dateRange.start}
                 endDate={dateRange.end}
-                height="360px"
+                height="320px"
                 className="dashboard-chart"
               />
             </div>
@@ -293,7 +294,7 @@ const AnalyticsDashboard = () => {
               <BudgetVsActualChart 
                 month={budgetMonth}
                 year={budgetYear}
-                height="360px"
+                height="320px"
                 className="dashboard-chart"
               />
             </div>

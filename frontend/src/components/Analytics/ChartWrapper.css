@@ -17,8 +17,8 @@
 }
 
 .chart-header {
-  margin-bottom: 1rem;
-  padding-bottom: 0.75rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
   border-bottom: 1px solid #f3f4f6;
 }
 
@@ -36,10 +36,11 @@
   position: relative;
   width: 100%;
   flex: 1;
-  min-height: 350px;
+  min-height: 400px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  padding: 0.25rem;
 }
 
 .chart-loading {
@@ -113,34 +114,50 @@
   .chart-wrapper {
     padding: 1rem;
     margin-bottom: 1rem;
+    border-radius: 8px;
+    margin-left: -16px;
+    margin-right: -16px;
   }
   
   .chart-title {
     font-size: 1.125rem;
   }
   
+  .chart-header {
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+  }
+  
   .chart-content {
-    min-height: 250px;
+    min-height: 280px;
+    padding: 0.5rem;
   }
   
   .chart-loading,
   .chart-error {
-    height: 250px;
+    height: 280px;
+  }
+  
+  /* Hide legend on mobile for better space utilization */
+  .chart-legend-container {
+    display: none;
   }
 }
 
 @media (max-width: 480px) {
   .chart-wrapper {
     padding: 0.75rem;
+    border-radius: 6px;
   }
   
   .chart-content {
-    min-height: 200px;
+    min-height: 250px;
+    padding: 0.25rem;
   }
   
   .chart-loading,
   .chart-error {
-    height: 200px;
+    height: 250px;
     padding: 1rem;
   }
   
@@ -154,6 +171,76 @@
   
   .error-details {
     font-size: 0.8rem;
+  }
+  
+  .retry-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+}
+
+/* Tablet Optimizations */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .chart-wrapper {
+    padding: 1.25rem;
+  }
+  
+  .chart-content {
+    min-height: 320px;
+  }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .chart-wrapper {
+    touch-action: manipulation;
+  }
+  
+  .retry-button {
+    min-height: 44px; /* Minimum touch target size */
+    min-width: 44px;
+  }
+  
+  /* Larger touch targets for mobile */
+  .chart-wrapper button,
+  .chart-wrapper .clickable {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* High DPI Display Optimizations */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .chart-wrapper canvas {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Landscape Mobile Optimizations */
+@media (max-width: 768px) and (orientation: landscape) {
+  .chart-wrapper {
+    padding: 0.75rem;
+  }
+  
+  .chart-content {
+    min-height: 200px;
+  }
+  
+  .chart-loading,
+  .chart-error {
+    height: 200px;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .chart-wrapper {
+    transition: none;
+  }
+  
+  .retry-button {
+    transition: none;
   }
 }/* Additiona
 l Chart Rendering Improvements */

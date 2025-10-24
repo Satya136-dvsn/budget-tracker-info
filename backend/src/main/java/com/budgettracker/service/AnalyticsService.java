@@ -6,6 +6,8 @@ import com.budgettracker.repository.TransactionRepository;
 import com.budgettracker.repository.BudgetRepository;
 import com.budgettracker.repository.SavingsGoalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,7 +34,8 @@ public class AnalyticsService {
     @Autowired
     private SavingsGoalRepository savingsGoalRepository;
     
-    // Get monthly trends analysis
+    // Get monthly trends analysis with caching
+    @Cacheable(value = "monthlyTrends", key = "#username + '_' + #months", unless = "#result == null")
     public Map<String, Object> getMonthlyTrends(int months, String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found: " + username));
@@ -84,7 +87,8 @@ public class AnalyticsService {
         }
     }
     
-    // Get category breakdown analysis
+    // Get category breakdown analysis with caching
+    @Cacheable(value = "categoryBreakdown", key = "#username + '_' + #startDate + '_' + #endDate", unless = "#result == null")
     public Map<String, Object> getCategoryBreakdown(String username, LocalDateTime startDate, LocalDateTime endDate) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found: " + username));
@@ -143,7 +147,8 @@ public class AnalyticsService {
         }
     }
     
-    // Get financial health score
+    // Get financial health score with caching
+    @Cacheable(value = "financialHealth", key = "#username", unless = "#result == null")
     public Map<String, Object> calculateFinancialHealth(String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found: " + username));
@@ -215,7 +220,8 @@ public class AnalyticsService {
         }
     }
     
-    // Get budget analysis
+    // Get budget analysis with caching
+    @Cacheable(value = "budgetAnalysis", key = "#username + '_' + #month + '_' + #year", unless = "#result == null")
     public Map<String, Object> getBudgetAnalysis(String username, int month, int year) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found: " + username));
@@ -283,7 +289,8 @@ public class AnalyticsService {
         }
     }
     
-    // Get savings progress analysis
+    // Get savings progress analysis with caching
+    @Cacheable(value = "savingsProgress", key = "#username", unless = "#result == null")
     public Map<String, Object> getSavingsProgress(String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found: " + username));
@@ -408,7 +415,14 @@ public class AnalyticsService {
         }
     }
     
+    // Clear analytics cache when data changes
+    @CacheEvict(value = {"monthlyTrends", "categoryBreakdown", "financialHealth", "budgetAnalysis", "savingsProgress"}, key = "#username")
+    public void clearAnalyticsCache(String username) {
+        // This method clears all analytics caches for a user when their data changes
+    }
+
     // Enhanced financial health calculation with user profile data
+    @Cacheable(value = "enhancedFinancialHealth", key = "#username", unless = "#result == null")
     public Map<String, Object> calculateEnhancedFinancialHealth(String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found: " + username));

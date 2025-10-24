@@ -1,10 +1,11 @@
 /* Analytics Dashboard Styles */
 .analytics-dashboard {
-  padding: 1.5rem 1.5rem 2.5rem 1.5rem;
-  max-width: 1600px;
+  padding: 1.5rem 1rem 2.5rem 1rem;
+  max-width: 100%;
   margin: 0 auto;
   background: #f9fafb;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 .dashboard-header {
@@ -55,6 +56,9 @@
   display: flex;
   flex-direction: column;
   gap: 1.75rem;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .dashboard-section {
@@ -70,12 +74,14 @@
 .dashboard-section.half-width {
   flex: 1;
   min-width: 0;
-  min-height: 480px;
+  max-width: calc(50% - 0.5rem);
+  width: calc(50% - 0.5rem);
+  min-height: 550px;
 }
 
 .dashboard-row {
   display: flex;
-  gap: 1.75rem;
+  gap: 1rem;
   width: 100%;
   align-items: stretch;
 }
@@ -641,19 +647,27 @@
 }
 
 /* Responsive Design */
-@media (max-width: 1024px) {
+@media (min-width: 1301px) {
+  .dashboard-section.half-width {
+    max-width: calc(50% - 0.5rem);
+    width: calc(50% - 0.5rem);
+  }
+}
+
+@media (max-width: 1300px) {
   .dashboard-row {
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;
   }
   
   .dashboard-section.half-width {
     width: 100%;
+    max-width: 100%;
     min-height: 400px;
   }
   
   .dashboard-content {
-    gap: 1.75rem;
+    gap: 1.5rem;
   }
   
   .advanced-filters {
