@@ -1,6 +1,7 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useRoles } from '../../utils/RoleBasedAccess';
+import NotificationBadge from '../Common/NotificationBadge';
 
 const CleanSidebar = ({ collapsed, onToggle, isAuthenticated }) => {
   const navigate = useNavigate();
@@ -213,6 +214,54 @@ const CleanSidebar = ({ collapsed, onToggle, isAuthenticated }) => {
               location={location}
             />
             <SidebarNavButton
+              icon="📋"
+              label="Bills"
+              path="/bills"
+              collapsed={collapsed}
+              navigate={navigate}
+              location={location}
+            />
+            <SidebarNavButton
+              icon="🤖"
+              label="AI Insights"
+              path="/ai"
+              collapsed={collapsed}
+              navigate={navigate}
+              location={location}
+            />
+            <SidebarNavButton
+              icon="👥"
+              label="Community"
+              path="/community"
+              collapsed={collapsed}
+              navigate={navigate}
+              location={location}
+            />
+            <SidebarNavButton
+              icon="📈"
+              label="Investments"
+              path="/investments"
+              collapsed={collapsed}
+              navigate={navigate}
+              location={location}
+            />
+            <SidebarNavButton
+              icon="🎯"
+              label="Planning"
+              path="/planning"
+              collapsed={collapsed}
+              navigate={navigate}
+              location={location}
+            />
+            <SidebarNavButtonWithBadge
+              icon="🔔"
+              label="Notifications"
+              path="/notifications"
+              collapsed={collapsed}
+              navigate={navigate}
+              location={location}
+            />
+            <SidebarNavButton
               icon="👤"
               label="Profile"
               path="/profile"
@@ -350,6 +399,56 @@ const SidebarNavButton = ({ icon, label, path, collapsed, navigate, location }) 
       }}
     >
       <span style={{ fontSize: '1.1rem' }}>{icon}</span>
+      {!collapsed && <span>{label}</span>}
+    </button>
+  );
+};
+
+// Helper component for sidebar navigation buttons with notification badge
+const SidebarNavButtonWithBadge = ({ icon, label, path, collapsed, navigate, location }) => {
+  const isActive = location.pathname === path;
+  
+  return (
+    <button
+      onClick={() => navigate(path)}
+      style={{
+        width: '100%',
+        padding: collapsed ? '0.75rem' : '0.75rem 1rem',
+        marginBottom: '0.5rem',
+        background: isActive ? 'rgba(255,255,255,0.2)' : 'transparent',
+        border: 'none',
+        borderRadius: '8px',
+        color: 'white',
+        cursor: 'pointer',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: collapsed ? 'center' : 'flex-start',
+        gap: '0.75rem',
+        fontSize: '0.9rem',
+        fontWeight: isActive ? '600' : '500',
+        transition: 'all 0.3s ease',
+        opacity: isActive ? 1 : 0.8,
+        position: 'relative'
+      }}
+      onMouseEnter={(e) => {
+        if (!isActive) {
+          e.target.style.background = 'rgba(255,255,255,0.1)';
+        }
+        e.target.style.transform = 'translateX(4px)';
+        e.target.style.opacity = '1';
+      }}
+      onMouseLeave={(e) => {
+        if (!isActive) {
+          e.target.style.background = 'transparent';
+        }
+        e.target.style.transform = 'translateX(0)';
+        e.target.style.opacity = isActive ? '1' : '0.8';
+      }}
+    >
+      <span style={{ fontSize: '1.1rem', position: 'relative' }}>
+        {icon}
+        <NotificationBadge />
+      </span>
       {!collapsed && <span>{label}</span>}
     </button>
   );

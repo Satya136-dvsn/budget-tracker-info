@@ -38,17 +38,17 @@ The enhanced BudgetWise system follows a **microservices-oriented architecture**
 #### 2. AI Insights Service
 - **Purpose**: Machine learning-powered financial analysis and recommendations
 - **Features**: Pattern recognition, anomaly detection, predictive analytics
-- **Technology**: Python/FastAPI, TensorFlow/PyTorch, PostgreSQL for ML data
+- **Technology**: Python/FastAPI, TensorFlow/PyTorch, PostgreSQL for ML data (separate from main MySQL database)
 
 #### 3. Community Forum Service
 - **Purpose**: User interaction platform for financial discussions
 - **Features**: Posts, comments, likes, moderation, user reputation
-- **Technology**: Node.js/Express, MongoDB, Redis for caching
+- **Technology**: Node.js/Express, MongoDB (separate from main MySQL database for document-based forum data), Redis for caching
 
 #### 4. Investment Tracking Service
 - **Purpose**: Portfolio management and investment analytics
 - **Features**: Real-time market data, portfolio analysis, performance tracking
-- **Technology**: Spring Boot, PostgreSQL, Redis for market data caching
+- **Technology**: Spring Boot, MySQL (integrated with main database), Redis for market data caching
 
 #### 5. Notification Service
 - **Purpose**: Multi-channel notification delivery

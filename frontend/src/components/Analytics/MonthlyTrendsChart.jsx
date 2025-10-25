@@ -265,7 +265,7 @@ const MonthlyTrendsChart = ({
           },
           title: {
             display: true,
-            text: 'Amount ($)',
+            text: 'Amount (₹)',
             font: {
               size: 12,
               weight: '600'

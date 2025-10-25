@@ -147,4 +147,8 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     
     // Count transactions by user after date
     long countByUserAndTransactionDateAfter(User user, LocalDateTime date);
+    
+    // Find transactions by user ID after a certain date
+    @Query("SELECT t FROM Transaction t WHERE t.user.id = :userId AND t.transactionDate > :date ORDER BY t.transactionDate DESC")
+    List<Transaction> findByUserIdAndTransactionDateAfter(@Param("userId") Long userId, @Param("date") LocalDateTime date);
 }

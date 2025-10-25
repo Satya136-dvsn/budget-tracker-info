@@ -25,19 +25,21 @@
 
 /* Chart wrapper improvements */
 .analytics-dashboard .chart-wrapper {
-  min-height: 550px !important;
+  min-height: 650px !important;
   padding: 2.5rem !important;
   margin-bottom: 2rem !important;
   overflow: visible !important;
   position: relative !important;
   z-index: 1 !important;
+  height: auto !important;
 }
 
 /* Chart content improvements */
 .analytics-dashboard .chart-content {
-  min-height: 500px !important;
+  min-height: 600px !important;
   padding: 1rem !important;
   overflow: visible !important;
+  height: auto !important;
 }
 
 /* Row layout fixes */
@@ -47,43 +49,56 @@
 }
 
 .analytics-dashboard .dashboard-section.half-width {
-  min-height: 650px !important;
+  min-height: 750px !important;
+  height: auto !important;
 }
 
 /* Specific chart fixes */
 .analytics-dashboard .category-breakdown-chart .category-chart-container {
-  min-height: 550px !important;
+  min-height: 650px !important;
   padding: 1.5rem !important;
+  height: auto !important;
 }
 
 .analytics-dashboard .category-breakdown-chart .chart-section {
-  height: 500px !important;
+  height: 600px !important;
   padding: 1.5rem !important;
 }
 
 .analytics-dashboard .category-breakdown-chart .category-legend {
-  max-height: 500px !important;
+  max-height: 600px !important;
   padding: 1.5rem !important;
+  overflow-y: auto !important;
 }
 
 /* Budget vs Actual chart fixes */
 .analytics-dashboard .budget-vs-actual-chart .chart-content {
-  min-height: 500px !important;
+  min-height: 600px !important;
+  height: auto !important;
+}
+
+.analytics-dashboard .budget-vs-actual-chart .budget-chart-container {
+  min-height: 650px !important;
+  height: auto !important;
 }
 
 /* Monthly trends chart fixes */
 .analytics-dashboard .monthly-trends-chart .chart-content {
-  min-height: 450px !important;
+  min-height: 550px !important;
+  height: auto !important;
 }
 
 /* Savings progress chart fixes */
 .analytics-dashboard .savings-progress-chart .chart-content {
-  min-height: 500px !important;
+  min-height: 600px !important;
+  height: auto !important;
 }
 
 /* Health score card improvements */
 .analytics-dashboard .health-score-content {
   padding: 2rem 0 !important;
+  min-height: 500px !important;
+  height: auto !important;
 }
 
 .analytics-dashboard .factor-scores {
@@ -94,6 +109,21 @@
 .analytics-dashboard .recommendations {
   margin-top: 2rem !important;
   padding: 2rem !important;
+  min-height: 150px !important;
+  height: auto !important;
+  overflow: visible !important;
+}
+
+.analytics-dashboard .recommendations ul {
+  margin: 0 !important;
+  padding-left: 1.5rem !important;
+  list-style-type: disc !important;
+}
+
+.analytics-dashboard .recommendations li {
+  margin-bottom: 0.75rem !important;
+  line-height: 1.5 !important;
+  word-wrap: break-word !important;
 }
 
 /* Advanced filters improvements */
@@ -154,27 +184,30 @@
   }
   
   .analytics-dashboard .dashboard-section.half-width {
-    min-height: 550px !important;
+    min-height: 650px !important;
+    height: auto !important;
   }
   
   .analytics-dashboard .category-breakdown-chart .category-chart-container {
     flex-direction: column !important;
     gap: 2rem !important;
-    min-height: 700px !important;
+    min-height: 800px !important;
+    height: auto !important;
   }
   
   .analytics-dashboard .category-breakdown-chart .chart-section {
-    height: 400px !important;
+    height: 500px !important;
     max-width: 100% !important;
   }
   
   .analytics-dashboard .category-breakdown-chart .category-legend {
     max-width: 100% !important;
-    max-height: 450px !important;
+    max-height: 500px !important;
     border-left: none !important;
     border-top: 1px solid #e5e7eb !important;
     padding-top: 2rem !important;
     padding-left: 0 !important;
+    overflow-y: auto !important;
   }
   
   .analytics-dashboard .recharts-responsive-container {
@@ -337,4 +370,72 @@
 .analytics-dashboard .period-selector {
   min-width: 150px;
   padding: 0.75rem 1rem;
+}
+/* Additio
+nal aggressive fixes for content cutoff */
+.analytics-dashboard .budget-vs-actual-chart .summary-cards {
+  margin-bottom: 2rem !important;
+  overflow: visible !important;
+}
+
+.analytics-dashboard .budget-vs-actual-chart .chart-section {
+  min-height: 400px !important;
+  height: auto !important;
+  overflow: visible !important;
+}
+
+.analytics-dashboard .budget-vs-actual-chart .overspending-alert {
+  margin-bottom: 1.5rem !important;
+  overflow: visible !important;
+}
+
+/* Force all chart containers to be taller */
+.analytics-dashboard .chart-wrapper .chart-content > div {
+  min-height: 500px !important;
+  height: auto !important;
+}
+
+/* Ensure canvas elements have proper sizing */
+.analytics-dashboard canvas {
+  min-height: 400px !important;
+  height: auto !important;
+}
+
+/* Fix for recharts containers */
+.analytics-dashboard .recharts-wrapper {
+  min-height: 500px !important;
+  height: auto !important;
+}
+
+/* Additional spacing for all sections */
+.analytics-dashboard .dashboard-section {
+  margin-bottom: 3rem !important;
+  padding-bottom: 1rem !important;
+}
+
+/* Fix for financial health recommendations */
+.analytics-dashboard .health-score-card .chart-content {
+  min-height: 600px !important;
+  height: auto !important;
+  overflow: visible !important;
+}
+
+/* Ensure proper spacing in mobile view */
+@media (max-width: 768px) {
+  .analytics-dashboard .chart-wrapper {
+    min-height: 600px !important;
+    padding: 2rem !important;
+  }
+  
+  .analytics-dashboard .chart-content {
+    min-height: 550px !important;
+  }
+  
+  .analytics-dashboard .budget-vs-actual-chart .budget-chart-container {
+    min-height: 700px !important;
+  }
+  
+  .analytics-dashboard .savings-progress-chart .savings-chart-container {
+    min-height: 750px !important;
+  }
 }

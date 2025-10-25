@@ -22,6 +22,15 @@ import SavingsGrowthResponsive from './components/Trends/SavingsGrowthResponsive
 import Export from './components/Export/Export';
 import FinancialInsights from './components/Insights/FinancialInsights';
 import AnalyticsDashboard from './components/Analytics/AnalyticsDashboard';
+import { BillsDashboard } from './components/Bills';
+import { NotificationCenter } from './components/Notifications';
+import { AIDashboard } from './components/AI';
+import { CommunityHub } from './components/Community';
+import { InvestmentDashboard } from './components/Investment';
+import FinancialPlanner from './components/Planning/FinancialPlanner';
+import RetirementCalculator from './components/Planning/RetirementCalculator';
+import DebtOptimizer from './components/Planning/DebtOptimizer';
+import TaxPlanner from './components/Planning/TaxPlanner';
 import Alert from './components/Common/Alert';
 import ErrorBoundary from './components/Common/ErrorBoundary';
 import './styles/clean-layout.css';
@@ -147,6 +156,81 @@ function AppContent() {
             <ProtectedRoute>
               <ErrorBoundary>
                 <AnalyticsDashboard />
+              </ErrorBoundary>
+            </ProtectedRoute>
+          } />
+          
+          {/* Bills Routes */}
+          <Route path="/bills" element={
+            <ProtectedRoute>
+              <ErrorBoundary>
+                <BillsDashboard />
+              </ErrorBoundary>
+            </ProtectedRoute>
+          } />
+          
+          {/* Notifications Route */}
+          <Route path="/notifications" element={
+            <ProtectedRoute>
+              <ErrorBoundary>
+                <NotificationCenter />
+              </ErrorBoundary>
+            </ProtectedRoute>
+          } />
+          
+          {/* AI Routes */}
+          <Route path="/ai" element={
+            <ProtectedRoute>
+              <ErrorBoundary>
+                <AIDashboard />
+              </ErrorBoundary>
+            </ProtectedRoute>
+          } />
+          
+          {/* Community Routes */}
+          <Route path="/community" element={
+            <ProtectedRoute>
+              <ErrorBoundary>
+                <CommunityHub />
+              </ErrorBoundary>
+            </ProtectedRoute>
+          } />
+          
+          {/* Investment Routes */}
+          <Route path="/investments" element={
+            <ProtectedRoute>
+              <ErrorBoundary>
+                <InvestmentDashboard />
+              </ErrorBoundary>
+            </ProtectedRoute>
+          } />
+          
+          {/* Financial Planning Routes */}
+          <Route path="/planning" element={
+            <ProtectedRoute>
+              <ErrorBoundary>
+                <FinancialPlanner />
+              </ErrorBoundary>
+            </ProtectedRoute>
+          } />
+          <Route path="/planning/retirement" element={
+            <ProtectedRoute>
+              <ErrorBoundary>
+                <RetirementCalculator />
+              </ErrorBoundary>
+            </ProtectedRoute>
+          } />
+          <Route path="/planning/debt" element={
+            <ProtectedRoute>
+              <ErrorBoundary>
+                <DebtOptimizer />
+              </ErrorBoundary>
+            </ProtectedRoute>
+          } />
+          <Route path="/planning/tax" element={
+            <ProtectedRoute>
+              <ErrorBoundary>
+                <TaxPlanner />
               </ErrorBoundary>
             </ProtectedRoute>
           } />
