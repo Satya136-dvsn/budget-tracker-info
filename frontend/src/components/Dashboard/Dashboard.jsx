@@ -320,13 +320,12 @@ const Dashboard = () => {
           </div>
           <div className="dashboard-header-actions">
             <button 
-              className="export-btn"
+              className="professional-btn professional-btn-primary export-btn"
               onClick={() => navigate('/export')}
               title="Export Financial Data"
             >
               📊 Export Data
             </button>
-
           </div>
         </div>
         
@@ -371,21 +370,21 @@ const Dashboard = () => {
             <h3>Quick Actions</h3>
             <div className="action-buttons">
               <button 
-                className="action-btn" 
+                className="professional-btn professional-btn-primary action-btn" 
                 onClick={() => setShowExpenseModal(true)}
                 title="Add a new expense transaction"
               >
                 ➕ Add Expense
               </button>
               <button 
-                className="action-btn" 
+                className="professional-btn professional-btn-success action-btn" 
                 onClick={() => setShowGoalModal(true)}
                 title="Set a new savings goal"
               >
                 🎯 Set Goal
               </button>
               <button 
-                className="action-btn" 
+                className="professional-btn professional-btn-secondary action-btn" 
                 onClick={() => navigate('/financial-health')}
                 title="View detailed financial health analysis"
               >

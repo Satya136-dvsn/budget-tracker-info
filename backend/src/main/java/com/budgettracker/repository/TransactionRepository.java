@@ -151,4 +151,8 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     // Find transactions by user ID after a certain date
     @Query("SELECT t FROM Transaction t WHERE t.user.id = :userId AND t.transactionDate > :date ORDER BY t.transactionDate DESC")
     List<Transaction> findByUserIdAndTransactionDateAfter(@Param("userId") Long userId, @Param("date") LocalDateTime date);
+    
+    // Find transactions by user ID and date range (for bill reminder service)
+    @Query("SELECT t FROM Transaction t WHERE t.user.id = :userId AND DATE(t.transactionDate) BETWEEN :startDate AND :endDate ORDER BY t.transactionDate DESC")
+    List<Transaction> findByUserIdAndDateBetween(@Param("userId") Long userId, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 }

@@ -31,9 +31,14 @@ import FinancialPlanner from './components/Planning/FinancialPlanner';
 import RetirementCalculator from './components/Planning/RetirementCalculator';
 import DebtOptimizer from './components/Planning/DebtOptimizer';
 import TaxPlanner from './components/Planning/TaxPlanner';
+import CurrencyDashboard from './components/Currency/CurrencyDashboard';
+import BankIntegration from './components/Banking/BankIntegration';
 import Alert from './components/Common/Alert';
 import ErrorBoundary from './components/Common/ErrorBoundary';
 import './styles/clean-layout.css';
+import './styles/global-layout-fix.css';
+import './styles/component-layout-fix.css';
+import './styles/chart-layout-fix.css';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -231,6 +236,24 @@ function AppContent() {
             <ProtectedRoute>
               <ErrorBoundary>
                 <TaxPlanner />
+              </ErrorBoundary>
+            </ProtectedRoute>
+          } />
+          
+          {/* Currency Routes */}
+          <Route path="/currencies" element={
+            <ProtectedRoute>
+              <ErrorBoundary>
+                <CurrencyDashboard />
+              </ErrorBoundary>
+            </ProtectedRoute>
+          } />
+          
+          {/* Bank Integration Routes */}
+          <Route path="/banking" element={
+            <ProtectedRoute>
+              <ErrorBoundary>
+                <BankIntegration />
               </ErrorBoundary>
             </ProtectedRoute>
           } />

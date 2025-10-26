@@ -220,3 +220,124 @@ CREATE TABLE IF NOT EXISTS notification_preferences (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     INDEX idx_notification_preferences_user_id (user_id)
 );
+-- C
+reate currencies table
+CREATE TABLE IF NOT EXISTS currencies (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    code VARCHAR(3) NOT NULL UNIQUE,
+    name VARCHAR(100) NOT NULL,
+    symbol VARCHAR(10) NOT NULL,
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_currencies_code (code),
+    INDEX idx_currencies_active (is_active)
+);
+
+-- Create exchange_rates table
+CREATE TABLE IF NOT EXISTS exchange_rates (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    from_currency_id BIGINT NOT NULL,
+    to_currency_id BIGINT NOT NULL,
+    rate DECIMAL(15,6) NOT NULL,
+    rate_date DATE NOT NULL,
+    source VARCHAR(50),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (from_currency_id) REFERENCES currencies(id) ON DELETE CASCADE,
+    FOREIGN KEY (to_currency_id) REFERENCES currencies(id) ON DELETE CASCADE,
+    UNIQUE KEY unique_rate_per_date (from_currency_id, to_currency_id, rate_date),
+    INDEX idx_exchange_rates_from_currency (from_currency_id),
+    INDEX idx_exchange_rates_to_currency (to_currency_id),
+    INDEX idx_exchange_rates_date (rate_date),
+    INDEX idx_exchange_rates_currencies_date (from_currency_id, to_currency_id, rate_date)
+);
+
+-- Insert default currencies
+INSERT INTO currencies (code, name, symbol, is_active) VALUES
+('USD', 'US Dollar', '$', TRUE),
+('EUR', 'Euro', '€', TRUE),
+('GBP', 'British Pound', '£', TRUE),
+('JPY', 'Japanese Yen', '¥', TRUE),
+('CAD', 'Canadian Dollar', 'C$', TRUE),
+('AUD', 'Australian Dollar', 'A$', TRUE),
+('CHF', 'Swiss Franc', 'CHF', TRUE),
+('CNY', 'Chinese Yuan', '¥', TRUE),
+('INR', 'Indian Rupee', '₹', TRUE),
+('KRW', 'South Korean Won', '₩', TRUE),
+('MXN', 'Mexican Peso', '$', TRUE),
+('BRL', 'Brazilian Real', 'R$', TRUE),
+('RUB', 'Russian Ruble', '₽', TRUE),
+('ZAR', 'South African Rand', 'R', TRUE),
+('SGD', 'Singapore Dollar', 'S$', TRUE),
+('HKD', 'Hong Kong Dollar', 'HK$', TRUE),
+('NOK', 'Norwegian Krone', 'kr', TRUE),
+('SEK', 'Swedish Krona', 'kr', TRUE),
+('DKK', 'Danish Krone', 'kr', TRUE),
+('PLN', 'Polish Zloty', 'zł', TRUE)
+ON DUPLICATE KEY UPDATE name = VALUES(name), symbol = VALUES(symbol);
+
+-- Add currency_code column to transactions table if it doesn't exist
+ALTER TABLE transactions 
+ADD COLUMN IF NOT EXISTS currency_code VARCHAR(3) DEFAULT 'USD',
+ADD INDEX IF NOT EXISTS idx_transactions_currency (currency_code);
+
+-- Add currency_code column to budgets table if it doesn't exist
+ALTER TABLE budgets 
+ADD COLUMN IF NOT EXISTS currency_code VARCHAR(3) DEFAULT 'USD',
+ADD INDEX IF NOT EXISTS idx_budgets_currency (currency_code);
+
+-- Add currency_code column to savings_goals table if it doesn't exist
+ALTER TABLE savings_goals 
+ADD COLUMN IF NOT EXISTS currency_code VARCHAR(3) DEFAULT 'USD',
+ADD INDEX IF NOT EXISTS idx_savings_goals_currency (currency_code);
+
+-- Add user_base_currency column to users table if it doesn't exist
+ALTER TABLE users 
+ADD COLUMN IF NOT EXISTS base_currency_code VARCHAR(3) DEFAULT 'USD',
+ADD INDEX IF NOT EXISTS idx_users_base_currency (base_currency_code);-- Cre
+ate bank_accounts table
+CREATE TABLE IF NOT EXISTS bank_accounts (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    account_name VARCHAR(100) NOT NULL,
+    bank_name VARCHAR(100) NOT NULL,
+    account_number VARCHAR(50) NOT NULL,
+    account_type ENUM('CHECKING', 'SAVINGS', 'CREDIT_CARD', 'INVESTMENT', 'LOAN', 'MORTGAGE', 'OTHER') NOT NULL,
+    current_balance DECIMAL(15,2) DEFAULT 0.00,
+    available_balance DECIMAL(15,2) DEFAULT 0.00,
+    currency_code VARCHAR(3) DEFAULT 'USD',
+    connection_status ENUM('ACTIVE', 'INACTIVE', 'ERROR', 'REQUIRES_UPDATE', 'DISCONNECTED') NOT NULL DEFAULT 'ACTIVE',
+    external_account_id VARCHAR(100),
+    institution_id VARCHAR(100),
+    last_sync_at TIMESTAMP NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    INDEX idx_bank_accounts_user_id (user_id),
+    INDEX idx_bank_accounts_status (connection_status),
+    INDEX idx_bank_accounts_external_id (external_account_id),
+    INDEX idx_bank_accounts_last_sync (last_sync_at)
+);
+
+-- Create bank_connections table
+CREATE TABLE IF NOT EXISTS bank_connections (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    institution_id VARCHAR(100),
+    institution_name VARCHAR(100),
+    access_token VARCHAR(500),
+    item_id VARCHAR(100),
+    status ENUM('ACTIVE', 'INACTIVE', 'ERROR', 'REQUIRES_UPDATE', 'EXPIRED', 'DISCONNECTED') NOT NULL DEFAULT 'ACTIVE',
+    last_successful_sync TIMESTAMP NULL,
+    last_error_message VARCHAR(500),
+    consent_expiration TIMESTAMP NULL,
+    webhook_url VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    INDEX idx_bank_connections_user_id (user_id),
+    INDEX idx_bank_connections_status (status),
+    INDEX idx_bank_connections_item_id (item_id),
+    INDEX idx_bank_connections_institution (institution_id)
+);

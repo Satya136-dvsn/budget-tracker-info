@@ -34,9 +34,11 @@ const BillsDashboard = () => {
 
     return (
         <div className="bills-dashboard">
-            <div className="bills-dashboard-header">
-                <h1>Bill Management</h1>
-                <p>Track, manage, and get reminders for all your bills</p>
+            <div className="dashboard-header">
+                <div className="welcome-section">
+                    <h1>Bill Management</h1>
+                    <p>Track, manage, and get reminders for all your bills</p>
+                </div>
             </div>
 
             <div className="bills-dashboard-tabs">

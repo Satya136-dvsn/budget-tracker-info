@@ -268,6 +268,7 @@ public class Notification {
         PENDING,
         SENT,
         DELIVERED,
+        UNREAD,
         READ,
         FAILED,
         CANCELLED

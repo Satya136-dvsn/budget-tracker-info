@@ -517,7 +517,98 @@ class ApiService {
     const url = `/api/export/preview${params.toString() ? '?' + params.toString() : ''}`;
     return this.makeRequest(url, 'GET');
   }
+
+  // Currency endpoints
+  async getAllCurrencies() {
+    return this.makeRequest('/api/currencies', 'GET');
+  }
+
+  async getCommonCurrencies() {
+    return this.makeRequest('/api/currencies/common', 'GET');
+  }
+
+  async getCurrencyByCode(code) {
+    return this.makeRequest(`/api/currencies/${code}`, 'GET');
+  }
+
+  async searchCurrencies(query) {
+    const params = new URLSearchParams();
+    params.append('query', query);
+    return this.makeRequest(`/api/currencies/search?${params.toString()}`, 'GET');
+  }
+
+  async createCurrency(currencyData) {
+    return this.makeRequest('/api/currencies', 'POST', currencyData);
+  }
+
+  async updateCurrency(id, currencyData) {
+    return this.makeRequest(`/api/currencies/${id}`, 'PUT', currencyData);
+  }
+
+  async convertCurrency(conversionData) {
+    return this.makeRequest('/api/currencies/convert', 'POST', conversionData);
+  }
+
+  async getLatestExchangeRates(baseCurrency) {
+    return this.makeRequest(`/api/currencies/rates/${baseCurrency}`, 'GET');
+  }
+
+  async getExchangeRate(fromCurrency, toCurrency, date = null) {
+    const params = new URLSearchParams();
+    if (date) params.append('date', date);
+    const url = `/api/currencies/rates/${fromCurrency}/${toCurrency}${params.toString() ? '?' + params.toString() : ''}`;
+    return this.makeRequest(url, 'GET');
+  }
+
+  async getHistoricalExchangeRates(fromCurrency, toCurrency, startDate, endDate) {
+    const params = new URLSearchParams();
+    params.append('startDate', startDate);
+    params.append('endDate', endDate);
+    return this.makeRequest(`/api/currencies/rates/${fromCurrency}/${toCurrency}/history?${params.toString()}`, 'GET');
+  }
+
+  async updateExchangeRates() {
+    return this.makeRequest('/api/currencies/rates/update', 'POST');
+  }
+
+  async initializeDefaultCurrencies() {
+    return this.makeRequest('/api/currencies/initialize', 'POST');
+  }
+
+  // Bank Integration endpoints
+  async getBankAccounts() {
+    return this.makeRequest('/api/bank-integration/accounts', 'GET');
+  }
+
+  async addBankAccount(accountData) {
+    return this.makeRequest('/api/bank-integration/accounts', 'POST', accountData);
+  }
+
+  async updateAccountBalance(accountId, balance) {
+    return this.makeRequest(`/api/bank-integration/accounts/${accountId}/balance`, 'PUT', { balance });
+  }
+
+  async syncBankAccount(accountId) {
+    return this.makeRequest(`/api/bank-integration/accounts/${accountId}/sync`, 'POST');
+  }
+
+  async syncAllBankAccounts() {
+    return this.makeRequest('/api/bank-integration/accounts/sync-all', 'POST');
+  }
+
+  async disconnectBankAccount(accountId) {
+    return this.makeRequest(`/api/bank-integration/accounts/${accountId}`, 'DELETE');
+  }
+
+  async getTotalBankBalance() {
+    return this.makeRequest('/api/bank-integration/accounts/total-balance', 'GET');
+  }
+
+  async getBankAccountTypes() {
+    return this.makeRequest('/api/bank-integration/account-types', 'GET');
+  }
 }
 
 export const apiService = new ApiService();
+export const api = apiService; // Alias for convenience
 export default apiService;

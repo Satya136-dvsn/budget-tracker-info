@@ -39,6 +39,9 @@ public class Budget {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
     
+    @Column(name = "currency_code", length = 3)
+    private String currencyCode = "USD";
+    
     // Constructors
     public Budget() {
         this.createdAt = LocalDateTime.now();
@@ -149,6 +152,14 @@ public class Budget {
     
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+    
+    public String getCurrencyCode() {
+        return currencyCode;
+    }
+    
+    public void setCurrencyCode(String currencyCode) {
+        this.currencyCode = currencyCode;
     }
     
     @PreUpdate

@@ -45,6 +45,9 @@ public class SavingsGoal {
     @Column(name = "completed_at")
     private LocalDateTime completedAt;
     
+    @Column(name = "currency_code", length = 3)
+    private String currencyCode = "USD";
+    
     // Constructors
     public SavingsGoal() {
         this.createdAt = LocalDateTime.now();
@@ -182,6 +185,14 @@ public class SavingsGoal {
     
     public void setCompletedAt(LocalDateTime completedAt) {
         this.completedAt = completedAt;
+    }
+    
+    public String getCurrencyCode() {
+        return currencyCode;
+    }
+    
+    public void setCurrencyCode(String currencyCode) {
+        this.currencyCode = currencyCode;
     }
     
     @PreUpdate

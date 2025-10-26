@@ -56,6 +56,9 @@ public class User implements UserDetails {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
     
+    @Column(name = "base_currency_code", length = 3)
+    private String baseCurrencyCode = "USD";
+    
     @Column(name = "is_enabled")
     private boolean enabled = true;
     
@@ -188,6 +191,14 @@ public class User implements UserDetails {
     
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+    
+    public String getBaseCurrencyCode() {
+        return baseCurrencyCode;
+    }
+    
+    public void setBaseCurrencyCode(String baseCurrencyCode) {
+        this.baseCurrencyCode = baseCurrencyCode;
     }
     
     public void setEnabled(boolean enabled) {

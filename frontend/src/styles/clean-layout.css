@@ -349,6 +349,7 @@ body {
   .sidebar-container {
     width: 280px;
     transform: translateX(-100%);
+    z-index: 2000;
   }
   
   .sidebar-container.mobile-open {
@@ -367,7 +368,25 @@ body {
     width: 100vw;
   }
   
-  /* Sidebar toggle positioning handled by inline styles in component */
+  /* Mobile overlay for sidebar */
+  .sidebar-container::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 280px;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: -1;
+  }
+  
+  .sidebar-container.mobile-open::after {
+    opacity: 1;
+    visibility: visible;
+  }
 }
 
 @media (max-width: 480px) {

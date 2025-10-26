@@ -253,6 +253,22 @@ const CleanSidebar = ({ collapsed, onToggle, isAuthenticated }) => {
               navigate={navigate}
               location={location}
             />
+            <SidebarNavButton
+              icon="💱"
+              label="Currencies"
+              path="/currencies"
+              collapsed={collapsed}
+              navigate={navigate}
+              location={location}
+            />
+            <SidebarNavButton
+              icon="🏦"
+              label="Banking"
+              path="/banking"
+              collapsed={collapsed}
+              navigate={navigate}
+              location={location}
+            />
             <SidebarNavButtonWithBadge
               icon="🔔"
               label="Notifications"

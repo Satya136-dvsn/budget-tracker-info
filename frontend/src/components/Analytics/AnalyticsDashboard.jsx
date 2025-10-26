@@ -12,6 +12,7 @@ import SavingsProgressChart from './SavingsProgressChart';
 import './AnalyticsDashboard.css';
 import './SimpleLayoutFix.css';
 import './AnalyticsLayoutFix.css';
+import '../../styles/global-layout-fix.css';
 
 const AnalyticsDashboard = () => {
   const navigate = useNavigate();

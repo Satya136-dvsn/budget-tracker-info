@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 @Service
 public class EmailService {
     
-    @Autowired
+    @Autowired(required = false)
     private JavaMailSender mailSender;
     
     @Value("${app.email.from:noreply@budgetwise.com}")
@@ -31,8 +31,8 @@ public class EmailService {
      * Send a simple notification email
      */
     public void sendNotificationEmail(String toEmail, String subject, String message, String actionUrl) {
-        if (!emailEnabled) {
-            System.out.println("Email disabled - would send: " + subject + " to " + toEmail);
+        if (!emailEnabled || mailSender == null) {
+            System.out.println("Email disabled or not configured - would send: " + subject + " to " + toEmail);
             return;
         }
         
@@ -188,8 +188,8 @@ public class EmailService {
      * Send simple text email (fallback)
      */
     public void sendSimpleEmail(String toEmail, String subject, String message) {
-        if (!emailEnabled) {
-            System.out.println("Email disabled - would send: " + subject + " to " + toEmail);
+        if (!emailEnabled || mailSender == null) {
+            System.out.println("Email disabled or not configured - would send: " + subject + " to " + toEmail);
             return;
         }
         
