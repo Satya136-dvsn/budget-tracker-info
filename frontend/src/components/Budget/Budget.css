@@ -610,8 +610,9 @@ select.form-control option {
   color: #1e293b;
   padding: 0.5rem;
   font-weight: 500;
-}/* Profile I
-ntegration Section */
+}
+
+/* Profile Integration Section */
 .profile-integration {
   background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
   border: 2px solid #bae6fd;
@@ -702,8 +703,9 @@ ntegration Section */
     font-size: 0.85rem;
     padding: 0.875rem;
   }
-}/* Budget Ch
-art Section */
+}
+
+/* Budget Chart Section */
 .budget-chart-section {
   margin-top: 2rem;
   background: white;

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
+import { formatCurrency } from '../../utils/currencyFormatter';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -104,7 +105,7 @@ const PureMonthlyChart = ({ months = 3 }) => {
         displayColors: true,
         callbacks: {
           label: function(context) {
-            return `${context.dataset.label}: $${context.parsed.y.toLocaleString()}`;
+            return `${context.dataset.label}: ${formatCurrency(context.parsed.y)}`;
           }
         }
       }
@@ -136,7 +137,7 @@ const PureMonthlyChart = ({ months = 3 }) => {
             weight: '500'
           },
           callback: function(value) {
-            return '$' + (value / 1000) + 'k';
+            return '₹' + (value / 1000) + 'k';
           }
         }
       }

@@ -11,6 +11,33 @@ const PersonalizedInsights = ({ userId }) => {
     fetchInsights();
   }, [userId]);
 
+  const handleApplySuggestion = (insight) => {
+    switch (insight.type) {
+      case 'spending_pattern':
+        alert(`Applying suggestion: ${insight.title}\n\nWe'll help you set up alerts for dining expenses and suggest meal planning tools.`);
+        break;
+      case 'budget_optimization':
+        alert(`Applying suggestion: ${insight.title}\n\nWe'll reallocate your entertainment budget to savings goals.`);
+        break;
+      case 'savings_opportunity':
+        alert(`Applying suggestion: ${insight.title}\n\nWe'll help you review and cancel unused subscriptions.`);
+        break;
+      default:
+        alert(`Applying suggestion: ${insight.title}`);
+    }
+  };
+
+  const handleLearnMore = (insight) => {
+    const learnMoreContent = {
+      'spending_pattern': 'Learn about tracking spending patterns and setting up automated alerts to help you stay within budget.',
+      'budget_optimization': 'Discover how to optimize your budget allocation and maximize your savings potential.',
+      'savings_opportunity': 'Find out how to identify and eliminate unnecessary expenses to boost your savings.',
+      'goal_progress': 'Learn about effective savings strategies and goal tracking techniques.'
+    };
+    
+    alert(`Learn More: ${insight.title}\n\n${learnMoreContent[insight.type] || 'More information about this insight.'}`);
+  };
+
   const fetchInsights = async () => {
     try {
       setLoading(true);
@@ -22,25 +49,25 @@ const PersonalizedInsights = ({ userId }) => {
           title: 'Dining Out Trend',
           description: 'You\'ve spent 23% more on dining out this month compared to last month. Consider cooking at home more often to save money.',
           impact: 'high',
-          savings: 150,
+          savings: 12500,
           confidence: 0.85
         },
         {
           id: 2,
           type: 'budget_optimization',
           title: 'Entertainment Budget',
-          description: 'Your entertainment spending is consistently under budget. You could reallocate $50 to your savings goal.',
+          description: 'Your entertainment spending is consistently under budget. You could reallocate ₹4,150 to your savings goal.',
           impact: 'medium',
-          savings: 50,
+          savings: 4150,
           confidence: 0.92
         },
         {
           id: 3,
           type: 'savings_opportunity',
           title: 'Subscription Review',
-          description: 'You have 3 unused subscriptions totaling $45/month. Consider canceling services you don\'t use.',
+          description: 'You have 3 unused subscriptions totaling ₹3,735/month. Consider canceling services you don\'t use.',
           impact: 'medium',
-          savings: 45,
+          savings: 3735,
           confidence: 0.78
         },
         {
@@ -126,12 +153,22 @@ const PersonalizedInsights = ({ userId }) => {
               {insight.savings > 0 && (
                 <div className="savings-potential">
                   <span className="savings-label">Potential Monthly Savings:</span>
-                  <span className="savings-amount">${insight.savings}</span>
+                  <span className="savings-amount">₹{insight.savings.toLocaleString('en-IN')}</span>
                 </div>
               )}
               <div className="insight-actions">
-                <Button className="action-btn primary">Apply Suggestion</Button>
-                <Button className="action-btn secondary">Learn More</Button>
+                <Button 
+                  className="action-btn primary"
+                  onClick={() => handleApplySuggestion(insight)}
+                >
+                  Apply Suggestion
+                </Button>
+                <Button 
+                  className="action-btn secondary"
+                  onClick={() => handleLearnMore(insight)}
+                >
+                  Learn More
+                </Button>
               </div>
             </CardContent>
           </Card>
@@ -147,13 +184,13 @@ const PersonalizedInsights = ({ userId }) => {
             <div className="summary-stats">
               <div className="stat">
                 <span className="stat-value">
-                  ${insights.reduce((sum, insight) => sum + insight.savings, 0)}
+                  ₹{insights.reduce((sum, insight) => sum + insight.savings, 0).toLocaleString('en-IN')}
                 </span>
                 <span className="stat-label">Monthly Savings</span>
               </div>
               <div className="stat">
                 <span className="stat-value">
-                  ${insights.reduce((sum, insight) => sum + insight.savings, 0) * 12}
+                  ₹{(insights.reduce((sum, insight) => sum + insight.savings, 0) * 12).toLocaleString('en-IN')}
                 </span>
                 <span className="stat-label">Annual Savings</span>
               </div>

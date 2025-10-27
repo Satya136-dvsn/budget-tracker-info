@@ -84,8 +84,8 @@ const BankIntegration = () => {
     }
   };
 
-  const formatCurrency = (amount, currencyCode = 'USD') => {
-    return new Intl.NumberFormat('en-US', {
+  const formatCurrency = (amount, currencyCode = 'INR') => {
+    return new Intl.NumberFormat('en-IN', {
       style: 'currency',
       currency: currencyCode,
     }).format(amount);
@@ -271,7 +271,7 @@ const AddAccountModal = ({ onClose, onAccountAdded }) => {
     accountNumber: '',
     accountType: 'CHECKING',
     currentBalance: '',
-    currencyCode: 'USD'
+    currencyCode: 'INR'
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -399,6 +399,7 @@ const AddAccountModal = ({ onClose, onAccountAdded }) => {
               value={formData.currencyCode}
               onChange={handleChange}
             >
+              <option value="INR">INR - Indian Rupee</option>
               <option value="USD">USD - US Dollar</option>
               <option value="EUR">EUR - Euro</option>
               <option value="GBP">GBP - British Pound</option>

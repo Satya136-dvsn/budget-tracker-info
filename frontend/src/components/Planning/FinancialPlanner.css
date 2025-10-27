@@ -265,4 +265,37 @@
 
 .text-red-600 {
   color: #dc2626;
+}/* G
+oals Section Styles */
+.goals-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.goals-tabs {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+}
+
+.goals-tabs h3 {
+  margin: 0 0 1rem 0;
+  color: #1f2937;
+  font-size: 1.25rem;
+  font-weight: 600;
+  border-bottom: 2px solid #3b82f6;
+  padding-bottom: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .goals-section {
+    flex-direction: row;
+  }
+  
+  .goals-tabs {
+    flex: 1;
+  }
 }

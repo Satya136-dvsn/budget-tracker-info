@@ -189,10 +189,9 @@ const MonthlyTrendsChart = ({
               const label = context.dataset.label || '';
               const value = context.parsed.y;
               
-              const formatter = new Intl.NumberFormat('en-US', {
+              const formatter = new Intl.NumberFormat('en-IN', {
                 style: 'currency',
-                currency: 'USD',
-                minimumFractionDigits: 0,
+                currency: 'INR',
                 maximumFractionDigits: 0
               });
               

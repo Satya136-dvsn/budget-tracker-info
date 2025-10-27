@@ -587,8 +587,9 @@
     align-items: flex-start;
     gap: 0.5rem;
   }
-}/* P
-attern Analysis Styles */
+}
+
+/* Pattern Analysis Styles */
 .patterns-analysis {
   display: flex;
   flex-direction: column;

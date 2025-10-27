@@ -160,9 +160,10 @@ const TaxPlanner = () => {
   };
 
   const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('en-US', {
+    return new Intl.NumberFormat('en-IN', {
       style: 'currency',
-      currency: 'USD'
+      currency: 'INR',
+      maximumFractionDigits: 0
     }).format(amount);
   };
 
@@ -313,7 +314,7 @@ const TaxPlanner = () => {
                       placeholder="10000"
                       className="form-input"
                     />
-                    <small className="form-help">Limited to $10,000</small>
+                    <small className="form-help">Limited to ₹8,30,000</small>
                   </div>
 
                   <div className="form-group">
@@ -361,7 +362,7 @@ const TaxPlanner = () => {
                       placeholder="22500"
                       className="form-input"
                     />
-                    <small className="form-help">2024 limit: $22,500</small>
+                    <small className="form-help">2024 limit: ₹18,67,500</small>
                   </div>
 
                   <div className="form-group">
@@ -374,7 +375,7 @@ const TaxPlanner = () => {
                       placeholder="6000"
                       className="form-input"
                     />
-                    <small className="form-help">2024 limit: $6,000</small>
+                    <small className="form-help">2024 limit: ₹4,98,000</small>
                   </div>
 
                   <div className="form-group">
@@ -400,7 +401,7 @@ const TaxPlanner = () => {
                       placeholder="3650"
                       className="form-input"
                     />
-                    <small className="form-help">2024 limit: $3,650 (individual)</small>
+                    <small className="form-help">2024 limit: ₹3,02,950 (individual)</small>
                   </div>
                 </div>
               </CardContent>

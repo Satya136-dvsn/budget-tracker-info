@@ -301,8 +301,7 @@ const SavingsProgressChart = ({
             }
           }
         },
-        scales: undefined,
-        maintainAspectRatio: false
+        scales: undefined
       };
     }
   };

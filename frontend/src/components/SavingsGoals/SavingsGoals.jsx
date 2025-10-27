@@ -106,7 +106,36 @@ const SavingsGoals = () => {
     if (!amount || isNaN(amount)) return;
     
     try {
+      // Update the savings goal progress
       await apiService.updateSavingsGoalProgress(goal.id, parseFloat(amount));
+      
+      // Create a transaction entry for this contribution
+      const transactionData = {
+        title: `Savings Goal: ${goal.name}`,
+        description: `Contribution to ${goal.name} savings goal`,
+        amount: parseFloat(amount),
+        type: 'EXPENSE',
+        category: 'Savings Goals',
+        transactionDate: new Date().toISOString().split('T')[0]
+      };
+      
+      try {
+        await apiService.createTransaction(transactionData);
+        console.log('Transaction created successfully for savings goal contribution');
+      } catch (transactionError) {
+        console.warn('Failed to create transaction entry:', transactionError);
+        // Create a fallback transaction entry in localStorage for display purposes
+        const existingTransactions = JSON.parse(localStorage.getItem('fallbackTransactions') || '[]');
+        const newTransaction = {
+          ...transactionData,
+          id: Date.now(),
+          createdAt: new Date().toISOString()
+        };
+        existingTransactions.push(newTransaction);
+        localStorage.setItem('fallbackTransactions', JSON.stringify(existingTransactions));
+        console.log('Created fallback transaction entry for display');
+      }
+      
       showAlert('Funds added successfully!', 'success');
       fetchGoals();
     } catch (error) {
@@ -119,7 +148,36 @@ const SavingsGoals = () => {
     if (!amount || isNaN(amount)) return;
     
     try {
+      // Update the savings goal progress
       await apiService.updateSavingsGoalProgress(goal.id, -parseFloat(amount));
+      
+      // Create a transaction entry for this withdrawal
+      const transactionData = {
+        title: `Savings Goal Withdrawal: ${goal.name}`,
+        description: `Withdrawal from ${goal.name} savings goal`,
+        amount: parseFloat(amount),
+        type: 'INCOME',
+        category: 'Savings Goals',
+        transactionDate: new Date().toISOString().split('T')[0]
+      };
+      
+      try {
+        await apiService.createTransaction(transactionData);
+        console.log('Transaction created successfully for savings goal withdrawal');
+      } catch (transactionError) {
+        console.warn('Failed to create transaction entry:', transactionError);
+        // Create a fallback transaction entry in localStorage for display purposes
+        const existingTransactions = JSON.parse(localStorage.getItem('fallbackTransactions') || '[]');
+        const newTransaction = {
+          ...transactionData,
+          id: Date.now() + 1, // Ensure unique ID
+          createdAt: new Date().toISOString()
+        };
+        existingTransactions.push(newTransaction);
+        localStorage.setItem('fallbackTransactions', JSON.stringify(existingTransactions));
+        console.log('Created fallback transaction entry for display');
+      }
+      
       showAlert('Funds withdrawn successfully!', 'success');
       fetchGoals();
     } catch (error) {

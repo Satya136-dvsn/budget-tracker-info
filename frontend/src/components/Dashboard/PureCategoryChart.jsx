@@ -6,6 +6,7 @@ import {
   Tooltip,
   Legend
 } from 'chart.js';
+import { formatCurrency } from '../../utils/currencyFormatter';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -64,7 +65,7 @@ const PureCategoryChart = () => {
           label: function(context) {
             const total = context.dataset.data.reduce((a, b) => a + b, 0);
             const percentage = ((context.parsed / total) * 100).toFixed(1);
-            return `${context.label}: $${context.parsed.toLocaleString()} (${percentage}%)`;
+            return `${context.label}: ${formatCurrency(context.parsed)} (${percentage}%)`;
           }
         }
       }

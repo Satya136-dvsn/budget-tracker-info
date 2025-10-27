@@ -70,10 +70,9 @@ export const defaultChartOptions = {
           
           // Format currency values
           if (typeof value === 'number') {
-            const formatter = new Intl.NumberFormat('en-US', {
+            const formatter = new Intl.NumberFormat('en-IN', {
               style: 'currency',
-              currency: 'USD',
-              minimumFractionDigits: 0,
+              currency: 'INR',
               maximumFractionDigits: 0
             });
             return `${label}: ${formatter.format(value)}`;
@@ -110,10 +109,9 @@ export const defaultChartOptions = {
         color: '#6b7280',
         callback: function(value) {
           // Format y-axis labels as currency
-          const formatter = new Intl.NumberFormat('en-US', {
+          const formatter = new Intl.NumberFormat('en-IN', {
             style: 'currency',
-            currency: 'USD',
-            minimumFractionDigits: 0,
+            currency: 'INR',
             maximumFractionDigits: 0,
             notation: value >= 1000 ? 'compact' : 'standard'
           });

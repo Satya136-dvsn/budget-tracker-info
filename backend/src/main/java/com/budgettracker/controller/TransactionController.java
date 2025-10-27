@@ -2,6 +2,7 @@ package com.budgettracker.controller;
 import com.budgettracker.dto.TransactionRequest;
 import com.budgettracker.dto.TransactionResponse;
 import com.budgettracker.service.TransactionService;
+import com.budgettracker.service.RealTimeService;
 import com.budgettracker.util.JwtUtil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class TransactionController {
     private TransactionService transactionService;
     
     @Autowired
+    private RealTimeService realTimeService;
+    
+    @Autowired
     private JwtUtil jwtUtil;
     
     // Create new transaction
@@ -35,6 +39,11 @@ public class TransactionController {
         try {
             String username = jwtUtil.extractUsername(token.substring(7));
             TransactionResponse response = transactionService.createTransaction(request, username);
+            
+            // Send real-time update
+            realTimeService.sendTransactionUpdate(response.getUserId(), response);
+            realTimeService.sendDashboardRefresh(response.getUserId());
+            
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error creating transaction: " + e.getMessage());

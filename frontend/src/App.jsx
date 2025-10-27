@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { AlertProvider } from './hooks/useAlert';
@@ -13,14 +13,13 @@ import AdminDashboard from './components/Admin/AdminDashboard';
 import Reports from './components/Reports/Reports';
 import Transactions from './components/Transactions/Transactions';
 import Budget from './components/Budget/Budget';
-import SavingsGoals from './components/SavingsGoals/SavingsGoals';
+// import SavingsGoals from './components/SavingsGoals/SavingsGoals'; // Now included in FinancialPlanner
 import FinancialHealthAnalysis from './components/FinancialHealth/FinancialHealthAnalysis';
 import CleanTrends from './components/Trends/CleanTrends';
 import MonthlySpendingResponsive from './components/Trends/MonthlySpendingResponsive';
 import CleanCategoryAnalysis from './components/Trends/CleanCategoryAnalysis';
 import SavingsGrowthResponsive from './components/Trends/SavingsGrowthResponsive';
 import Export from './components/Export/Export';
-import FinancialInsights from './components/Insights/FinancialInsights';
 import AnalyticsDashboard from './components/Analytics/AnalyticsDashboard';
 import { BillsDashboard } from './components/Bills';
 import { NotificationCenter } from './components/Notifications';
@@ -28,6 +27,10 @@ import { AIDashboard } from './components/AI';
 import { CommunityHub } from './components/Community';
 import { InvestmentDashboard } from './components/Investment';
 import FinancialPlanner from './components/Planning/FinancialPlanner';
+import UserProfile from './components/Profile/UserProfile';
+// import RealTimeStatus from './components/Common/RealTimeStatus'; // Removed as requested
+import RealTimeToast from './components/Common/RealTimeToast';
+
 import RetirementCalculator from './components/Planning/RetirementCalculator';
 import DebtOptimizer from './components/Planning/DebtOptimizer';
 import TaxPlanner from './components/Planning/TaxPlanner';
@@ -39,6 +42,8 @@ import './styles/clean-layout.css';
 import './styles/global-layout-fix.css';
 import './styles/component-layout-fix.css';
 import './styles/chart-layout-fix.css';
+import './styles/comprehensive-layout-fix.css';
+import './styles/dropdown-fix.css';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -87,6 +92,11 @@ function AppContent() {
       
       <main className={isHomePage ? 'main-content-full' : `main-content ${sidebarCollapsed ? 'sidebar-collapsed' : 'sidebar-expanded'}`}>
         <Alert />
+        {isAuthenticated && !isHomePage && (
+          <>
+            <RealTimeToast />
+          </>
+        )}
         <Routes>
           <Route path="/" element={
             isAuthenticated ? <Navigate to="/dashboard" replace /> : <CleanHome />
@@ -114,10 +124,13 @@ function AppContent() {
             <ProtectedRoute><Budget /></ProtectedRoute>
           } />
           <Route path="/savings-goals" element={
-            <ProtectedRoute><SavingsGoals /></ProtectedRoute>
+            <Navigate to="/planning" replace />
           } />
           <Route path="/profile" element={
             <ProtectedRoute><ProfileNew /></ProtectedRoute>
+          } />
+          <Route path="/settings" element={
+            <ProtectedRoute><UserProfile /></ProtectedRoute>
           } />
           <Route path="/reports" element={
             <ProtectedRoute><Reports /></ProtectedRoute>

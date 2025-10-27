@@ -25,6 +25,8 @@ The enhanced BudgetWise system follows a **microservices-oriented architecture**
 │ 🆕 Investment   │ ✅ Analytics    │ 🆕 Bill Service │ 🔗 Tax APIs (TurboTax)      │
 │ 🆕 Mobile Apps  │ ✅ Export       │ 🆕 Notification │ 🔗 ML APIs (OpenAI/AWS)     │
 │ 🆕 Planning UI  │ 🆕 Gateway      │ 🆕 Currency     │ 🔗 Push Services (FCM)      │
+│ 🆕 Real-Time UI │ 🆕 WebSocket    │ 🆕 Real-Time    │ 🔗 INR APIs (RBI/Indian)    │
+│ 🆕 Profile UI   │ 🆕 Profile API  │ 🆕 Profile Svc  │ 🔗 Indian Banking APIs      │
 └─────────────────┴─────────────────┴─────────────────┴─────────────────────────────┘
 ```
 
@@ -54,6 +56,16 @@ The enhanced BudgetWise system follows a **microservices-oriented architecture**
 - **Purpose**: Multi-channel notification delivery
 - **Features**: Email, SMS, push notifications, in-app alerts
 - **Technology**: Spring Boot, RabbitMQ, Firebase Cloud Messaging
+
+#### 6. Real-Time Data Service
+- **Purpose**: Live data streaming and instant updates
+- **Features**: WebSocket connections, Server-Sent Events, real-time notifications
+- **Technology**: Spring Boot WebSocket, STOMP protocol, Redis for message broadcasting
+
+#### 7. User Profile Service
+- **Purpose**: Personal settings and preferences management
+- **Features**: Currency preferences, timezone settings, notification preferences
+- **Technology**: Spring Boot, MySQL (integrated with main database), Redis for session management
 
 ## Components and Interfaces
 
@@ -394,44 +406,79 @@ const CommunityProfileSchema = {
 
 ## Implementation Phases
 
-### Phase 1: AI Foundation (Weeks 1-3)
-1. Set up AI service infrastructure with FastAPI
-2. Implement basic spending pattern analysis
-3. Create anomaly detection algorithms
-4. Build AI dashboard frontend components
-5. Integrate AI insights with existing dashboard
+### Phase 1: Core Functionality Completion (Weeks 1-4)
+1. Complete all missing backend functionality and API endpoints
+2. Implement real-time data infrastructure with WebSocket support
+3. Set up INR currency as default with user profile management
+4. Fix all layout issues and ensure complete content display
+5. Comprehensive testing of all functional features
 
-### Phase 2: Investment Tracking (Weeks 4-6)
-1. Implement investment service with market data integration
-2. Create portfolio management interfaces
-3. Build investment analytics and reporting
-4. Add investment goals and tracking
-5. Integrate with existing financial health scoring
+### Phase 2: Professional UI/UX Redesign (Weeks 5-8)
+1. Design and implement glassmorphism design system
+2. Create comprehensive component library with glass effects
+3. Redesign main dashboard and navigation with professional styling
+4. Implement smooth animations and micro-interactions
+5. Optimize for portfolio presentation and recruiter appeal
 
-### Phase 3: Community Platform (Weeks 7-9)
-1. Set up community service with Node.js/MongoDB
-2. Implement forum functionality and user interactions
-3. Create community frontend components
-4. Add moderation and reputation systems
-5. Integrate community insights with personal finance
+### Phase 3: Advanced Visual Features (Weeks 9-12)
+1. Implement stunning data visualizations with glass-effect charts
+2. Create beautiful forms and interactive components
+3. Add professional loading animations and transitions
+4. Optimize mobile responsive design with glassmorphism
+5. Create impressive demo scenarios and sample data
 
-### Phase 4: Advanced Planning (Weeks 10-12)
-1. Implement comprehensive financial planning tools
-2. Create retirement and debt optimization calculators
-3. Build tax planning and optimization features
-4. Add scenario analysis and what-if modeling
-5. Integrate planning tools with existing budgets and goals
+### Phase 4: Portfolio Optimization (Weeks 13-16)
+1. Create portfolio-ready landing and demo pages
+2. Add professional branding and visual identity
+3. Implement smooth onboarding flow for demonstration
+4. Create comprehensive documentation and feature highlights
+5. Performance optimization for smooth glass effects
 
-### Phase 5: Mobile & Integration (Weeks 13-16)
-1. Develop React Native mobile applications
-2. Implement bank integration with Open Banking APIs
-3. Add multi-currency support and real-time exchange rates
-4. Create bill reminder and notification systems
-5. Implement offline capabilities and data synchronization
+## Glassmorphism Design System
 
-### Phase 6: Polish & Production (Weeks 17-20)
-1. Comprehensive testing and bug fixes
-2. Performance optimization and scalability improvements
-3. Security audits and compliance validation
-4. User acceptance testing and feedback integration
-5. Production deployment and monitoring setup
+### Core Design Principles
+- **Glass-like transparency** with backdrop blur effects
+- **Layered depth** using subtle shadows and borders
+- **Gradient overlays** with vibrant but professional colors
+- **Smooth animations** with hardware acceleration
+- **Consistent spacing** and typography hierarchy
+
+### Component Specifications
+```css
+/* Glass Card Base */
+.glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* Glass Button */
+.glass-button {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+/* Glass Navigation */
+.glass-nav {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+```
+
+### Color Palette
+- **Primary Gradient**: Linear gradient from #667eea to #764ba2
+- **Secondary Gradient**: Linear gradient from #f093fb to #f5576c
+- **Success Gradient**: Linear gradient from #4facfe to #00f2fe
+- **Glass Overlay**: rgba(255, 255, 255, 0.1) to rgba(255, 255, 255, 0.2)
+- **Text Colors**: #2d3748 (dark), #718096 (medium), #ffffff (light)
+
+### Typography
+- **Primary Font**: Inter or Poppins for modern, clean appearance
+- **Heading Weights**: 600-700 for professional hierarchy
+- **Body Text**: 400-500 for optimal readability
+- **Font Sizes**: Responsive scale from 14px to 48px

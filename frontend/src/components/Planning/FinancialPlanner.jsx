@@ -5,6 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '../Common/Tabs';
 import RetirementCalculator from './RetirementCalculator';
 import DebtOptimizer from './DebtOptimizer';
 import TaxPlanner from './TaxPlanner';
+import UnifiedGoals from '../Goals/UnifiedGoals';
 import './FinancialPlanner.css';
 
 const FinancialPlanner = () => {
@@ -141,6 +142,7 @@ const FinancialPlanner = () => {
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <TabsList className="planner-tabs">
           <TabsTrigger value="overview">Overview</TabsTrigger>
+          <TabsTrigger value="goals">Goals & Savings</TabsTrigger>
           <TabsTrigger value="retirement">Retirement</TabsTrigger>
           <TabsTrigger value="debt">Debt Optimization</TabsTrigger>
           <TabsTrigger value="tax">Tax Planning</TabsTrigger>
@@ -335,6 +337,10 @@ const FinancialPlanner = () => {
               </div>
             </CardContent>
           </Card>
+        </TabsContent>
+
+        <TabsContent value="goals">
+          <UnifiedGoals />
         </TabsContent>
 
         <TabsContent value="retirement">

@@ -328,12 +328,6 @@ const FinancialHealthAnalysis = () => {
             📊 Overview
           </button>
           <button 
-            className={`tab-btn ${activeTab === 'patterns' ? 'active' : ''}`}
-            onClick={() => setActiveTab('patterns')}
-          >
-            📈 Patterns
-          </button>
-          <button 
             className={`tab-btn ${activeTab === 'community' ? 'active' : ''}`}
             onClick={() => setActiveTab('community')}
           >
@@ -492,35 +486,7 @@ const FinancialHealthAnalysis = () => {
         </>
         )}
 
-        {/* Patterns Tab */}
-        {activeTab === 'patterns' && (
-          <div className="insight-card">
-            <div style={{ textAlign: 'center', padding: '3rem' }}>
-              <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>📊</div>
-              <h3 style={{ color: '#64748b', marginBottom: '1rem' }}>Spending Patterns</h3>
-              <p style={{ color: '#64748b', marginBottom: '2rem' }}>
-                Detailed spending patterns and analytics will be available here. 
-                For now, check out the Analytics section for spending trends.
-              </p>
-              <button 
-                onClick={() => navigate('/trends')}
-                style={{
-                  background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '12px',
-                  padding: '0.75rem 1.5rem',
-                  fontSize: '1rem',
-                  fontWeight: '600',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s'
-                }}
-              >
-                View Analytics
-              </button>
-            </div>
-          </div>
-        )}
+
 
         {/* Community Tips Tab */}
         {activeTab === 'community' && (

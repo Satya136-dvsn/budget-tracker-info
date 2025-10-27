@@ -33,12 +33,14 @@
 .budget-vs-actual-chart .budget-chart-container {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
   height: 100%;
-  min-height: 500px;
-  padding: 1rem;
-  overflow: visible;
+  min-height: 350px;
+  padding: 0.5rem;
+  overflow: hidden;
   position: relative;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .budget-vs-actual-chart .budget-summary {
@@ -165,9 +167,12 @@
 
 .budget-vs-actual-chart .chart-section {
   flex: 1;
-  min-height: 350px;
-  height: 350px;
-  padding: 1rem;
+  min-height: 250px;
+  height: 250px;
+  padding: 0.5rem;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 /* Responsive Design */

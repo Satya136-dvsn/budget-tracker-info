@@ -17,6 +17,29 @@ const CommunityHub = () => {
     fetchCommunityData();
   }, []);
 
+  const handleCreatePost = () => {
+    const title = prompt('Enter post title:');
+    if (title) {
+      const content = prompt('Enter post content:');
+      if (content) {
+        alert(`Post Created!\n\nTitle: ${title}\nContent: ${content}\n\nThis would normally be saved to the community database.`);
+        // In a real app, this would create a new post
+      }
+    }
+  };
+
+  const handleBrowseGroups = () => {
+    alert('Browse Groups\n\nAvailable Groups:\n• Budgeting Beginners (1,250 members)\n• Investment Club (890 members)\n• Debt Freedom (675 members)\n• Retirement Planning (543 members)\n• Side Hustles (432 members)\n• Frugal Living (321 members)\n\nClick on any group to join the discussion!');
+  };
+
+  const handleViewLeaderboard = () => {
+    alert('Community Leaderboard\n\n🏆 Top Contributors:\n1. FinanceGuru - 2,450 points\n2. InvestSmart - 2,120 points\n3. DebtFree2024 - 1,890 points\n4. TaxExpert - 1,675 points\n5. SafeSaver - 1,432 points\n\nPoints are earned by posting helpful content, answering questions, and receiving likes from the community!');
+  };
+
+  const handleViewProfile = () => {
+    alert('My Community Profile\n\n👤 Profile Stats:\n• Posts Created: 12\n• Comments Made: 45\n• Likes Received: 128\n• Community Points: 567\n• Member Since: January 2024\n• Groups Joined: 3\n\nBadges Earned:\n🥉 Helpful Contributor\n📝 Active Poster\n💬 Great Commenter');
+  };
+
   const fetchCommunityData = async () => {
     try {
       setLoading(true);
@@ -24,7 +47,7 @@ const CommunityHub = () => {
       // Mock data for now since backend might not be fully connected
       const mockPosts = [
         { id: 1, title: 'Best budgeting apps for beginners', author: 'FinanceGuru', replies: 12, likes: 25, createdAt: '2024-01-15' },
-        { id: 2, title: 'How I paid off $50k in debt', author: 'DebtFree2024', replies: 8, likes: 45, createdAt: '2024-01-14' },
+        { id: 2, title: 'How I paid off ₹41.5L in debt', author: 'DebtFree2024', replies: 8, likes: 45, createdAt: '2024-01-14' },
         { id: 3, title: 'Investment strategies for young professionals', author: 'InvestSmart', replies: 15, likes: 32, createdAt: '2024-01-13' },
         { id: 4, title: 'Emergency fund: How much is enough?', author: 'SafeSaver', replies: 6, likes: 18, createdAt: '2024-01-12' },
         { id: 5, title: 'Tax planning tips for 2024', author: 'TaxExpert', replies: 9, likes: 28, createdAt: '2024-01-11' }
@@ -96,22 +119,34 @@ const CommunityHub = () => {
         <div className="quick-actions">
           <h2>Quick Actions</h2>
           <div className="action-buttons">
-            <Link to="/community/posts/new" className="action-btn primary">
+            <button 
+              onClick={() => handleCreatePost()}
+              className="action-btn primary"
+            >
               <span className="icon">✏️</span>
               Create Post
-            </Link>
-            <Link to="/community/groups" className="action-btn">
+            </button>
+            <button 
+              onClick={() => handleBrowseGroups()}
+              className="action-btn"
+            >
               <span className="icon">👥</span>
               Browse Groups
-            </Link>
-            <Link to="/community/leaderboard" className="action-btn">
+            </button>
+            <button 
+              onClick={() => handleViewLeaderboard()}
+              className="action-btn"
+            >
               <span className="icon">🏆</span>
               Leaderboard
-            </Link>
-            <Link to="/community/profile" className="action-btn">
+            </button>
+            <button 
+              onClick={() => handleViewProfile()}
+              className="action-btn"
+            >
               <span className="icon">👤</span>
               My Profile
-            </Link>
+            </button>
           </div>
         </div>
 

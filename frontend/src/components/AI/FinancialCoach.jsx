@@ -87,7 +87,7 @@ const FinancialCoach = ({ userId }) => {
 
     if (lowerMessage.includes('emergency') || lowerMessage.includes('fund')) {
       return {
-        message: 'Building an emergency fund is crucial! Here\'s my recommended approach:\n\n**Start Small**: Aim for $1,000 first, then build to 3-6 months of expenses\n**Automate**: Set up automatic transfers to a separate savings account\n**High-yield account**: Keep it in a savings account that earns interest\n**Don\'t touch it**: Only use for true emergencies\n\nBased on your current expenses (~$3,200/month), you should aim for $9,600-$19,200. You\'re currently at $3,400 - great start!',
+        message: 'Building an emergency fund is crucial! Here\'s my recommended approach:\n\n**Start Small**: Aim for ₹83,000 first, then build to 3-6 months of expenses\n**Automate**: Set up automatic transfers to a separate savings account\n**High-yield account**: Keep it in a savings account that earns interest\n**Don\'t touch it**: Only use for true emergencies\n\nBased on your current expenses (~₹2,65,600/month), you should aim for ₹7,96,800-₹15,93,600. You\'re currently at ₹2,82,200 - great start!',
         type: 'advice',
         actions: ['Set Emergency Goal', 'Automate Savings', 'Find High-Yield Account']
       };
@@ -103,7 +103,7 @@ const FinancialCoach = ({ userId }) => {
 
     if (lowerMessage.includes('retirement') || lowerMessage.includes('save')) {
       return {
-        message: 'Retirement planning is all about starting early! Here\'s what I recommend:\n\n**The 10-15% Rule**: Save 10-15% of your income for retirement\n**Take advantage of**:\n- Employer 401k match (contribute enough to get full match)\n- Roth IRA for tax-free growth\n- Traditional IRA for tax deductions now\n\n**Your situation**: With $4,500 monthly income, aim to save $450-$675/month for retirement. The retirement calculator in your planning section can help you see if you\'re on track!',
+        message: 'Retirement planning is all about starting early! Here\'s what I recommend:\n\n**The 10-15% Rule**: Save 10-15% of your income for retirement\n**Take advantage of**:\n- Employer PF match (contribute enough to get full match)\n- PPF for tax-free growth\n- ELSS for tax deductions now\n\n**Your situation**: With ₹3,73,500 monthly income, aim to save ₹37,350-₹56,025/month for retirement. The retirement calculator in your planning section can help you see if you\'re on track!',
         type: 'advice',
         actions: ['Retirement Calculator', 'Set Retirement Goal', '401k Optimization']
       };

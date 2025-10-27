@@ -4,6 +4,8 @@ import { useAlert } from '../../hooks/useAlert';
 import { useNavigate } from 'react-router-dom';
 import { apiService } from '../../services/api';
 import { calculateFinancialHealthScore, getHealthScoreStatus } from '../../utils/financialHealthCalculator';
+// Using fallback hooks to prevent import errors
+import { useDashboardRealTime, useTransactionRealTime, useNotificationRealTime } from '../../hooks/useRealTimeFallback';
 import MonthlyTrendsChart from '../Analytics/MonthlyTrendsChart';
 import CategoryBreakdownChart from '../Analytics/CategoryBreakdownChart';
 import PureMonthlyChart from './PureMonthlyChart';
@@ -46,6 +48,32 @@ const Dashboard = () => {
       loadDashboardData();
     }
   }, [user]);
+
+  // Real-time dashboard updates (using fallback hooks for now)
+  useDashboardRealTime((update) => {
+    console.log('Dashboard real-time update:', update);
+    if (update.type === 'DASHBOARD_REFRESH') {
+      loadDashboardData();
+    }
+  });
+
+  // Real-time transaction updates
+  useTransactionRealTime((update) => {
+    console.log('Transaction real-time update:', update);
+    if (update.type === 'TRANSACTION_UPDATE') {
+      loadDashboardData(); // Refresh dashboard data when transactions change
+      showAlert('Transaction updated in real-time!', 'success');
+    }
+  });
+
+  // Real-time notifications
+  useNotificationRealTime((update) => {
+    console.log('Notification real-time update:', update);
+    if (update.type === 'NOTIFICATION') {
+      const { title, message, priority } = update.data;
+      showAlert(`${title}: ${message}`, priority === 'HIGH' ? 'error' : 'info');
+    }
+  });
 
   const loadDashboardData = async () => {
     setLoading(true);

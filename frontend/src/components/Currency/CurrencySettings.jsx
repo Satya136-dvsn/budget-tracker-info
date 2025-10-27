@@ -5,7 +5,7 @@ import './CurrencySettings.css';
 const CurrencySettings = ({ onClose, onSave }) => {
   const [currencies, setCurrencies] = useState([]);
   const [commonCurrencies, setCommonCurrencies] = useState([]);
-  const [selectedBaseCurrency, setSelectedBaseCurrency] = useState('USD');
+  const [selectedBaseCurrency, setSelectedBaseCurrency] = useState('INR');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
@@ -27,7 +27,16 @@ const CurrencySettings = ({ onClose, onSave }) => {
       setCurrencies(allResponse.data);
     } catch (error) {
       console.error('Error fetching currencies:', error);
-      setError('Failed to load currencies');
+      // Fallback to mock data with INR first
+      const mockCurrencies = [
+        { id: 1, code: 'INR', name: 'Indian Rupee', symbol: '₹' },
+        { id: 2, code: 'USD', name: 'US Dollar', symbol: '$' },
+        { id: 3, code: 'EUR', name: 'Euro', symbol: '€' },
+        { id: 4, code: 'GBP', name: 'British Pound', symbol: '£' },
+        { id: 5, code: 'JPY', name: 'Japanese Yen', symbol: '¥' }
+      ];
+      setCommonCurrencies(mockCurrencies);
+      setCurrencies(mockCurrencies);
     } finally {
       setLoading(false);
     }
@@ -39,6 +48,9 @@ const CurrencySettings = ({ onClose, onSave }) => {
       const userProfile = JSON.parse(localStorage.getItem('userProfile') || '{}');
       if (userProfile.baseCurrencyCode) {
         setSelectedBaseCurrency(userProfile.baseCurrencyCode);
+      } else {
+        // Default to INR if no preference is set
+        setSelectedBaseCurrency('INR');
       }
     } catch (error) {
       console.error('Error fetching user base currency:', error);

@@ -3,7 +3,7 @@ import { api } from '../../services/api';
 import './CurrencySelector.css';
 
 const CurrencySelector = ({ 
-  value = 'USD', 
+  value = 'INR', 
   onChange, 
   label = 'Currency',
   showCommonOnly = true,
@@ -26,7 +26,20 @@ const CurrencySelector = ({
       setCurrencies(response.data);
     } catch (error) {
       console.error('Error fetching currencies:', error);
-      setError('Failed to load currencies');
+      // Fallback to mock data
+      const mockCurrencies = [
+        { id: 1, code: 'INR', name: 'Indian Rupee', symbol: '₹' },
+        { id: 2, code: 'USD', name: 'US Dollar', symbol: '$' },
+        { id: 3, code: 'EUR', name: 'Euro', symbol: '€' },
+        { id: 4, code: 'GBP', name: 'British Pound', symbol: '£' },
+        { id: 5, code: 'JPY', name: 'Japanese Yen', symbol: '¥' },
+        { id: 6, code: 'AUD', name: 'Australian Dollar', symbol: 'A$' },
+        { id: 7, code: 'CAD', name: 'Canadian Dollar', symbol: 'C$' },
+        { id: 8, code: 'CHF', name: 'Swiss Franc', symbol: 'CHF' },
+        { id: 9, code: 'CNY', name: 'Chinese Yuan', symbol: '¥' },
+        { id: 10, code: 'SGD', name: 'Singapore Dollar', symbol: 'S$' }
+      ];
+      setCurrencies(mockCurrencies);
     } finally {
       setLoading(false);
     }
@@ -82,9 +95,10 @@ const CurrencySelector = ({
           required={required}
           className="currency-select"
         >
+          {!value && <option value="">Select a currency...</option>}
           {currencies.map(currency => (
             <option key={currency.id} value={currency.code}>
-              {currency.code} - {currency.name}
+              {currency.symbol} {currency.code} - {currency.name}
             </option>
           ))}
         </select>

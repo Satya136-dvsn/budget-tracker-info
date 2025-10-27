@@ -1,7 +1,7 @@
 /* Financial Health Analysis Styles */
 .financial-health-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #f8fafc;
   padding: 2rem 1rem;
   padding-bottom: 4rem; /* Added margin space at the bottom */
 }

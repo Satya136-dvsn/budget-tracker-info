@@ -207,8 +207,8 @@ const CleanSidebar = ({ collapsed, onToggle, isAuthenticated }) => {
             />
             <SidebarNavButton
               icon="🎯"
-              label="Goals"
-              path="/savings-goals"
+              label="Savings & Planning"
+              path="/planning"
               collapsed={collapsed}
               navigate={navigate}
               location={location}
@@ -246,14 +246,6 @@ const CleanSidebar = ({ collapsed, onToggle, isAuthenticated }) => {
               location={location}
             />
             <SidebarNavButton
-              icon="🎯"
-              label="Planning"
-              path="/planning"
-              collapsed={collapsed}
-              navigate={navigate}
-              location={location}
-            />
-            <SidebarNavButton
               icon="💱"
               label="Currencies"
               path="/currencies"
@@ -281,6 +273,14 @@ const CleanSidebar = ({ collapsed, onToggle, isAuthenticated }) => {
               icon="👤"
               label="Profile"
               path="/profile"
+              collapsed={collapsed}
+              navigate={navigate}
+              location={location}
+            />
+            <SidebarNavButton
+              icon="⚙️"
+              label="Settings"
+              path="/settings"
               collapsed={collapsed}
               navigate={navigate}
               location={location}
