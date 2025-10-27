@@ -1,4 +1,4 @@
-import { useState, Suspense } from 'react';
+import React, { useState, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { AlertProvider } from './hooks/useAlert';
