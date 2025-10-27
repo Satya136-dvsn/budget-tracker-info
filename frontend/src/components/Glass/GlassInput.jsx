@@ -13,7 +13,7 @@ const GlassInput = forwardRef(({
   iconPosition = 'left',
   size = 'md',
   variant = 'default',
-  fullWidth = false,
+  fullWidth = true,
   className = '',
   onChange,
   onFocus,
@@ -24,22 +24,18 @@ const GlassInput = forwardRef(({
   const [hasValue, setHasValue] = useState(props.value || props.defaultValue || '');
 
   const inputClasses = [
-    'glass-input',
-    `glass-input--${variant}`,
-    `glass-input--${size}`,
-    error && 'glass-input--error',
-    success && 'glass-input--success',
-    disabled && 'glass-input--disabled',
-    focused && 'glass-input--focused',
-    hasValue && 'glass-input--has-value',
-    fullWidth && 'glass-input--full-width',
-    icon && `glass-input--with-icon-${iconPosition}`,
+    'pro-input',
+    error && 'border-red-500 focus:border-red-500',
+    success && 'border-green-500 focus:border-green-500',
+    disabled && 'cursor-not-allowed opacity-50',
+    focused && 'ring-2 ring-primary-500/20',
+    fullWidth && 'w-full',
     className
   ].filter(Boolean).join(' ');
 
   const containerClasses = [
-    'glass-input-container',
-    fullWidth && 'glass-input-container--full-width'
+    'space-y-2',
+    fullWidth && 'w-full'
   ].filter(Boolean).join(' ');
 
   const handleFocus = (e) => {
@@ -60,15 +56,15 @@ const GlassInput = forwardRef(({
   return (
     <div className={containerClasses}>
       {label && (
-        <label className="glass-input-label">
+        <label className="block text-sm font-medium text-secondary">
           {label}
-          {required && <span className="glass-input-required">*</span>}
+          {required && <span className="text-red-400 ml-1">*</span>}
         </label>
       )}
       
-      <div className="glass-input-wrapper">
+      <div className="relative">
         {icon && iconPosition === 'left' && (
-          <div className="glass-input-icon glass-input-icon--left">
+          <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted">
             {icon}
           </div>
         )}
@@ -79,7 +75,7 @@ const GlassInput = forwardRef(({
           placeholder={placeholder}
           disabled={disabled}
           required={required}
-          className={inputClasses}
+          className={`${inputClasses} ${icon && iconPosition === 'left' ? 'pl-10' : ''} ${icon && iconPosition === 'right' ? 'pr-10' : ''}`}
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={handleChange}
@@ -87,22 +83,22 @@ const GlassInput = forwardRef(({
         />
         
         {icon && iconPosition === 'right' && (
-          <div className="glass-input-icon glass-input-icon--right">
+          <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted">
             {icon}
           </div>
         )}
       </div>
       
       {error && (
-        <div className="glass-input-error">
+        <p className="text-xs text-red-400 mt-1">
           {error}
-        </div>
+        </p>
       )}
       
       {success && !error && (
-        <div className="glass-input-success">
+        <p className="text-xs text-green-400 mt-1">
           Input is valid
-        </div>
+        </p>
       )}
     </div>
   );

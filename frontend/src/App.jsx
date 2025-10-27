@@ -1,12 +1,14 @@
-import React, { useState, Suspense } from 'react';
+import React, { useState, Suspense, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { AlertProvider } from './hooks/useAlert';
+import { initProfessionalAnimations } from './utils/animations';
 
 // Import Professional Design System
 import './styles/professional-design-system.css';
 import './styles/professional-components.css';
 import './styles/professional-typography.css';
+import './styles/professional-animations.css';
 import './styles/professional-utilities.css';
 import './styles/theme-config.css';
 import './App.css';
@@ -313,6 +315,15 @@ function AppContent() {
 }
 
 function App() {
+  useEffect(() => {
+    // Initialize professional animations after component mount
+    const timer = setTimeout(() => {
+      initProfessionalAnimations();
+    }, 100);
+    
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <AuthProvider>
       <AlertProvider>

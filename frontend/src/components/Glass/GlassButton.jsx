@@ -3,7 +3,7 @@ import './GlassButton.css';
 
 const GlassButton = ({ 
   children, 
-  variant = 'default', 
+  variant = 'primary', 
   size = 'md',
   type = 'button',
   disabled = false,
@@ -17,13 +17,13 @@ const GlassButton = ({
   ...props 
 }) => {
   const buttonClasses = [
-    'glass-btn',
-    `glass-btn--${variant}`,
-    `glass-btn--${size}`,
-    disabled && 'glass-btn--disabled',
-    loading && 'glass-btn--loading',
-    fullWidth && 'glass-btn--full-width',
-    glow && 'glass-btn--glow',
+    'pro-btn',
+    `pro-btn-${variant}`,
+    size !== 'md' && `pro-btn-${size}`,
+    disabled && 'cursor-not-allowed opacity-50',
+    loading && 'cursor-not-allowed',
+    fullWidth && 'w-full',
+    glow && 'hover-glow',
     className
   ].filter(Boolean).join(' ');
 
@@ -41,27 +41,30 @@ const GlassButton = ({
       {...props}
     >
       {loading && (
-        <div className="glass-btn__spinner">
-          <div className="glass-btn__spinner-circle"></div>
+        <div className="inline-flex items-center gap-2">
+          <div className="loading-spinner w-4 h-4"></div>
+          <span>Loading...</span>
         </div>
       )}
       
-      {!loading && icon && iconPosition === 'left' && (
-        <span className="glass-btn__icon glass-btn__icon--left">
-          {icon}
-        </span>
-      )}
-      
       {!loading && (
-        <span className="glass-btn__text">
-          {children}
-        </span>
-      )}
-      
-      {!loading && icon && iconPosition === 'right' && (
-        <span className="glass-btn__icon glass-btn__icon--right">
-          {icon}
-        </span>
+        <div className="flex items-center gap-2">
+          {icon && iconPosition === 'left' && (
+            <span className="flex-shrink-0">
+              {icon}
+            </span>
+          )}
+          
+          <span>
+            {children}
+          </span>
+          
+          {icon && iconPosition === 'right' && (
+            <span className="flex-shrink-0">
+              {icon}
+            </span>
+          )}
+        </div>
       )}
     </button>
   );

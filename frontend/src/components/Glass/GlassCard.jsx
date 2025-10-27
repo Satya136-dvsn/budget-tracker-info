@@ -3,22 +3,22 @@ import './GlassCard.css';
 
 const GlassCard = ({ 
   children, 
-  variant = 'default', 
+  variant = 'primary', 
   size = 'md',
   hover = true,
   glow = false,
-  animated = false,
+  animated = true,
   className = '',
   onClick,
   ...props 
 }) => {
   const cardClasses = [
-    'glass-card',
-    `glass-card--${variant}`,
-    `glass-card--${size}`,
-    hover && 'glass-card--hover',
-    glow && 'glass-card--glow',
-    animated && 'glass-card--animated',
+    'pro-card',
+    `pro-card-${variant}`,
+    `pro-card-${size}`,
+    hover && 'hover-lift',
+    glow && 'hover-glow',
+    animated && 'transition-smooth',
     className
   ].filter(Boolean).join(' ');
 
