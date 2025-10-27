@@ -758,16 +758,18 @@ const UnifiedGoals = () => {
                   <button 
                     className="btn-icon" 
                     onClick={() => handleEdit(goal)}
-                    title="Edit"
+                    title="Edit Goal"
                   >
                     <i className="fas fa-edit"></i>
+                    <span>Edit</span>
                   </button>
                   <button 
                     className="btn-icon delete" 
                     onClick={() => handleDelete(goal)}
-                    title="Delete"
+                    title="Delete Goal"
                   >
                     <i className="fas fa-trash"></i>
+                    <span>Delete</span>
                   </button>
                 </div>
               </div>
@@ -909,6 +911,7 @@ const UnifiedGoals = () => {
                   title="Quick Contribute"
                 >
                   <i className="fas fa-plus"></i>
+                  <span>Add</span>
                 </button>
                 <button 
                   className="quick-action-btn"
@@ -916,6 +919,7 @@ const UnifiedGoals = () => {
                   title="View Details"
                 >
                   <i className="fas fa-chart-bar"></i>
+                  <span>Details</span>
                 </button>
                 <button 
                   className="quick-action-btn"
@@ -923,6 +927,7 @@ const UnifiedGoals = () => {
                   title="Toggle Auto-contribute"
                 >
                   <i className={`fas ${goal.autoContribute ? 'fa-pause' : 'fa-play'}`}></i>
+                  <span>{goal.autoContribute ? 'Pause' : 'Auto'}</span>
                 </button>
               </div>
             </div>
