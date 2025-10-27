@@ -3,8 +3,12 @@ import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'r
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { AlertProvider } from './hooks/useAlert';
 
-// Import Glassmorphism Design System
-import './styles/glassmorphism-design-system.css';
+// Import Professional Design System
+import './styles/professional-design-system.css';
+import './styles/professional-components.css';
+import './styles/professional-typography.css';
+import './styles/professional-utilities.css';
+import './styles/theme-config.css';
 import './App.css';
 import CleanSidebar from './components/Layout/CleanSidebar';
 import CleanHome from './components/Home/CleanHome';

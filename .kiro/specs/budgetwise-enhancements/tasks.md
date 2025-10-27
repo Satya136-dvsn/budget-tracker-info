@@ -396,6 +396,7 @@
 - [x] 9. Set up API Gateway and Microservices Infrastructure
 
 
+
   - Create Spring Cloud Gateway project with routing configuration
   - Set up service discovery using Spring Cloud Netflix Eureka
   - Implement centralized configuration management with Spring Cloud Config
