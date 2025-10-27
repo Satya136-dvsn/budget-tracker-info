@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import './GlassButton.css';
 
 const GlassButton = ({ 
@@ -66,21 +65,6 @@ const GlassButton = ({
       )}
     </button>
   );
-};
-
-GlassButton.propTypes = {
-  children: PropTypes.node.isRequired,
-  variant: PropTypes.oneOf(['default', 'primary', 'secondary', 'accent', 'success', 'warning', 'error', 'ghost']),
-  size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl']),
-  type: PropTypes.oneOf(['button', 'submit', 'reset']),
-  disabled: PropTypes.bool,
-  loading: PropTypes.bool,
-  icon: PropTypes.node,
-  iconPosition: PropTypes.oneOf(['left', 'right']),
-  fullWidth: PropTypes.bool,
-  glow: PropTypes.bool,
-  className: PropTypes.string,
-  onClick: PropTypes.func
 };
 
 export default GlassButton;

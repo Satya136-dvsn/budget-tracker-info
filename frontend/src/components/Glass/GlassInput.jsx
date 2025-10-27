@@ -1,5 +1,4 @@
 import React, { useState, forwardRef } from 'react';
-import PropTypes from 'prop-types';
 import './GlassInput.css';
 
 const GlassInput = forwardRef(({ 
@@ -110,26 +109,5 @@ const GlassInput = forwardRef(({
 });
 
 GlassInput.displayName = 'GlassInput';
-
-GlassInput.propTypes = {
-  type: PropTypes.string,
-  placeholder: PropTypes.string,
-  label: PropTypes.string,
-  error: PropTypes.string,
-  success: PropTypes.bool,
-  disabled: PropTypes.bool,
-  required: PropTypes.bool,
-  icon: PropTypes.node,
-  iconPosition: PropTypes.oneOf(['left', 'right']),
-  size: PropTypes.oneOf(['sm', 'md', 'lg']),
-  variant: PropTypes.oneOf(['default', 'primary', 'secondary', 'accent']),
-  fullWidth: PropTypes.bool,
-  className: PropTypes.string,
-  onChange: PropTypes.func,
-  onFocus: PropTypes.func,
-  onBlur: PropTypes.func,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-};
 
 export default GlassInput;

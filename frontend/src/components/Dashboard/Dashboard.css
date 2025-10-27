@@ -1,7 +1,7 @@
 /* Dashboard Container - Glassmorphism Background */
 .dashboard-container {
     min-height: 100vh;
-    background: var(--gradient-background);
+    background: var(--gradient-background, linear-gradient(135deg, #1e3c72 0%, #2a5298 100%));
     padding: 0;
     margin: 0;
     width: 100%;
@@ -51,7 +51,7 @@
     font-weight: 800;
     color: rgba(255, 255, 255, 0.95);
     margin-bottom: 0.5rem;
-    font-family: var(--font-primary);
+    font-family: var(--font-primary, 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -59,7 +59,7 @@
     font-size: 1.1rem;
     color: rgba(255, 255, 255, 0.8);
     margin: 0;
-    font-family: var(--font-primary);
+    font-family: var(--font-primary, 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
 }
 
 /* Dashboard Stats - Glassmorphism */
@@ -76,7 +76,7 @@
     align-items: center;
     gap: 1rem;
     padding: 1.5rem !important;
-    transition: all var(--duration-normal) var(--ease-smooth);
+    transition: all var(--duration-normal, 250ms) var(--ease-smooth, cubic-bezier(0.4, 0, 0.2, 1));
 }
 
 .stat-card-glass:hover {
@@ -90,9 +90,9 @@
     width: 3.5rem;
     height: 3.5rem;
     background: rgba(255, 255, 255, 0.1);
-    border-radius: var(--radius-xl);
-    backdrop-filter: var(--blur-light);
-    -webkit-backdrop-filter: var(--blur-light);
+    border-radius: var(--radius-xl, 1rem);
+    backdrop-filter: var(--blur-light, blur(10px));
+    -webkit-backdrop-filter: var(--blur-light, blur(10px));
 }
 
 .stat-card-glass .emoji-icon {
@@ -105,8 +105,8 @@
 }
 
 .stat-card-glass .stat-content h3 {
-    font-size: var(--text-sm);
-    font-weight: var(--font-medium);
+    font-size: var(--text-sm, 0.875rem);
+    font-weight: var(--font-medium, 500);
     color: rgba(255, 255, 255, 0.8);
     margin: 0 0 0.25rem 0;
     text-transform: uppercase;
@@ -115,17 +115,17 @@
 
 .stat-card-glass .stat-amount {
     display: block;
-    font-size: var(--text-2xl);
-    font-weight: var(--font-bold);
+    font-size: var(--text-2xl, 1.5rem);
+    font-weight: var(--font-bold, 700);
     color: rgba(255, 255, 255, 0.95);
     margin-bottom: 0.25rem;
-    font-family: var(--font-mono);
+    font-family: var(--font-mono, 'JetBrains Mono', 'Fira Code', 'Consolas', monospace);
 }
 
 .stat-card-glass .stat-label {
-    font-size: var(--text-xs);
+    font-size: var(--text-xs, 0.75rem);
     color: rgba(255, 255, 255, 0.7);
-    font-weight: var(--font-medium);
+    font-weight: var(--font-medium, 500);
 }
 }
 
