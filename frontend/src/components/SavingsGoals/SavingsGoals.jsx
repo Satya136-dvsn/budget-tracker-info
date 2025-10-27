@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { apiService } from '../../services/api';
 import { useAlert } from '../../hooks/useAlert';
+import { formatCurrency } from '../../utils/currencyFormatter';
 import SavingsProgressChart from '../Analytics/SavingsProgressChart';
 import './SavingsGoals.css';
 
@@ -294,7 +295,7 @@ const SavingsGoals = () => {
               <i className="fas fa-bullseye"></i>
             </div>
             <div className="summary-info">
-              <h3>₹{calculateTotalTarget().toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
+              <h3>{formatCurrency(calculateTotalTarget())}</h3>
               <p>Total Target</p>
             </div>
           </div>
@@ -303,7 +304,7 @@ const SavingsGoals = () => {
               <i className="fas fa-coins"></i>
             </div>
             <div className="summary-info">
-              <h3>₹{calculateTotalSaved().toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
+              <h3>{formatCurrency(calculateTotalSaved())}</h3>
               <p>Total Saved</p>
             </div>
           </div>
@@ -408,16 +409,16 @@ const SavingsGoals = () => {
               <div className="goal-amounts">
                 <div className="amount-row">
                   <span className="amount-label">Current</span>
-                  <span className="amount-value">₹{goal.currentAmount.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                  <span className="amount-value">{formatCurrency(goal.currentAmount)}</span>
                 </div>
                 <div className="amount-row">
                   <span className="amount-label">Target</span>
-                  <span className="amount-value">₹{goal.targetAmount.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                  <span className="amount-value">{formatCurrency(goal.targetAmount)}</span>
                 </div>
                 <div className="amount-row">
                   <span className="amount-label">Remaining</span>
                   <span className="amount-value remaining">
-                    ₹{goal.remainingAmount.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    {formatCurrency(goal.remainingAmount)}
                   </span>
                 </div>
               </div>
