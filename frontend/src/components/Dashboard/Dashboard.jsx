@@ -12,6 +12,7 @@ import PureMonthlyChart from './PureMonthlyChart';
 import PureCategoryChart from './PureCategoryChart';
 import ErrorBoundary from '../Common/ErrorBoundary';
 import { GlassCard, GlassButton } from '../Glass';
+import WelcomeTour from '../Common/WelcomeTour';
 import './Dashboard.css';
 
 const Dashboard = () => {
@@ -341,6 +342,7 @@ const Dashboard = () => {
 
   return (
     <section className="dashboard-container">
+      <WelcomeTour />
       <div className="dashboard-content">
         <div className="dashboard-header">
           <div className="welcome-section">

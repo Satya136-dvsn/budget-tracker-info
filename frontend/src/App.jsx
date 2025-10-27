@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { AlertProvider } from './hooks/useAlert';
@@ -24,13 +24,14 @@ import MonthlySpendingResponsive from './components/Trends/MonthlySpendingRespon
 import CleanCategoryAnalysis from './components/Trends/CleanCategoryAnalysis';
 import SavingsGrowthResponsive from './components/Trends/SavingsGrowthResponsive';
 import Export from './components/Export/Export';
-import AnalyticsDashboard from './components/Analytics/AnalyticsDashboard';
-import { BillsDashboard } from './components/Bills';
-import { NotificationCenter } from './components/Notifications';
-import { AIDashboard } from './components/AI';
-import { CommunityHub } from './components/Community';
-import { InvestmentDashboard } from './components/Investment';
-import FinancialPlanner from './components/Planning/FinancialPlanner';
+// Lazy load heavy components for better performance
+const AnalyticsDashboard = React.lazy(() => import('./components/Analytics/AnalyticsDashboard'));
+const BillsDashboard = React.lazy(() => import('./components/Bills').then(module => ({ default: module.BillsDashboard })));
+const NotificationCenter = React.lazy(() => import('./components/Notifications').then(module => ({ default: module.NotificationCenter })));
+const AIDashboard = React.lazy(() => import('./components/AI').then(module => ({ default: module.AIDashboard })));
+const CommunityHub = React.lazy(() => import('./components/Community').then(module => ({ default: module.CommunityHub })));
+const InvestmentDashboard = React.lazy(() => import('./components/Investment').then(module => ({ default: module.InvestmentDashboard })));
+const FinancialPlanner = React.lazy(() => import('./components/Planning/FinancialPlanner'));
 import UserProfile from './components/Profile/UserProfile';
 // import RealTimeStatus from './components/Common/RealTimeStatus'; // Removed as requested
 import RealTimeToast from './components/Common/RealTimeToast';
@@ -48,6 +49,7 @@ import './styles/component-layout-fix.css';
 import './styles/chart-layout-fix.css';
 import './styles/comprehensive-layout-fix.css';
 import './styles/dropdown-fix.css';
+import './styles/accessibility.css';
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -177,7 +179,9 @@ function AppContent() {
           <Route path="/analytics" element={
             <ProtectedRoute>
               <ErrorBoundary>
-                <AnalyticsDashboard />
+                <Suspense fallback={<div style={{ padding: '2rem', textAlign: 'center' }}>Loading Analytics...</div>}>
+                  <AnalyticsDashboard />
+                </Suspense>
               </ErrorBoundary>
             </ProtectedRoute>
           } />
@@ -186,7 +190,9 @@ function AppContent() {
           <Route path="/bills" element={
             <ProtectedRoute>
               <ErrorBoundary>
-                <BillsDashboard />
+                <Suspense fallback={<div style={{ padding: '2rem', textAlign: 'center' }}>Loading Bills...</div>}>
+                  <BillsDashboard />
+                </Suspense>
               </ErrorBoundary>
             </ProtectedRoute>
           } />
@@ -204,7 +210,9 @@ function AppContent() {
           <Route path="/ai" element={
             <ProtectedRoute>
               <ErrorBoundary>
-                <AIDashboard />
+                <Suspense fallback={<div style={{ padding: '2rem', textAlign: 'center' }}>Loading AI Dashboard...</div>}>
+                  <AIDashboard />
+                </Suspense>
               </ErrorBoundary>
             </ProtectedRoute>
           } />
@@ -213,7 +221,9 @@ function AppContent() {
           <Route path="/community" element={
             <ProtectedRoute>
               <ErrorBoundary>
-                <CommunityHub />
+                <Suspense fallback={<div style={{ padding: '2rem', textAlign: 'center' }}>Loading Community...</div>}>
+                  <CommunityHub />
+                </Suspense>
               </ErrorBoundary>
             </ProtectedRoute>
           } />
@@ -222,7 +232,9 @@ function AppContent() {
           <Route path="/investments" element={
             <ProtectedRoute>
               <ErrorBoundary>
-                <InvestmentDashboard />
+                <Suspense fallback={<div style={{ padding: '2rem', textAlign: 'center' }}>Loading Investments...</div>}>
+                  <InvestmentDashboard />
+                </Suspense>
               </ErrorBoundary>
             </ProtectedRoute>
           } />
@@ -231,7 +243,9 @@ function AppContent() {
           <Route path="/planning" element={
             <ProtectedRoute>
               <ErrorBoundary>
-                <FinancialPlanner />
+                <Suspense fallback={<div style={{ padding: '2rem', textAlign: 'center' }}>Loading Financial Planning...</div>}>
+                  <FinancialPlanner />
+                </Suspense>
               </ErrorBoundary>
             </ProtectedRoute>
           } />
