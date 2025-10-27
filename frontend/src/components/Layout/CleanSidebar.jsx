@@ -2,6 +2,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useRoles } from '../../utils/RoleBasedAccess';
 import NotificationBadge from '../Common/NotificationBadge';
+import { GlassCard, GlassButton } from '../Glass';
+import './CleanSidebar.css';
 
 const CleanSidebar = ({ collapsed, onToggle, isAuthenticated }) => {
   const navigate = useNavigate();

@@ -11,6 +11,7 @@ import CategoryBreakdownChart from '../Analytics/CategoryBreakdownChart';
 import PureMonthlyChart from './PureMonthlyChart';
 import PureCategoryChart from './PureCategoryChart';
 import ErrorBoundary from '../Common/ErrorBoundary';
+import { GlassCard, GlassButton } from '../Glass';
 import './Dashboard.css';
 
 const Dashboard = () => {
@@ -347,18 +348,19 @@ const Dashboard = () => {
             <p>Here's your complete financial overview</p>
           </div>
           <div className="dashboard-header-actions">
-            <button 
-              className="professional-btn professional-btn-primary export-btn"
+            <GlassButton 
+              variant="primary"
               onClick={() => navigate('/export')}
-              title="Export Financial Data"
+              icon="📊"
+              className="export-btn"
             >
-              📊 Export Data
-            </button>
+              Export Data
+            </GlassButton>
           </div>
         </div>
         
         <div className="dashboard-stats">
-          <div className="stat-card primary">
+          <GlassCard variant="primary" className="stat-card-glass">
             <div className="stat-icon">
               <span className="emoji-icon">💵</span>
             </div>
@@ -367,9 +369,9 @@ const Dashboard = () => {
               <span className="stat-amount">{formatCurrency(user.monthlyIncome)}</span>
               <span className="stat-label">Total Income</span>
             </div>
-          </div>
+          </GlassCard>
           
-          <div className="stat-card warning">
+          <GlassCard variant="secondary" className="stat-card-glass">
             <div className="stat-icon">
               <span className="emoji-icon">🛒</span>
             </div>
@@ -378,9 +380,9 @@ const Dashboard = () => {
               <span className="stat-amount">{formatCurrency(user.targetExpenses)}</span>
               <span className="stat-label">{expenseRatio}% of income</span>
             </div>
-          </div>
+          </GlassCard>
           
-          <div className="stat-card success">
+          <GlassCard variant="accent" className="stat-card-glass">
             <div className="stat-icon">
               <span className="emoji-icon">🏦</span>
             </div>
@@ -389,7 +391,7 @@ const Dashboard = () => {
               <span className="stat-amount">{formatCurrency(user.currentSavings)}</span>
               <span className="stat-label">{savingsRate}% savings rate</span>
             </div>
-          </div>
+          </GlassCard>
         </div>
 
         {/* Quick Actions and View Trends Row */}
