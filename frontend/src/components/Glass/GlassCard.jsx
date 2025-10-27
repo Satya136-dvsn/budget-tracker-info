@@ -33,15 +33,4 @@ const GlassCard = ({
   );
 };
 
-GlassCard.propTypes = {
-  children: PropTypes.node.isRequired,
-  variant: PropTypes.oneOf(['default', 'primary', 'secondary', 'accent', 'success', 'warning', 'error']),
-  size: PropTypes.oneOf(['sm', 'md', 'lg', 'xl']),
-  hover: PropTypes.bool,
-  glow: PropTypes.bool,
-  animated: PropTypes.bool,
-  className: PropTypes.string,
-  onClick: PropTypes.func
-};
-
 export default GlassCard;

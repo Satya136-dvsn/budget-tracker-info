@@ -1433,9 +1433,17 @@ Ensure action buttons are always visible */
     box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4) !important;
 }
 
-/* Debug styles - remove after testing */
-.insight-card {
-    border: 2px solid #e2e8f0 !important;
+/* Professional chart grid spacing */
+.professional-chart-grid {
+    margin-bottom: 2rem;
+}
+
+.professional-chart-grid + .dashboard-section {
+    margin-top: 2rem;
+}
+
+.dashboard-insights + .professional-chart-grid {
+    margin-top: 2.5rem;
 }
 
 .action-buttons {
