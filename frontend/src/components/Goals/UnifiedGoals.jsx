@@ -541,7 +541,7 @@ const UnifiedGoals = () => {
           <p>Track your savings and investment goals in one place</p>
         </div>
         <button className="btn-primary" onClick={openNewGoalModal}>
-          <i className="fas fa-plus"></i> New Goal
+          <i className="fas fa-plus">+</i> New Goal
         </button>
       </div>
 
@@ -760,7 +760,7 @@ const UnifiedGoals = () => {
                     onClick={() => handleEdit(goal)}
                     title="Edit Goal"
                   >
-                    <i className="fas fa-edit"></i>
+                    <i className="fas fa-edit">✏️</i>
                     <span>Edit</span>
                   </button>
                   <button 
@@ -768,7 +768,7 @@ const UnifiedGoals = () => {
                     onClick={() => handleDelete(goal)}
                     title="Delete Goal"
                   >
-                    <i className="fas fa-trash"></i>
+                    <i className="fas fa-trash">🗑️</i>
                     <span>Delete</span>
                   </button>
                 </div>
@@ -910,7 +910,7 @@ const UnifiedGoals = () => {
                   onClick={() => handleQuickContribute(goal)}
                   title="Quick Contribute"
                 >
-                  <i className="fas fa-plus"></i>
+                  <i className="fas fa-plus" aria-hidden="true">+</i>
                   <span>Add</span>
                 </button>
                 <button 
@@ -918,7 +918,7 @@ const UnifiedGoals = () => {
                   onClick={() => setSelectedGoal(goal)}
                   title="View Details"
                 >
-                  <i className="fas fa-chart-bar"></i>
+                  <i className="fas fa-chart-bar" aria-hidden="true">📊</i>
                   <span>Details</span>
                 </button>
                 <button 
@@ -926,7 +926,9 @@ const UnifiedGoals = () => {
                   onClick={() => handleToggleAutoContribute(goal)}
                   title="Toggle Auto-contribute"
                 >
-                  <i className={`fas ${goal.autoContribute ? 'fa-pause' : 'fa-play'}`}></i>
+                  <i className={`fas ${goal.autoContribute ? 'fa-pause' : 'fa-play'}`} aria-hidden="true">
+                    {goal.autoContribute ? '⏸️' : '▶️'}
+                  </i>
                   <span>{goal.autoContribute ? 'Pause' : 'Auto'}</span>
                 </button>
               </div>
@@ -942,7 +944,7 @@ const UnifiedGoals = () => {
             <div className="modal-header">
               <h2>{editingGoal ? 'Edit Goal' : 'Create New Goal'}</h2>
               <button className="modal-close" onClick={() => setShowModal(false)}>
-                <i className="fas fa-times"></i>
+                <i className="fas fa-times">×</i>
               </button>
             </div>
             
@@ -1178,7 +1180,7 @@ const UnifiedGoals = () => {
                 {selectedGoal.name}
               </h2>
               <button className="modal-close" onClick={() => setSelectedGoal(null)}>
-                <i className="fas fa-times"></i>
+                <i className="fas fa-times">×</i>
               </button>
             </div>
             
@@ -1318,16 +1320,18 @@ const UnifiedGoals = () => {
               {/* Goal Actions */}
               <div className="details-actions">
                 <button className="btn-primary" onClick={() => handleQuickContribute(selectedGoal)}>
-                  <i className="fas fa-plus"></i> Add Contribution
+                  <i className="fas fa-plus">+</i> Add Contribution
                 </button>
                 <button className="btn-secondary" onClick={() => handleEdit(selectedGoal)}>
-                  <i className="fas fa-edit"></i> Edit Goal
+                  <i className="fas fa-edit">✏️</i> Edit Goal
                 </button>
                 <button 
                   className="btn-secondary"
                   onClick={() => handleToggleAutoContribute(selectedGoal)}
                 >
-                  <i className={`fas ${selectedGoal.autoContribute ? 'fa-pause' : 'fa-play'}`}></i>
+                  <i className={`fas ${selectedGoal.autoContribute ? 'fa-pause' : 'fa-play'}`}>
+                    {selectedGoal.autoContribute ? '⏸️' : '▶️'}
+                  </i>
                   {selectedGoal.autoContribute ? 'Disable' : 'Enable'} Auto-contribute
                 </button>
               </div>

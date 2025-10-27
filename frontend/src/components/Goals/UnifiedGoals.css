@@ -1,3 +1,36 @@
+/* Icon Fallback Support */
+.fas {
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Pro", "Font Awesome 5 Free", "Font Awesome 5 Pro", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  line-height: 1;
+  display: inline-block;
+}
+
+/* When FontAwesome fails, show the emoji fallback */
+.fas:empty,
+.fas:not([class*="fa-"]) {
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Ensure icons are visible in buttons */
+.btn-primary .fas,
+.btn-secondary .fas,
+.btn-icon .fas,
+.quick-action-btn .fas,
+.modal-close .fas {
+  font-size: 1em;
+  margin-right: 0.25rem;
+}
+
+.modal-close .fas {
+  margin-right: 0;
+}
+
 .unified-goals {
   padding: 2rem;
   max-width: 1200px;
@@ -216,6 +249,13 @@
   display: inline-block;
   width: 1rem;
   text-align: center;
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Pro", "Font Awesome 5 Free", "Font Awesome 5 Pro", sans-serif;
+  font-weight: 900;
+}
+
+.btn-icon i:before {
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Pro", "Font Awesome 5 Free", "Font Awesome 5 Pro", sans-serif;
+  font-weight: 900;
 }
 
 .btn-icon span {
@@ -263,19 +303,34 @@
 
 /* Progress Bar */
 .goal-progress {
-  margin-bottom: 1rem;
+  margin: 1rem 0;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  contain: layout style;
 }
 
 .progress-header {
   display: flex;
   justify-content: center;
+  align-items: center;
   margin-bottom: 0.5rem;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  contain: layout;
+  min-height: 1.25rem;
 }
 
-.progress-text {
+/* Goal card progress text */
+.goal-progress .progress-text {
   font-size: 0.875rem;
   font-weight: 600;
   color: #374151;
+  white-space: nowrap;
+  position: relative;
+  z-index: 1;
+  display: inline-block;
 }
 
 .progress-bar {
@@ -618,6 +673,13 @@ form {
   display: inline-block;
   width: 1rem;
   text-align: center;
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Pro", "Font Awesome 5 Free", "Font Awesome 5 Pro", sans-serif;
+  font-weight: 900;
+}
+
+.quick-action-btn i:before {
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Pro", "Font Awesome 5 Free", "Font Awesome 5 Pro", sans-serif;
+  font-weight: 900;
 }
 
 .quick-action-btn span {
@@ -1030,7 +1092,8 @@ form {
   transform: rotate(-90deg);
 }
 
-.progress-text {
+/* Modal circular progress text */
+.circular-progress .progress-text {
   position: absolute;
   top: 50%;
   left: 50%;
