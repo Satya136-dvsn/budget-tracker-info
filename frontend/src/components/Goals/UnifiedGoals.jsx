@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../Common/Card';
 import { Button } from '../Common/Button';
+import { GlassCard, GlassButton, GlassModal, GlassInput } from '../Glass';
 import { apiService } from '../../services/api';
 import { useAlert } from '../../hooks/useAlert';
 import { formatCurrency } from '../../utils/currencyFormatter';
@@ -535,7 +536,7 @@ const UnifiedGoals = () => {
 
   return (
     <div className="unified-goals">
-      <div className="goals-header">
+      <GlassCard className="goals-header" variant="primary">
         <div>
           <h1>Financial Goals</h1>
           <p>Track your savings and investment goals in one place</p>
@@ -543,45 +544,50 @@ const UnifiedGoals = () => {
         <button className="btn-primary" onClick={openNewGoalModal}>
           <i className="fas fa-plus">+</i> New Goal
         </button>
-      </div>
+      </GlassCard>
 
       {/* Filter Tabs */}
       <div className="filter-tabs">
-        <button 
+        <GlassButton 
           className={`filter-tab ${filter === 'all' ? 'active' : ''}`}
           onClick={() => setFilter('all')}
+          variant={filter === 'all' ? 'primary' : 'secondary'}
         >
           All Goals ({goals.length})
-        </button>
-        <button 
+        </GlassButton>
+        <GlassButton 
           className={`filter-tab ${filter === 'savings' ? 'active' : ''}`}
           onClick={() => setFilter('savings')}
+          variant={filter === 'savings' ? 'primary' : 'secondary'}
         >
           Savings Goals
-        </button>
-        <button 
+        </GlassButton>
+        <GlassButton 
           className={`filter-tab ${filter === 'investment' ? 'active' : ''}`}
           onClick={() => setFilter('investment')}
+          variant={filter === 'investment' ? 'primary' : 'secondary'}
         >
           Investment Goals
-        </button>
-        <button 
+        </GlassButton>
+        <GlassButton 
           className={`filter-tab ${filter === 'active' ? 'active' : ''}`}
           onClick={() => setFilter('active')}
+          variant={filter === 'active' ? 'primary' : 'secondary'}
         >
           Active
-        </button>
-        <button 
+        </GlassButton>
+        <GlassButton 
           className={`filter-tab ${filter === 'completed' ? 'active' : ''}`}
           onClick={() => setFilter('completed')}
+          variant={filter === 'completed' ? 'primary' : 'secondary'}
         >
           Completed
-        </button>
+        </GlassButton>
       </div>
 
       {/* Goals Summary */}
       <div className="goals-summary">
-        <div className="summary-card">
+        <GlassCard className="summary-card" variant="primary">
           <div className="summary-icon">
             <i className="fas fa-bullseye"></i>
           </div>
@@ -589,8 +595,8 @@ const UnifiedGoals = () => {
             <h3>{formatCurrency(goals.reduce((sum, goal) => sum + goal.targetAmount, 0))}</h3>
             <p>Total Target</p>
           </div>
-        </div>
-        <div className="summary-card">
+        </GlassCard>
+        <GlassCard className="summary-card" variant="secondary">
           <div className="summary-icon">
             <i className="fas fa-coins"></i>
           </div>
@@ -598,8 +604,8 @@ const UnifiedGoals = () => {
             <h3>{formatCurrency(goals.reduce((sum, goal) => sum + (goal.currentAmount || 0), 0))}</h3>
             <p>Total Saved</p>
           </div>
-        </div>
-        <div className="summary-card">
+        </GlassCard>
+        <GlassCard className="summary-card" variant="accent">
           <div className="summary-icon">
             <i className="fas fa-chart-line"></i>
           </div>
@@ -612,7 +618,7 @@ const UnifiedGoals = () => {
             </h3>
             <p>Overall Progress</p>
           </div>
-        </div>
+        </GlassCard>
       </div>
 
       {/* Smart Recommendations */}
@@ -745,7 +751,7 @@ const UnifiedGoals = () => {
       ) : (
         <div className="goals-grid">
           {goals.map(goal => (
-            <div key={goal.id} className={`goal-card ${goal.type}`}>
+            <GlassCard key={goal.id} className={`goal-card ${goal.type}`} variant={goal.type === 'investment' ? 'secondary' : 'primary'} hover={true}>
               <div className="goal-header">
                 <div className="goal-title">
                   <span className="goal-icon">{getGoalIcon(goal.type, goal.category)}</span>
@@ -932,7 +938,7 @@ const UnifiedGoals = () => {
                   <span>{goal.autoContribute ? 'Pause' : 'Auto'}</span>
                 </button>
               </div>
-            </div>
+            </GlassCard>
           ))}
         </div>
       )}

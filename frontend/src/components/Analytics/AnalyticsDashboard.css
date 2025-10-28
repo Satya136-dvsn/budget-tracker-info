@@ -1,3 +1,6 @@
+/* Import professional analytics styling */
+@import '../../styles/professional-analytics.css';
+
 /* Analytics Dashboard - Simple & Clean Layout */
 .analytics-dashboard {
   padding: 1.5rem;

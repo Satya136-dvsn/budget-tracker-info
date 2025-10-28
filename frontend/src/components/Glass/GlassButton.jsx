@@ -17,13 +17,13 @@ const GlassButton = ({
   ...props 
 }) => {
   const buttonClasses = [
-    'pro-btn',
-    `pro-btn-${variant}`,
-    size !== 'md' && `pro-btn-${size}`,
-    disabled && 'cursor-not-allowed opacity-50',
-    loading && 'cursor-not-allowed',
-    fullWidth && 'w-full',
-    glow && 'hover-glow',
+    'glass-btn',
+    `glass-btn-${variant}`,
+    size !== 'md' && `glass-btn-${size}`,
+    disabled && 'glass-btn-disabled',
+    loading && 'glass-btn-loading',
+    fullWidth && 'glass-btn-full',
+    glow && 'glass-btn-glow',
     className
   ].filter(Boolean).join(' ');
 

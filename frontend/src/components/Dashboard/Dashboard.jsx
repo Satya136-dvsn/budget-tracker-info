@@ -11,7 +11,7 @@ import CategoryBreakdownChart from '../Analytics/CategoryBreakdownChart';
 import PureMonthlyChart from './PureMonthlyChart';
 import PureCategoryChart from './PureCategoryChart';
 import ErrorBoundary from '../Common/ErrorBoundary';
-import { GlassCard, GlassButton } from '../Glass';
+import { GlassCard, GlassButton, GlassModal, GlassInput } from '../Glass';
 import WelcomeTour from '../Common/WelcomeTour';
 import './Dashboard.css';
 
@@ -352,9 +352,9 @@ const Dashboard = () => {
           <div className="dashboard-header-actions">
             <GlassButton 
               variant="primary"
+              className="export-btn"
               onClick={() => navigate('/export')}
               icon="📊"
-              className="export-btn"
             >
               Export Data
             </GlassButton>
@@ -398,97 +398,88 @@ const Dashboard = () => {
 
         {/* Quick Actions and View Trends Row */}
         <div className="dashboard-actions">
-          <div className="insight-card">
+          <GlassCard className="insight-card">
             <h3>Quick Actions</h3>
             <div className="action-buttons">
-              <button 
-                className="professional-btn professional-btn-primary action-btn" 
+              <GlassButton 
+                variant="primary" 
+                className="action-btn" 
                 onClick={() => setShowExpenseModal(true)}
-                title="Add a new expense transaction"
+                icon="➕"
               >
-                ➕ Add Expense
-              </button>
-              <button 
-                className="professional-btn professional-btn-success action-btn" 
+                Add Expense
+              </GlassButton>
+              <GlassButton 
+                variant="accent" 
+                className="action-btn" 
                 onClick={() => setShowGoalModal(true)}
-                title="Set a new savings goal"
+                icon="🎯"
               >
-                🎯 Set Goal
-              </button>
-              <button 
-                className="professional-btn professional-btn-secondary action-btn" 
+                Set Goal
+              </GlassButton>
+              <GlassButton 
+                variant="secondary" 
+                className="action-btn" 
                 onClick={() => navigate('/financial-health')}
-                title="View detailed financial health analysis"
+                icon="📊"
               >
-                📊 View Reports
-              </button>
+                View Reports
+              </GlassButton>
             </div>
-          </div>
+          </GlassCard>
 
-          <div className="insight-card">
+          <GlassCard className="insight-card">
             <h3>View Trends</h3>
             <div className="trends-preview">
-              <div 
+              <GlassCard 
+                variant="secondary"
                 className="trend-item" 
                 onClick={() => navigate('/trends/monthly-spending')}
-                title="View monthly spending trends and patterns"
-                style={{
-                  background: 'linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%)',
-                  border: '1px solid #d8b4fe',
-                  cursor: 'pointer'
-                }}
+                hover={true}
               >
                 <div className="trend-icon">
                   <span className="emoji-icon">📈</span>
                 </div>
                 <div className="trend-info">
-                  <h4 style={{ color: '#6b21a8' }}>Monthly Spending</h4>
-                  <p style={{ color: '#7c3aed' }}>Track your spending patterns over time</p>
+                  <h4>Monthly Spending</h4>
+                  <p>Track your spending patterns over time</p>
                 </div>
-              </div>
-              <div 
+              </GlassCard>
+              <GlassCard 
+                variant="primary"
                 className="trend-item" 
                 onClick={() => navigate('/trends/category-analysis')}
-                title="Analyze spending by categories"
-                style={{
-                  background: 'linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%)',
-                  border: '1px solid #d8b4fe',
-                  cursor: 'pointer'
-                }}
+                hover={true}
               >
                 <div className="trend-icon">
                   <span className="emoji-icon">🥧</span>
                 </div>
                 <div className="trend-info">
-                  <h4 style={{ color: '#6b21a8' }}>Category Analysis</h4>
-                  <p style={{ color: '#7c3aed' }}>See where your money goes</p>
+                  <h4>Category Analysis</h4>
+                  <p>See where your money goes</p>
                 </div>
-              </div>
-              <div 
+              </GlassCard>
+              <GlassCard 
+                variant="accent"
                 className="trend-item" 
                 onClick={() => navigate('/trends/savings-growth')}
-                title="Track your savings growth over time"
-                style={{
-                  background: 'linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%)',
-                  border: '1px solid #d8b4fe',
-                  cursor: 'pointer'
-                }}
+                hover={true}
               >
                 <div className="trend-icon">
                   <span className="emoji-icon">📊</span>
                 </div>
                 <div className="trend-info">
-                  <h4 style={{ color: '#6b21a8' }}>Savings Growth</h4>
-                  <p style={{ color: '#7c3aed' }}>Monitor your savings progress</p>
+                  <h4>Savings Growth</h4>
+                  <p>Monitor your savings progress</p>
                 </div>
-              </div>
+              </GlassCard>
             </div>
-          </div>
+          </GlassCard>
         </div>
 
         {/* Financial Health Section */}
         <div className="dashboard-insights">
-          <div className="insight-card financial-health-card">
+          <GlassCard variant="primary" className="insight-card financial-health-card" glow={true}>
             <h3>Financial Health Score</h3>
             <div className="health-score-container">
               <div className="score-circle">
@@ -553,48 +544,52 @@ const Dashboard = () => {
                 📊 View Detailed Analysis
               </button>
             </div>
-          </div>
+          </GlassCard>
         </div>
 
         {/* Professional Chart Cards */}
         <div className="professional-chart-grid">
-          <div className="chart-card">
+          <GlassCard variant="primary" className="chart-card" glow={true}>
             <div className="chart-card-header">
               <h3>Monthly Trends</h3>
-              <button 
+              <GlassButton 
+                variant="secondary"
+                size="sm"
                 className="chart-view-btn"
                 onClick={() => navigate('/analytics')}
               >
                 View Full Analytics
-              </button>
+              </GlassButton>
             </div>
             <div className="pure-chart-container">
               <ErrorBoundary>
                 <PureMonthlyChart months={3} />
               </ErrorBoundary>
             </div>
-          </div>
+          </GlassCard>
           
-          <div className="chart-card">
+          <GlassCard variant="secondary" className="chart-card" glow={true}>
             <div className="chart-card-header">
               <h3>Spending Categories</h3>
-              <button 
+              <GlassButton 
+                variant="accent"
+                size="sm"
                 className="chart-view-btn"
                 onClick={() => navigate('/analytics')}
               >
                 View Details
-              </button>
+              </GlassButton>
             </div>
             <div className="pure-chart-container">
               <ErrorBoundary>
                 <PureCategoryChart />
               </ErrorBoundary>
             </div>
-          </div>
+          </GlassCard>
         </div>
 
         {/* Recent Transactions Section */}
-        <div className="dashboard-section">
+        <GlassCard className="dashboard-section">
           <div className="section-header">
             <h3>Recent Transactions</h3>
             <button 
@@ -668,11 +663,12 @@ const Dashboard = () => {
               </div>
             )}
           </div>
-        </div>
+        </GlassCard>
 
         {/* Add/Edit Expense Modal */}
-        {showExpenseModal && (
-          <div className="modal-overlay" onClick={() => {
+        <GlassModal 
+          isOpen={showExpenseModal}
+          onClose={() => {
             setShowExpenseModal(false);
             setEditingTransaction(null);
             setExpenseForm({
@@ -681,11 +677,82 @@ const Dashboard = () => {
               description: '',
               date: new Date().toISOString().split('T')[0]
             });
-          }}>
-            <div className="modal-content" onClick={e => e.stopPropagation()}>
-              <div className="modal-header">
-                <h3>{editingTransaction ? 'Edit Transaction' : 'Add New Expense'}</h3>
-                <button className="close-btn" onClick={() => {
+          }}
+          title={editingTransaction ? 'Edit Transaction' : 'Add New Expense'}
+        >
+          <form onSubmit={editingTransaction ? handleUpdateTransaction : handleAddExpense} className="expense-form">
+            <div className="form-group">
+              <label htmlFor="amount">Amount (₹)</label>
+              <GlassInput
+                type="text"
+                id="amount"
+                name="amount"
+                value={expenseForm.amount}
+                onChange={handleExpenseInputChange}
+                placeholder="0.00"
+                pattern="^\d+(\.\d{1,2})?$"
+                title="Please enter a valid amount (e.g., 100 or 100.50)"
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="category">Category</label>
+              <select
+                id="category"
+                name="category"
+                className="glass-input"
+                value={expenseForm.category}
+                onChange={handleExpenseInputChange}
+                required
+              >
+                <option value="">Select a category</option>
+                {categories.length > 0 ? (
+                  categories.map((cat) => (
+                    <option key={cat.id} value={cat.name}>
+                      {cat.name}
+                    </option>
+                  ))
+                ) : (
+                  <>
+                    <option value="Food & Dining">Food & Dining</option>
+                    <option value="Transportation">Transportation</option>
+                    <option value="Shopping">Shopping</option>
+                    <option value="Entertainment">Entertainment</option>
+                    <option value="Bills & Utilities">Bills & Utilities</option>
+                    <option value="Healthcare">Healthcare</option>
+                    <option value="Education">Education</option>
+                    <option value="Other">Other</option>
+                  </>
+                )}
+              </select>
+            </div>
+            <div className="form-group">
+              <label htmlFor="description">Description</label>
+              <GlassInput
+                type="text"
+                id="description"
+                name="description"
+                value={expenseForm.description}
+                onChange={handleExpenseInputChange}
+                placeholder="What did you spend on?"
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="date">Date</label>
+              <GlassInput
+                type="date"
+                id="date"
+                name="date"
+                value={expenseForm.date}
+                onChange={handleExpenseInputChange}
+                required
+              />
+            </div>
+            <div className="form-actions">
+              <GlassButton 
+                type="button" 
+                variant="secondary" 
+                onClick={() => {
                   setShowExpenseModal(false);
                   setEditingTransaction(null);
                   setExpenseForm({
@@ -694,170 +761,81 @@ const Dashboard = () => {
                     description: '',
                     date: new Date().toISOString().split('T')[0]
                   });
-                }} title="Close">
-                  ×
-                </button>
-              </div>
-              <form onSubmit={editingTransaction ? handleUpdateTransaction : handleAddExpense} className="expense-form">
-                <div className="form-group">
-                  <label htmlFor="amount">Amount (₹)</label>
-                  <input
-                    type="text"
-                    id="amount"
-                    name="amount"
-                    value={expenseForm.amount}
-                    onChange={handleExpenseInputChange}
-                    placeholder="0.00"
-                    pattern="^\d+(\.\d{1,2})?$"
-                    title="Please enter a valid amount (e.g., 100 or 100.50)"
-                    required
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="category">Category</label>
-                  <select
-                    id="category"
-                    name="category"
-                    className="professional-dropdown"
-                    value={expenseForm.category}
-                    onChange={handleExpenseInputChange}
-                    required
-                  >
-                    <option value="">Select a category</option>
-                    {categories.length > 0 ? (
-                      categories.map((cat) => (
-                        <option key={cat.id} value={cat.name}>
-                          {cat.name}
-                        </option>
-                      ))
-                    ) : (
-                      <>
-                        <option value="Food & Dining">Food & Dining</option>
-                        <option value="Transportation">Transportation</option>
-                        <option value="Shopping">Shopping</option>
-                        <option value="Entertainment">Entertainment</option>
-                        <option value="Bills & Utilities">Bills & Utilities</option>
-                        <option value="Healthcare">Healthcare</option>
-                        <option value="Education">Education</option>
-                        <option value="Other">Other</option>
-                      </>
-                    )}
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label htmlFor="description">Description</label>
-                  <input
-                    type="text"
-                    id="description"
-                    name="description"
-                    value={expenseForm.description}
-                    onChange={handleExpenseInputChange}
-                    placeholder="What did you spend on?"
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="date">Date</label>
-                  <input
-                    type="date"
-                    id="date"
-                    name="date"
-                    value={expenseForm.date}
-                    onChange={handleExpenseInputChange}
-                    required
-                  />
-                </div>
-                <div className="form-actions">
-                  <button type="button" className="btn-secondary" onClick={() => {
-                    setShowExpenseModal(false);
-                    setEditingTransaction(null);
-                    setExpenseForm({
-                      amount: '',
-                      category: '',
-                      description: '',
-                      date: new Date().toISOString().split('T')[0]
-                    });
-                  }}>
-                    Cancel
-                  </button>
-                  <button type="submit" className="btn-primary">
-                    {editingTransaction ? 'Update Transaction' : 'Add Expense'}
-                  </button>
-                </div>
-              </form>
+                }}
+              >
+                Cancel
+              </GlassButton>
+              <GlassButton type="submit" variant="primary">
+                {editingTransaction ? 'Update Transaction' : 'Add Expense'}
+              </GlassButton>
             </div>
-          </div>
-        )}
+          </form>
+        </GlassModal>
 
         {/* Set Goal Modal */}
-        {showGoalModal && (
-          <div className="modal-overlay" onClick={() => setShowGoalModal(false)}>
-            <div className="modal-content" onClick={e => e.stopPropagation()}>
-              <div className="modal-header">
-                <h3>Set New Goal</h3>
-                <button className="close-btn" onClick={() => setShowGoalModal(false)} title="Close">
-                  ×
-                </button>
-              </div>
-              <form onSubmit={handleSetGoal} className="goal-form">
-                <div className="form-group">
-                  <label htmlFor="title">Goal Title</label>
-                  <input
-                    type="text"
-                    id="title"
-                    name="title"
-                    value={goalForm.title}
-                    onChange={handleGoalInputChange}
-                    placeholder="e.g., Emergency Fund, Vacation, New Car"
-                    required
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="targetAmount">Target Amount (₹)</label>
-                  <input
-                    type="number"
-                    id="targetAmount"
-                    name="targetAmount"
-                    value={goalForm.targetAmount}
-                    onChange={handleGoalInputChange}
-                    placeholder="0.00"
-                    step="0.01"
-                    required
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="currentAmount">Current Amount (₹)</label>
-                  <input
-                    type="number"
-                    id="currentAmount"
-                    name="currentAmount"
-                    value={goalForm.currentAmount}
-                    onChange={handleGoalInputChange}
-                    placeholder="0.00"
-                    step="0.01"
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="deadline">Target Date</label>
-                  <input
-                    type="date"
-                    id="deadline"
-                    name="deadline"
-                    value={goalForm.deadline}
-                    onChange={handleGoalInputChange}
-                  />
-                </div>
-                <div className="form-actions">
-                  <button type="button" className="btn-secondary" onClick={() => setShowGoalModal(false)}>
-                    Cancel
-                  </button>
-                  <button type="submit" className="btn-primary">
-                    Set Goal
-                  </button>
-                </div>
-              </form>
+        <GlassModal 
+          isOpen={showGoalModal}
+          onClose={() => setShowGoalModal(false)}
+          title="Set New Goal"
+        >
+          <form onSubmit={handleSetGoal} className="goal-form">
+            <div className="form-group">
+              <label htmlFor="title">Goal Title</label>
+              <GlassInput
+                type="text"
+                id="title"
+                name="title"
+                value={goalForm.title}
+                onChange={handleGoalInputChange}
+                placeholder="e.g., Emergency Fund, Vacation, New Car"
+                required
+              />
             </div>
-          </div>
-        )}
+            <div className="form-group">
+              <label htmlFor="targetAmount">Target Amount (₹)</label>
+              <GlassInput
+                type="number"
+                id="targetAmount"
+                name="targetAmount"
+                value={goalForm.targetAmount}
+                onChange={handleGoalInputChange}
+                placeholder="0.00"
+                step="0.01"
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="currentAmount">Current Amount (₹)</label>
+              <GlassInput
+                type="number"
+                id="currentAmount"
+                name="currentAmount"
+                value={goalForm.currentAmount}
+                onChange={handleGoalInputChange}
+                placeholder="0.00"
+                step="0.01"
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="deadline">Target Date</label>
+              <GlassInput
+                type="date"
+                id="deadline"
+                name="deadline"
+                value={goalForm.deadline}
+                onChange={handleGoalInputChange}
+              />
+            </div>
+            <div className="form-actions">
+              <GlassButton type="button" variant="secondary" onClick={() => setShowGoalModal(false)}>
+                Cancel
+              </GlassButton>
+              <GlassButton type="submit" variant="primary">
+                Set Goal
+              </GlassButton>
+            </div>
+          </form>
+        </GlassModal>
       </div>
     </section>
   );

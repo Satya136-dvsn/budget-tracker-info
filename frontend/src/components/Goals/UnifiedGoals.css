@@ -1349,4 +1349,6 @@ form {
   .details-actions {
     flex-direction: column;
   }
-}
+}/* Import 
+professional goals styling */
+@import '../../styles/professional-goals.css';

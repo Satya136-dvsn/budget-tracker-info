@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { GlassCard, GlassButton } from '../Glass';
+// import { GlassCard, GlassButton } from '../Glass';
 import './WelcomeTour.css';
 
 const WelcomeTour = ({ onComplete }) => {
@@ -82,7 +82,7 @@ const WelcomeTour = ({ onComplete }) => {
       <div className="welcome-tour-backdrop" onClick={skipTour} />
       
       <div className="welcome-tour-container">
-        <GlassCard className="welcome-tour-card">
+        <div className="professional-card welcome-tour-card">
           <div className="tour-header">
             <div className="tour-progress">
               <div className="progress-bar">
@@ -105,24 +105,24 @@ const WelcomeTour = ({ onComplete }) => {
 
           <div className="tour-actions">
             {currentStep > 0 && (
-              <GlassButton 
-                variant="secondary" 
+              <button 
+                className="professional-btn professional-btn-secondary"
                 onClick={() => setCurrentStep(currentStep - 1)}
               >
                 Previous
-              </GlassButton>
+              </button>
             )}
             
             <div className="tour-action-right">
               <button className="tour-skip" onClick={skipTour}>
                 Skip Tour
               </button>
-              <GlassButton onClick={nextStep}>
+              <button className="professional-btn professional-btn-primary" onClick={nextStep}>
                 {currentStep === tourSteps.length - 1 ? 'Get Started' : 'Next'}
-              </GlassButton>
+              </button>
             </div>
           </div>
-        </GlassCard>
+        </div>
       </div>
 
       {/* Highlight overlay for specific elements */}

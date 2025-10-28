@@ -13,12 +13,12 @@ const GlassCard = ({
   ...props 
 }) => {
   const cardClasses = [
-    'pro-card',
-    `pro-card-${variant}`,
-    `pro-card-${size}`,
-    hover && 'hover-lift',
-    glow && 'hover-glow',
-    animated && 'transition-smooth',
+    'glass-card',
+    `glass-card-${variant}`,
+    `glass-card-${size}`,
+    hover && 'glass-card-hover',
+    glow && 'glass-card-glow',
+    animated && 'glass-card-animated',
     className
   ].filter(Boolean).join(' ');
 

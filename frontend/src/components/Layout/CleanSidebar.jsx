@@ -2,7 +2,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useRoles } from '../../utils/RoleBasedAccess';
 import NotificationBadge from '../Common/NotificationBadge';
-import { GlassCard, GlassButton } from '../Glass';
+import { GlassCard, GlassButton, GlassNavigation } from '../Glass';
 import './CleanSidebar.css';
 
 const CleanSidebar = ({ collapsed, onToggle, isAuthenticated }) => {
@@ -63,31 +63,24 @@ const CleanSidebar = ({ collapsed, onToggle, isAuthenticated }) => {
 
             {/* Auth buttons */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: 'auto' }}>
-              <button 
+              <GlassButton 
                 onClick={() => navigate('/signin')}
                 disabled={location.pathname === '/signin'}
-                className="professional-btn professional-btn-secondary"
-                style={{
-                  background: 'rgba(255,255,255,0.2)',
-                  color: 'white',
-                  border: '2px solid rgba(255,255,255,0.3)',
-                  opacity: location.pathname === '/signin' ? 0.6 : 1
-                }}
+                variant="secondary"
+                fullWidth={true}
+                icon={collapsed ? '🔑' : null}
               >
-                {collapsed ? '🔑' : 'Sign In'}
-              </button>
-              <button 
+                {collapsed ? '' : 'Sign In'}
+              </GlassButton>
+              <GlassButton 
                 onClick={() => navigate('/signup')}
                 disabled={location.pathname === '/signup'}
-                className="professional-btn"
-                style={{
-                  background: 'white',
-                  color: '#667eea',
-                  opacity: location.pathname === '/signup' ? 0.6 : 1
-                }}
+                variant="primary"
+                fullWidth={true}
+                icon={collapsed ? '✨' : '✨'}
               >
-                {collapsed ? '✨' : '✨ Get Started'}
-              </button>
+                {collapsed ? '' : 'Get Started'}
+              </GlassButton>
             </div>
             
             {/* Toggle Button - INSIDE sidebar - Fixed positioning */}
@@ -166,171 +159,44 @@ const CleanSidebar = ({ collapsed, onToggle, isAuthenticated }) => {
           </div>
 
           {/* Navigation */}
-          <nav style={{ flex: 1 }}>
-            <SidebarNavButton
-              icon="🏠"
-              label="Dashboard"
-              path="/dashboard"
-              collapsed={collapsed}
-              navigate={navigate}
-              location={location}
-            />
-            <SidebarNavButton
-              icon="💳"
-              label="Transactions"
-              path="/transactions"
-              collapsed={collapsed}
-              navigate={navigate}
-              location={location}
-            />
-            <SidebarNavButton
-              icon="📊"
-              label="Analytics"
-              path="/analytics"
-              collapsed={collapsed}
-              navigate={navigate}
-              location={location}
-            />
-            <SidebarNavButton
-              icon="❤️"
-              label="Health"
-              path="/financial-health"
-              collapsed={collapsed}
-              navigate={navigate}
-              location={location}
-            />
-            <SidebarNavButton
-              icon="🎯"
-              label="Budgets"
-              path="/budgets"
-              collapsed={collapsed}
-              navigate={navigate}
-              location={location}
-            />
-            <SidebarNavButton
-              icon="🎯"
-              label="Savings & Planning"
-              path="/planning"
-              collapsed={collapsed}
-              navigate={navigate}
-              location={location}
-            />
-            <SidebarNavButton
-              icon="📋"
-              label="Bills"
-              path="/bills"
-              collapsed={collapsed}
-              navigate={navigate}
-              location={location}
-            />
-            <SidebarNavButton
-              icon="🤖"
-              label="AI Insights"
-              path="/ai"
-              collapsed={collapsed}
-              navigate={navigate}
-              location={location}
-            />
-            <SidebarNavButton
-              icon="👥"
-              label="Community"
-              path="/community"
-              collapsed={collapsed}
-              navigate={navigate}
-              location={location}
-            />
-            <SidebarNavButton
-              icon="📈"
-              label="Investments"
-              path="/investments"
-              collapsed={collapsed}
-              navigate={navigate}
-              location={location}
-            />
-            <SidebarNavButton
-              icon="💱"
-              label="Currencies"
-              path="/currencies"
-              collapsed={collapsed}
-              navigate={navigate}
-              location={location}
-            />
-            <SidebarNavButton
-              icon="🏦"
-              label="Banking"
-              path="/banking"
-              collapsed={collapsed}
-              navigate={navigate}
-              location={location}
-            />
-            <SidebarNavButtonWithBadge
-              icon="🔔"
-              label="Notifications"
-              path="/notifications"
-              collapsed={collapsed}
-              navigate={navigate}
-              location={location}
-            />
-            <SidebarNavButton
-              icon="👤"
-              label="Profile"
-              path="/profile"
-              collapsed={collapsed}
-              navigate={navigate}
-              location={location}
-            />
-            <SidebarNavButton
-              icon="⚙️"
-              label="Settings"
-              path="/settings"
-              collapsed={collapsed}
-              navigate={navigate}
-              location={location}
-            />
-            {isAdmin && (
-              <SidebarNavButton
-                icon="⚙️"
-                label="Admin"
-                path="/admin"
-                collapsed={collapsed}
-                navigate={navigate}
-                location={location}
-              />
-            )}
-          </nav>
+          <GlassNavigation 
+            orientation="vertical"
+            className="sidebar-nav"
+            items={[
+              { path: '/dashboard', label: collapsed ? '' : 'Dashboard', icon: '🏠' },
+              { path: '/transactions', label: collapsed ? '' : 'Transactions', icon: '💳' },
+              { path: '/analytics', label: collapsed ? '' : 'Analytics', icon: '📊' },
+              { path: '/financial-health', label: collapsed ? '' : 'Health', icon: '❤️' },
+              { path: '/budgets', label: collapsed ? '' : 'Budgets', icon: '🎯' },
+              { path: '/planning', label: collapsed ? '' : 'Savings & Planning', icon: '🎯' },
+              { path: '/bills', label: collapsed ? '' : 'Bills', icon: '📋' },
+              { path: '/ai', label: collapsed ? '' : 'AI Insights', icon: '🤖' },
+              { path: '/community', label: collapsed ? '' : 'Community', icon: '👥' },
+              { path: '/investments', label: collapsed ? '' : 'Investments', icon: '📈' },
+              { path: '/currencies', label: collapsed ? '' : 'Currencies', icon: '💱' },
+              { path: '/banking', label: collapsed ? '' : 'Banking', icon: '🏦' },
+              { path: '/notifications', label: collapsed ? '' : 'Notifications', icon: '🔔', badge: true },
+              { path: '/profile', label: collapsed ? '' : 'Profile', icon: '👤' },
+              { path: '/settings', label: collapsed ? '' : 'Settings', icon: '⚙️' },
+              ...(isAdmin ? [{ path: '/admin', label: collapsed ? '' : 'Admin', icon: '⚙️' }] : [])
+            ]}
+          />
 
           {/* Logout */}
           <div style={{ marginTop: 'auto' }}>
-            <button
+            <GlassButton
               onClick={handleLogout}
+              variant="secondary"
+              fullWidth={true}
+              className="logout-btn"
+              icon={collapsed ? '🚪' : '🚪'}
               style={{
-                width: '100%',
-                padding: collapsed ? '0.75rem' : '0.75rem 1rem',
                 background: 'rgba(239, 68, 68, 0.2)',
-                border: '1px solid rgba(239, 68, 68, 0.3)',
-                borderRadius: '8px',
-                color: 'white',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: collapsed ? 'center' : 'flex-start',
-                gap: '0.75rem',
-                fontSize: '0.9rem',
-                fontWeight: '600',
-                transition: 'all 0.3s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.background = 'rgba(239, 68, 68, 0.3)';
-                e.target.style.transform = 'translateY(-2px)';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.background = 'rgba(239, 68, 68, 0.2)';
-                e.target.style.transform = 'translateY(0)';
+                borderColor: 'rgba(239, 68, 68, 0.3)'
               }}
             >
-              <span>🚪</span>
-              {!collapsed && <span>Logout</span>}
-            </button>
+              {collapsed ? '' : 'Logout'}
+            </GlassButton>
             
             {/* Toggle Button - INSIDE sidebar - Fixed positioning */}
             <button 

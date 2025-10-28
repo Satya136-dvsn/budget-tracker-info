@@ -4,13 +4,13 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { AlertProvider } from './hooks/useAlert';
 import { initProfessionalAnimations } from './utils/animations';
 
-// Import Professional Design System
+// Import Professional Design System in correct order
 import './styles/professional-design-system.css';
-import './styles/professional-components.css';
-import './styles/professional-typography.css';
-import './styles/professional-animations.css';
-import './styles/professional-utilities.css';
 import './styles/theme-config.css';
+import './styles/professional-typography.css';
+import './styles/professional-components.css';
+import './styles/professional-utilities.css';
+import './styles/professional-animations.css';
 import './App.css';
 import CleanSidebar from './components/Layout/CleanSidebar';
 import CleanHome from './components/Home/CleanHome';
@@ -49,12 +49,7 @@ import CurrencyDashboard from './components/Currency/CurrencyDashboard';
 import BankIntegration from './components/Banking/BankIntegration';
 import Alert from './components/Common/Alert';
 import ErrorBoundary from './components/Common/ErrorBoundary';
-import './styles/clean-layout.css';
-import './styles/global-layout-fix.css';
-import './styles/component-layout-fix.css';
-import './styles/chart-layout-fix.css';
-import './styles/comprehensive-layout-fix.css';
-import './styles/dropdown-fix.css';
+// Layout and accessibility styles
 import './styles/accessibility.css';
 
 // Protected Route Component

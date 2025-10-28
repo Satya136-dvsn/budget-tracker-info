@@ -3,18 +3,14 @@
    Portfolio-Quality Design System
    =================================== */
 
-/* Import Professional Design System */
-@import './professional-design-system.css';
-@import './professional-components.css';
-
 /* Global App Container - Professional Theme */
 .app-container {
   min-height: 100vh;
-  background: var(--gradient-bg-dark);
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
   position: relative;
   overflow-x: hidden;
-  font-family: var(--font-primary);
-  color: var(--color-neutral-50);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #f1f5f9;
 }
 
 /* Professional Animated Background */
@@ -51,30 +47,57 @@
 }
 
 /* Main Content Areas - Professional Layout */
-.main-content,
-.main-content-full {
+.main-content {
+  margin-left: 280px; /* Space for expanded sidebar */
+  min-height: 100vh;
+  padding: 2rem;
   position: relative;
   z-index: 1;
-  backdrop-filter: var(--glass-blur-light);
-  -webkit-backdrop-filter: var(--glass-blur-light);
-  transition: all var(--duration-300) var(--ease-smooth);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  width: calc(100% - 280px);
+  overflow-x: hidden;
+}
+
+.main-content.sidebar-collapsed {
+  margin-left: 80px; /* Space for collapsed sidebar */
+  width: calc(100% - 80px);
+}
+
+.main-content.sidebar-expanded {
+  margin-left: 280px; /* Space for expanded sidebar */
+  width: calc(100% - 280px);
+}
+
+.main-content-full {
+  margin-left: 0; /* No sidebar for home page */
+  min-height: 100vh;
+  padding: 2rem;
+  position: relative;
+  z-index: 1;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100%;
+  overflow-x: hidden;
 }
 
 /* Professional Sidebar Enhancement */
 .sidebar {
-  backdrop-filter: var(--glass-blur-heavy);
-  -webkit-backdrop-filter: var(--glass-blur-heavy);
-  background: var(--glass-bg-medium);
-  border-right: var(--glass-border);
-  transition: all var(--duration-300) var(--ease-smooth);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  background: rgba(15, 23, 42, 0.8);
+  border-right: 1px solid rgba(148, 163, 184, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Professional Global Styles */
 body {
-  color: var(--color-neutral-50);
-  font-family: var(--font-primary);
-  font-weight: var(--font-weight-normal);
-  line-height: var(--leading-normal);
+  color: #f1f5f9;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -85,14 +108,14 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--glass-bg-light);
-  border-radius: var(--radius-full);
+  background: rgba(15, 23, 42, 0.3);
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--glass-bg-heavy);
-  border-radius: var(--radius-full);
-  transition: background var(--duration-200) var(--ease-smooth);
+  background: rgba(15, 23, 42, 0.8);
+  border-radius: 9999px;
+  transition: background 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -102,19 +125,19 @@ body {
 /* Professional Selection Colors */
 ::selection {
   background: rgba(59, 130, 246, 0.25);
-  color: var(--color-neutral-50);
+  color: #f1f5f9;
 }
 
 ::-moz-selection {
   background: rgba(59, 130, 246, 0.25);
-  color: var(--color-neutral-50);
+  color: #f1f5f9;
 }
 
 /* Professional Focus States */
 *:focus-visible {
-  outline: 2px solid var(--color-primary-500);
+  outline: 2px solid #3b82f6;
   outline-offset: 2px;
-  border-radius: var(--radius-md);
+  border-radius: 0.375rem;
   box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
 }
 
@@ -126,34 +149,34 @@ body {
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: var(--glass-blur-medium);
-  -webkit-backdrop-filter: var(--glass-blur-medium);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: var(--z-modal);
+  z-index: 1000;
 }
 
 .loading-spinner {
   width: 2.5rem;
   height: 2.5rem;
-  border: 2px solid var(--glass-bg-light);
-  border-top: 2px solid var(--color-primary-500);
-  border-radius: var(--radius-full);
+  border: 2px solid rgba(15, 23, 42, 0.3);
+  border-top: 2px solid #3b82f6;
+  border-radius: 9999px;
   animation: professionalSpin 1s linear infinite;
 }
 
 @keyframes professionalSpin {
   0% { 
     transform: rotate(0deg); 
-    box-shadow: var(--glow-primary);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
   }
   50% {
-    box-shadow: var(--glow-secondary);
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
   }
   100% { 
     transform: rotate(360deg); 
-    box-shadow: var(--glow-primary);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
   }
 }
 
@@ -164,18 +187,50 @@ body {
   }
   
   .main-content,
+  .main-content.sidebar-collapsed,
+  .main-content.sidebar-expanded {
+    margin-left: 0;
+    width: 100%;
+    padding: 1rem;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  
   .main-content-full {
-    backdrop-filter: var(--glass-blur-light);
-    -webkit-backdrop-filter: var(--glass-blur-light);
+    margin-left: 0;
+    width: 100%;
+    padding: 1rem;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
   }
   
-  .pro-card {
-    padding: var(--space-4);
-    border-radius: var(--radius-xl);
+  .professional-card {
+    padding: 1rem;
+    border-radius: 0.75rem;
   }
   
-  .pro-btn {
-    padding: var(--space-2-5) var(--space-5);
+  .professional-btn {
+    padding: 0.625rem 1rem;
+    font-size: 0.8125rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-content,
+  .main-content.sidebar-collapsed,
+  .main-content.sidebar-expanded,
+  .main-content-full {
+    padding: 0.75rem;
+  }
+  
+  .professional-card {
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+  }
+  
+  .professional-btn {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
   }
 }
 
@@ -220,4 +275,183 @@ body {
   body {
     color: black !important;
   }
+}/*
+ Professional Components - Temporary Styles */
+.professional-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+.professional-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.professional-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  color: rgba(255, 255, 255, 0.95);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  outline: none;
+  user-select: none;
+}
+
+.professional-btn-primary {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(139, 92, 246, 0.3));
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+.professional-btn-primary:hover {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.4), rgba(139, 92, 246, 0.4));
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.professional-btn-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.professional-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Layout Container Fix */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+}
+
+.app-layout .sidebar-container {
+  flex-shrink: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  z-index: 1000;
+}
+
+.app-layout .main-content {
+  flex: 1;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+.app-layout .main-content-full {
+  flex: 1;
+  overflow-x: hidden;
+  min-height: 100vh;
+  margin-left: 0;
+}
+
+/* Dashboard Layout Fix */
+.dashboard-container {
+  width: 100%;
+  max-width: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card-glass {
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .dashboard-stats {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .dashboard-header {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+}
+
+/* Content Wrapper Fix */
+.content-wrapper {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0;
+}
+
+/* Prevent horizontal scroll */
+html, body {
+  overflow-x: hidden;
+}
+
+.app-container {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+}
+
+/* Fix for any remaining layout issues */
+* {
+  box-sizing: border-box;
+}
+
+.main-content > * {
+  max-width: 100%;
+}
+
+.main-content-full > * {
+  max-width: 100%;
+}
+
+/* Import Professional Component Styles */
+@import './styles/professional-forms.css';
+@import './styles/professional-tables.css';
+@import './styles/professional-modals.css';
+@import './styles/professional-loading.css';
+
+/* Import Additional Professional Component Styles */
+@import './styles/professional-goals.css';
+@import './styles/professional-analytics.css';

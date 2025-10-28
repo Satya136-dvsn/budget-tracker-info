@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { validateAppHealth, validatePerformance, validateResponsiveness } from '../../utils/appValidation';
-import { GlassCard, GlassButton } from '../Glass';
+// import { GlassCard, GlassButton } from '../Glass';
 
 const AppHealthCheck = ({ onClose }) => {
   const [healthResults, setHealthResults] = useState(null);
@@ -54,7 +54,7 @@ const AppHealthCheck = ({ onClose }) => {
       zIndex: 10000,
       padding: '2rem'
     }}>
-      <GlassCard style={{ 
+      <div className="professional-card" style={{ 
         maxWidth: '800px', 
         width: '100%', 
         maxHeight: '90vh', 
@@ -177,16 +177,16 @@ const AppHealthCheck = ({ onClose }) => {
             )}
 
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'flex-end' }}>
-              <GlassButton variant="secondary" onClick={runHealthCheck}>
+              <button className="professional-btn professional-btn-secondary" onClick={runHealthCheck}>
                 Re-run Tests
-              </GlassButton>
-              <GlassButton onClick={onClose}>
+              </button>
+              <button className="professional-btn professional-btn-primary" onClick={onClose}>
                 Close
-              </GlassButton>
+              </button>
             </div>
           </>
         )}
-      </GlassCard>
+      </div>
     </div>
   );
 };

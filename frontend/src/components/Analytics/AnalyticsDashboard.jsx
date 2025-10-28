@@ -8,6 +8,7 @@ import MonthlyTrendsChart from './MonthlyTrendsChart';
 import CategoryBreakdownChart from './CategoryBreakdownChart';
 import BudgetVsActualChart from './BudgetVsActualChart';
 import SavingsProgressChart from './SavingsProgressChart';
+import { GlassCard, GlassButton } from '../Glass';
 import './AnalyticsDashboard.css';
 
 const AnalyticsDashboard = () => {
@@ -110,7 +111,7 @@ const AnalyticsDashboard = () => {
   return (
     <ErrorBoundary>
       <div className="analytics-dashboard">
-        <div className="dashboard-header">
+        <GlassCard className="dashboard-header" variant="primary">
           <h1>📊 Analytics Dashboard</h1>
           <div className="dashboard-controls">
             <label htmlFor="period-select">Time Period:</label>
@@ -125,12 +126,12 @@ const AnalyticsDashboard = () => {
               <option value={12}>Last 12 months</option>
             </select>
           </div>
-        </div>
+        </GlassCard>
 
         <div className="dashboard-content">
           {/* Financial Health Score - Full Width, Clean Layout */}
           {analyticsData?.financialHealth && (
-            <div className="dashboard-section">
+            <GlassCard className="dashboard-section" variant="accent" glow={true}>
               <h2>💚 Financial Health Score</h2>
               <div className="health-score-content">
                 <div className="score-display">
@@ -179,20 +180,20 @@ const AnalyticsDashboard = () => {
                   </ul>
                 </div>
               )}
-            </div>
+            </GlassCard>
           )}
 
           {/* Monthly Trends Chart - Full Width, Larger */}
-          <div className="dashboard-section">
+          <GlassCard className="dashboard-section" variant="primary">
             <MonthlyTrendsChart 
               months={selectedPeriod}
               height="400px"
               className="dashboard-chart"
             />
-          </div>
+          </GlassCard>
 
           {/* Vertical Layout - Category & Budget Charts */}
-          <div className="dashboard-section">
+          <GlassCard className="dashboard-section" variant="secondary">
             <CategoryBreakdownChart 
               startDate={dateRange.start}
               endDate={dateRange.end}
@@ -201,41 +202,42 @@ const AnalyticsDashboard = () => {
               minimal={false}
               showCustomization={false}
             />
-          </div>
+          </GlassCard>
           
-          <div className="dashboard-section">
+          <GlassCard className="dashboard-section" variant="primary">
             <BudgetVsActualChart 
               month={budgetMonth}
               year={budgetYear}
               height="500px"
               className="dashboard-chart"
             />
-          </div>
+          </GlassCard>
 
           {/* Savings Progress Chart - Full Width */}
-          <div className="dashboard-section">
+          <GlassCard className="dashboard-section" variant="accent">
             <SavingsProgressChart 
               height="400px"
               className="dashboard-chart"
             />
-          </div>
+          </GlassCard>
 
           {/* Demo Data Notice - Simple */}
-          <div className="dashboard-section">
+          <GlassCard className="dashboard-section" variant="secondary">
             <div className="demo-notice-content">
               <div className="notice-icon">ℹ️</div>
               <div className="notice-text">
                 <h4>Demo Mode Active</h4>
                 <p>You're currently viewing sample analytics data. Connect your financial accounts or add more transactions to see personalized insights.</p>
               </div>
-              <button 
+              <GlassButton 
                 className="connect-btn"
                 onClick={() => navigate('/transactions')}
+                variant="primary"
               >
                 Add Transactions
-              </button>
+              </GlassButton>
             </div>
-          </div>
+          </GlassCard>
         </div>
       </div>
     </ErrorBoundary>
