@@ -1,0 +1,353 @@
+/* ===================================
+   PROFESSIONAL DESIGN SYSTEM
+   Portfolio-Quality Foundation
+   =================================== */
+
+/* Import Design System Foundation */
+@import './tokens.css';
+@import './utilities.css';
+@import './layout.css';
+@import './components.css';
+
+/* ===================================
+   DESIGN SYSTEM INITIALIZATION
+   =================================== */
+
+/* Ensure proper box-sizing and reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Root element setup */
+#root {
+  min-height: 100vh;
+  background: var(--gradient-background-dark);
+  color: var(--text-primary);
+  font-family: var(--font-family-primary);
+  line-height: var(--line-height-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Professional app wrapper */
+.professional-design-system {
+  min-height: 100vh;
+  background: var(--gradient-background-dark);
+  position: relative;
+  overflow-x: hidden;
+}
+
+.professional-design-system::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(16, 185, 129, 0.04) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: var(--z-hide);
+}
+
+/* ===================================
+   PROFESSIONAL THEME CLASSES
+   =================================== */
+
+/* Theme application classes */
+.theme-professional {
+  color-scheme: dark;
+}
+
+.glassmorphism-theme {
+  /* Enhanced glassmorphism effects - applied via component classes */
+  color-scheme: dark;
+}
+
+.glassmorphism-app-wrapper {
+  background: var(--gradient-background-dark);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.glassmorphism-app-wrapper::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(16, 185, 129, 0.04) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: var(--z-hide);
+}
+
+/* ===================================
+   PROFESSIONAL COMPONENT ENHANCEMENTS
+   =================================== */
+
+/* Enhanced glass effects for all components */
+.glassmorphism-app-wrapper .professional-card {
+  backdrop-filter: var(--glass-blur-medium);
+  -webkit-backdrop-filter: var(--glass-blur-medium);
+  border: var(--glass-border-medium);
+  box-shadow: 
+    var(--shadow-glass-md),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.glassmorphism-app-wrapper .professional-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    var(--shadow-glass-lg),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.glassmorphism-app-wrapper .professional-btn {
+  backdrop-filter: var(--glass-blur-medium);
+  -webkit-backdrop-filter: var(--glass-blur-medium);
+  border: var(--glass-border-medium);
+  box-shadow: var(--shadow-glass-sm);
+}
+
+.glassmorphism-app-wrapper .professional-btn:hover {
+  backdrop-filter: var(--glass-blur-heavy);
+  -webkit-backdrop-filter: var(--glass-blur-heavy);
+  box-shadow: var(--shadow-glass-md);
+}
+
+.glassmorphism-app-wrapper .professional-input {
+  backdrop-filter: var(--glass-blur-light);
+  -webkit-backdrop-filter: var(--glass-blur-light);
+  border: var(--glass-border-light);
+  box-shadow: var(--shadow-glass-xs);
+}
+
+.glassmorphism-app-wrapper .professional-input:focus {
+  backdrop-filter: var(--glass-blur-medium);
+  -webkit-backdrop-filter: var(--glass-blur-medium);
+  border: var(--glass-border-medium);
+  box-shadow: var(--shadow-glass-sm), 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* ===================================
+   PROFESSIONAL ANIMATIONS
+   =================================== */
+
+/* Staggered animations for components */
+.professional-design-system .professional-card {
+  animation: professionalFadeInUp 0.6s var(--ease-smooth) forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.professional-design-system .professional-card:nth-child(1) { animation-delay: 0.1s; }
+.professional-design-system .professional-card:nth-child(2) { animation-delay: 0.2s; }
+.professional-design-system .professional-card:nth-child(3) { animation-delay: 0.3s; }
+.professional-design-system .professional-card:nth-child(4) { animation-delay: 0.4s; }
+.professional-design-system .professional-card:nth-child(5) { animation-delay: 0.5s; }
+.professional-design-system .professional-card:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes professionalFadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===================================
+   PROFESSIONAL RESPONSIVE ENHANCEMENTS
+   =================================== */
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  :root {
+    /* Reduce blur intensity for mobile performance */
+    --glass-blur-light: blur(4px);
+    --glass-blur-medium: blur(8px);
+    --glass-blur-heavy: blur(12px);
+  }
+  
+  .professional-card {
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+  }
+  
+  .professional-btn {
+    padding: var(--space-2-5) var(--space-5);
+  }
+  
+  .professional-modal {
+    margin: var(--space-4);
+    border-radius: var(--radius-xl);
+  }
+}
+
+/* High-performance devices */
+@media (min-width: 1024px) and (min-resolution: 2dppx) {
+  .professional-card:hover {
+    backdrop-filter: var(--glass-blur-heavy);
+    -webkit-backdrop-filter: var(--glass-blur-heavy);
+  }
+  
+  .professional-btn:hover {
+    backdrop-filter: var(--glass-blur-heavy);
+    -webkit-backdrop-filter: var(--glass-blur-heavy);
+  }
+}
+
+/* ===================================
+   PROFESSIONAL ACCESSIBILITY ENHANCEMENTS
+   =================================== */
+
+/* Focus indicators */
+.professional-btn:focus-visible,
+.professional-input:focus-visible,
+.professional-card--interactive:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .professional-card,
+  .professional-btn,
+  .professional-input {
+    border-width: 2px;
+    background: rgba(255, 255, 255, 0.2);
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .professional-card,
+  .professional-btn,
+  .professional-input,
+  .professional-modal {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ===================================
+   PROFESSIONAL BROWSER FALLBACKS
+   =================================== */
+
+/* Fallback for browsers without backdrop-filter support */
+@supports not (backdrop-filter: blur(1px)) {
+  .professional-card,
+  .professional-btn,
+  .professional-input,
+  .professional-modal {
+    background: rgba(30, 41, 59, 0.9);
+  }
+  
+  .professional-sidebar {
+    background: rgba(30, 41, 59, 0.95);
+  }
+  
+  .professional-modal-overlay {
+    background: rgba(0, 0, 0, 0.8);
+  }
+}
+
+/* ===================================
+   PROFESSIONAL PRINT STYLES
+   =================================== */
+
+@media print {
+  .professional-card,
+  .professional-btn,
+  .professional-input {
+    background: white !important;
+    color: black !important;
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+  }
+  
+  .professional-sidebar,
+  .professional-modal-overlay {
+    display: none !important;
+  }
+  
+  .professional-main {
+    margin-left: 0 !important;
+    padding: 0 !important;
+  }
+}
+
+/* ===================================
+   PROFESSIONAL UTILITY OVERRIDES
+   =================================== */
+
+/* Ensure utilities work with the design system */
+.professional-design-system .glass-light {
+  background: var(--glass-bg-light);
+  backdrop-filter: var(--glass-blur-light);
+  -webkit-backdrop-filter: var(--glass-blur-light);
+  border: var(--glass-border-light);
+}
+
+.professional-design-system .glass-medium {
+  background: var(--glass-bg-medium);
+  backdrop-filter: var(--glass-blur-medium);
+  -webkit-backdrop-filter: var(--glass-blur-medium);
+  border: var(--glass-border-medium);
+}
+
+.professional-design-system .glass-heavy {
+  background: var(--glass-bg-heavy);
+  backdrop-filter: var(--glass-blur-heavy);
+  -webkit-backdrop-filter: var(--glass-blur-heavy);
+  border: var(--glass-border-heavy);
+}
+
+/* ===================================
+   PROFESSIONAL COMPONENT INTEGRATION
+   =================================== */
+
+/* Ensure all existing components work with the new design system */
+.professional-design-system .card,
+.professional-design-system .btn,
+.professional-design-system .form-control,
+.professional-design-system .modal {
+  /* Inherit professional styling */
+  font-family: var(--font-family-primary);
+  color: var(--text-primary);
+  border-radius: var(--radius-lg);
+  transition: all var(--duration-300) var(--ease-smooth);
+}
+
+/* Legacy component enhancement */
+.professional-design-system .card {
+  background: var(--glass-bg-medium);
+  backdrop-filter: var(--glass-blur-medium);
+  -webkit-backdrop-filter: var(--glass-blur-medium);
+  border: var(--glass-border-medium);
+  box-shadow: var(--shadow-glass-md);
+}
+
+.professional-design-system .btn {
+  background: var(--glass-bg-medium);
+  backdrop-filter: var(--glass-blur-medium);
+  -webkit-backdrop-filter: var(--glass-blur-medium);
+  border: var(--glass-border-medium);
+  box-shadow: var(--shadow-glass-sm);
+}
+
+.professional-design-system .form-control {
+  background: var(--glass-bg-light);
+  backdrop-filter: var(--glass-blur-light);
+  -webkit-backdrop-filter: var(--glass-blur-light);
+  border: var(--glass-border-light);
+  box-shadow: var(--shadow-glass-xs);
+}

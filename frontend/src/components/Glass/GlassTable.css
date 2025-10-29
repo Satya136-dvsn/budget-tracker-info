@@ -1,0 +1,59 @@
+/* ===================================
+   GLASS TABLE COMPONENT STYLES
+   =================================== */
+
+.glass-table-container {
+  background: var(--glass-bg-medium);
+  backdrop-filter: var(--glass-blur-medium);
+  -webkit-backdrop-filter: var(--glass-blur-medium);
+  border: var(--glass-border-medium);
+  border-radius: 16px;
+  box-shadow: var(--glass-shadow-medium);
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: transparent;
+}
+
+.glass-table th {
+  background: var(--glass-bg-heavy);
+  color: var(--text-primary);
+  font-weight: 600;
+  padding: 1rem;
+  border-bottom: var(--glass-border-light);
+  text-align: left;
+}
+
+.glass-table td {
+  color: var(--text-primary);
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-table-hover tbody tr:hover {
+  background: var(--glass-bg-light);
+}
+
+.glass-table-striped tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* Table variants */
+.glass-table-primary th {
+  background: rgba(102, 126, 234, 0.2);
+  border-bottom: 1px solid rgba(102, 126, 234, 0.3);
+}
+
+.glass-table-secondary th {
+  background: rgba(139, 92, 246, 0.2);
+  border-bottom: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+.glass-table-accent th {
+  background: rgba(16, 185, 129, 0.2);
+  border-bottom: 1px solid rgba(16, 185, 129, 0.3);
+}

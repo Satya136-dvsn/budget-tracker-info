@@ -1,0 +1,372 @@
+/* ===================================
+   PROFESSIONAL DESIGN SYSTEM
+   Portfolio-Quality CSS Architecture
+   =================================== */
+
+/* ===================================
+   IMPORT ORDER - CRITICAL FOR CASCADE
+   =================================== */
+
+/* 1. Design System Foundation */
+@import './design-system/index.css';
+
+/* 2. Legacy Component Compatibility */
+@import './professional-components.css';
+
+/* 3. Specific Component Overrides (if needed) */
+/* These files will be imported only if they contain unique styles not covered by the design system */
+
+/* ===================================
+   PROFESSIONAL ARCHITECTURE NOTES
+   =================================== */
+
+/*
+This file serves as the main entry point for the professional design system.
+It imports all necessary CSS files in the correct order to ensure proper
+cascade and specificity management.
+
+Import Order Explanation:
+1. Design System Foundation - Core tokens, utilities, layout, and components
+2. Legacy Component Compatibility - Ensures existing components work with new system
+3. Specific Overrides - Any component-specific styles that need to override defaults
+
+The design system is built with:
+- CSS Custom Properties (CSS Variables) for theming
+- Professional color palette with proper contrast ratios
+- Comprehensive spacing scale
+- Professional typography system
+- Glassmorphism effects with proper fallbacks
+- Responsive design with mobile-first approach
+- Accessibility compliance (WCAG 2.1 AA)
+- Cross-browser compatibility
+- Performance optimizations
+*/
+
+/* ===================================
+   PROFESSIONAL THEME INITIALIZATION
+   =================================== */
+
+/* Ensure the design system is properly initialized */
+html {
+  /* Enable smooth scrolling */
+  scroll-behavior: smooth;
+  
+  /* Improve text rendering */
+  -webkit-text-size-adjust: 100%;
+  -moz-tab-size: 4;
+  tab-size: 4;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  /* Apply professional theme */
+  background: var(--gradient-background-dark);
+  color: var(--text-primary);
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+  
+  /* Improve font rendering */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  /* Prevent horizontal scroll */
+  overflow-x: hidden;
+  
+  /* Ensure full height */
+  min-height: 100vh;
+}
+
+/* ===================================
+   PROFESSIONAL GLOBAL ENHANCEMENTS
+   =================================== */
+
+/* Ensure all interactive elements have proper focus states */
+button,
+input,
+select,
+textarea,
+a,
+[tabindex] {
+  transition: all var(--duration-200) var(--ease-smooth);
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+a:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Improve image rendering */
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+}
+
+/* Professional link styles */
+a {
+  color: var(--color-primary-400);
+  text-decoration: none;
+  transition: color var(--duration-200) var(--ease-smooth);
+}
+
+a:hover {
+  color: var(--color-primary-300);
+  text-decoration: underline;
+}
+
+/* Professional heading styles */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  color: var(--text-primary);
+  margin: 0 0 var(--space-4) 0;
+}
+
+h1 {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+}
+
+h2 {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-semibold);
+}
+
+h3 {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+}
+
+h4 {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-medium);
+}
+
+h5 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+}
+
+h6 {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Professional paragraph styles */
+p {
+  color: var(--text-secondary);
+  line-height: var(--line-height-relaxed);
+  margin: 0 0 var(--space-4) 0;
+}
+
+/* Professional list styles */
+ul, ol {
+  color: var(--text-secondary);
+  line-height: var(--line-height-relaxed);
+  margin: 0 0 var(--space-4) var(--space-6);
+}
+
+li {
+  margin-bottom: var(--space-1);
+}
+
+/* Professional code styles */
+code {
+  font-family: var(--font-family-mono);
+  font-size: 0.9em;
+  background: var(--glass-bg-light);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  color: var(--color-primary-300);
+}
+
+pre {
+  font-family: var(--font-family-mono);
+  background: var(--glass-bg-medium);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  overflow-x: auto;
+  margin: 0 0 var(--space-4) 0;
+  border: var(--glass-border-light);
+}
+
+pre code {
+  background: none;
+  padding: 0;
+  color: var(--text-primary);
+}
+
+/* Professional table styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--glass-bg-light);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin: 0 0 var(--space-6) 0;
+}
+
+th, td {
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  border-bottom: var(--glass-border-light);
+}
+
+th {
+  background: var(--glass-bg-medium);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+td {
+  color: var(--text-secondary);
+}
+
+tr:hover {
+  background: var(--glass-bg-subtle);
+}
+
+/* Professional form styles */
+fieldset {
+  border: var(--glass-border-light);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  margin: 0 0 var(--space-4) 0;
+  background: var(--glass-bg-subtle);
+}
+
+legend {
+  color: var(--text-primary);
+  font-weight: var(--font-weight-medium);
+  padding: 0 var(--space-2);
+}
+
+label {
+  color: var(--text-primary);
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--space-2);
+  display: block;
+}
+
+/* ===================================
+   PROFESSIONAL COMPONENT COMPATIBILITY
+   =================================== */
+
+/* Ensure React components inherit professional styling */
+.App,
+.app,
+[class*="App"],
+[class*="app"] {
+  font-family: var(--font-family-primary);
+  color: var(--text-primary);
+  background: transparent;
+}
+
+/* Professional wrapper classes */
+.professional-wrapper,
+.glassmorphism-wrapper,
+.theme-wrapper {
+  background: var(--gradient-background-dark);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.professional-wrapper::before,
+.glassmorphism-wrapper::before,
+.theme-wrapper::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(16, 185, 129, 0.04) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: var(--z-hide);
+}
+
+/* ===================================
+   PROFESSIONAL PERFORMANCE OPTIMIZATIONS
+   =================================== */
+
+/* GPU acceleration for smooth animations */
+.professional-card,
+.professional-btn,
+.professional-input,
+.professional-modal {
+  will-change: transform, opacity, backdrop-filter;
+  transform: translateZ(0);
+}
+
+/* Optimize backdrop-filter performance */
+@supports (backdrop-filter: blur(1px)) {
+  .professional-card,
+  .professional-btn,
+  .professional-input,
+  .professional-modal,
+  .professional-sidebar {
+    -webkit-backdrop-filter: var(--glass-blur-medium);
+    backdrop-filter: var(--glass-blur-medium);
+  }
+}
+
+/* ===================================
+   PROFESSIONAL DEBUG UTILITIES
+   =================================== */
+
+/* Debug mode - uncomment to see layout boundaries */
+/*
+.debug * {
+  outline: 1px solid rgba(255, 0, 0, 0.3) !important;
+}
+
+.debug .professional-card {
+  outline: 2px solid rgba(0, 255, 0, 0.5) !important;
+}
+
+.debug .professional-btn {
+  outline: 2px solid rgba(0, 0, 255, 0.5) !important;
+}
+*/
+
+/* ===================================
+   PROFESSIONAL THEME VALIDATION
+   =================================== */
+
+/* Ensure all required CSS custom properties are defined */
+@supports (color: var(--text-primary)) {
+  .professional-design-system-ready {
+    opacity: 1;
+  }
+}
+
+@supports not (color: var(--text-primary)) {
+  .professional-design-system-ready {
+    opacity: 0;
+  }
+  
+  .professional-design-system-ready::after {
+    content: 'Design system not loaded properly';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: red;
+    color: white;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    z-index: 9999;
+  }
+}

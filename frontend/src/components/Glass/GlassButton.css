@@ -1,0 +1,131 @@
+/* ===================================
+   GLASS BUTTON COMPONENT STYLES
+   =================================== */
+
+.glass-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--glass-bg-medium);
+  backdrop-filter: var(--glass-blur-medium);
+  -webkit-backdrop-filter: var(--glass-blur-medium);
+  border: var(--glass-border-medium);
+  border-radius: 12px;
+  box-shadow: var(--glass-shadow-medium);
+  color: var(--text-primary);
+  font-family: var(--font-primary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  outline: none;
+  user-select: none;
+}
+
+/* Button Variants */
+.glass-btn-primary {
+  background: rgba(102, 126, 234, 0.2);
+  border: 1px solid rgba(102, 126, 234, 0.3);
+}
+
+.glass-btn-primary:hover {
+  background: rgba(102, 126, 234, 0.3);
+  border: 1px solid rgba(102, 126, 234, 0.5);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+.glass-btn-secondary {
+  background: var(--glass-bg-light);
+  border: var(--glass-border-light);
+}
+
+.glass-btn-secondary:hover {
+  background: var(--glass-bg-medium);
+  border: var(--glass-border-medium);
+  transform: translateY(-1px);
+}
+
+.glass-btn-success {
+  background: rgba(16, 185, 129, 0.2);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.glass-btn-success:hover {
+  background: rgba(16, 185, 129, 0.3);
+  border: 1px solid rgba(16, 185, 129, 0.5);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+}
+
+.glass-btn-accent {
+  background: var(--glass-accent);
+  border: 1px solid var(--glass-accent-border);
+}
+
+.glass-btn-accent:hover {
+  background: var(--glass-accent-hover);
+  border: 1px solid var(--glass-accent-glow);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 25px var(--glass-accent-glow);
+}
+
+/* Button Sizes */
+.glass-btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+}
+
+.glass-btn-lg {
+  padding: 1rem 2rem;
+  font-size: 1rem;
+}
+
+/* Button States */
+.glass-btn-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.glass-btn-loading {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.glass-btn-full {
+  width: 100%;
+}
+
+.glass-btn-glow:hover {
+  box-shadow: 0 0 20px rgba(102, 126, 234, 0.4);
+}
+
+.glass-btn-animated {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-btn-animated:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

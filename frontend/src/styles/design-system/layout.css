@@ -1,0 +1,677 @@
+/* ===================================
+   PROFESSIONAL LAYOUT SYSTEM
+   Portfolio-Quality Grid & Flexbox Layout
+   =================================== */
+
+/* ===================================
+   PROFESSIONAL APP LAYOUT
+   =================================== */
+
+.professional-app-layout {
+  display: grid;
+  grid-template-columns: var(--sidebar-width-expanded) 1fr;
+  grid-template-rows: 1fr;
+  min-height: 100vh;
+  background: var(--gradient-background-dark);
+  position: relative;
+  overflow-x: hidden;
+  transition: grid-template-columns var(--duration-300) var(--ease-smooth);
+}
+
+.professional-app-layout.sidebar-collapsed {
+  grid-template-columns: var(--sidebar-width-collapsed) 1fr;
+}
+
+.professional-app-layout::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(16, 185, 129, 0.04) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: var(--z-hide);
+}
+
+/* ===================================
+   PROFESSIONAL SIDEBAR LAYOUT
+   =================================== */
+
+.professional-sidebar {
+  grid-column: 1;
+  grid-row: 1;
+  background: var(--glass-bg-light);
+  backdrop-filter: var(--glass-blur-heavy);
+  -webkit-backdrop-filter: var(--glass-blur-heavy);
+  border-right: var(--glass-border-medium);
+  box-shadow: var(--shadow-glass-lg);
+  z-index: var(--z-fixed);
+  transition: all var(--duration-300) var(--ease-smooth);
+  overflow: hidden;
+  position: relative;
+}
+
+.professional-sidebar-content {
+  padding: var(--space-6) var(--space-4);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Professional Brand Section */
+.professional-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  margin-bottom: var(--space-6);
+  background: var(--glass-bg-medium);
+  backdrop-filter: var(--glass-blur-medium);
+  -webkit-backdrop-filter: var(--glass-blur-medium);
+  border: var(--glass-border-light);
+  border-radius: var(--radius-xl);
+  cursor: pointer;
+  transition: all var(--duration-300) var(--ease-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.professional-brand::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+}
+
+.professional-brand:hover {
+  background: var(--glass-bg-heavy);
+  border: var(--glass-border-medium);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glass-md);
+}
+
+.professional-brand-icon {
+  font-size: var(--font-size-2xl);
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+  transition: transform var(--duration-200) var(--ease-smooth);
+}
+
+.professional-brand:hover .professional-brand-icon {
+  transform: scale(1.1);
+}
+
+.professional-brand-text {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  white-space: nowrap;
+  transition: opacity var(--duration-300) var(--ease-smooth);
+}
+
+/* Professional Navigation */
+.professional-nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  overflow: hidden;
+}
+
+.professional-nav-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--glass-bg-light);
+  backdrop-filter: var(--glass-blur-light);
+  -webkit-backdrop-filter: var(--glass-blur-light);
+  border: var(--glass-border-light);
+  border-radius: var(--radius-lg);
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: all var(--duration-300) var(--ease-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.professional-nav-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--gradient-primary);
+  transform: scaleY(0);
+  transition: transform var(--duration-300) var(--ease-smooth);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.professional-nav-item:hover {
+  background: var(--glass-bg-medium);
+  border: var(--glass-border-medium);
+  color: var(--text-primary);
+  transform: translateX(4px);
+  box-shadow: var(--shadow-glass-sm);
+}
+
+.professional-nav-item:hover::before {
+  transform: scaleY(0.6);
+}
+
+.professional-nav-item.active {
+  background: var(--glass-bg-heavy);
+  border: var(--glass-border-heavy);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-glass-md), var(--shadow-primary);
+}
+
+.professional-nav-item.active::before {
+  transform: scaleY(1);
+}
+
+.professional-nav-icon {
+  font-size: var(--font-size-lg);
+  min-width: var(--font-size-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--duration-200) var(--ease-smooth);
+}
+
+.professional-nav-item:hover .professional-nav-icon {
+  transform: scale(1.1);
+}
+
+.professional-nav-text {
+  white-space: nowrap;
+  opacity: 1;
+  transition: opacity var(--duration-300) var(--ease-smooth);
+}
+
+/* Collapsed Sidebar States */
+.professional-sidebar.collapsed .professional-nav-text,
+.professional-sidebar.collapsed .professional-brand-text {
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
+}
+
+.professional-sidebar.collapsed .professional-brand,
+.professional-sidebar.collapsed .professional-nav-item {
+  justify-content: center;
+  padding-left: var(--space-3);
+  padding-right: var(--space-3);
+}
+
+/* Professional Sidebar Footer */
+.professional-sidebar-footer {
+  margin-top: auto;
+  padding-top: var(--space-4);
+  border-top: var(--glass-border-light);
+}
+
+/* ===================================
+   PROFESSIONAL MAIN CONTENT LAYOUT
+   =================================== */
+
+.professional-main {
+  grid-column: 2;
+  grid-row: 1;
+  padding: var(--space-8);
+  overflow-y: auto;
+  background: transparent;
+  position: relative;
+  min-height: 100vh;
+}
+
+.professional-main-content {
+  max-width: var(--container-2xl);
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Professional Header */
+.professional-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-6);
+  background: var(--glass-bg-light);
+  backdrop-filter: var(--glass-blur-medium);
+  -webkit-backdrop-filter: var(--glass-blur-medium);
+  border: var(--glass-border-light);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-glass-sm);
+  margin-bottom: var(--space-6);
+  position: sticky;
+  top: var(--space-8);
+  z-index: var(--z-sticky);
+}
+
+.professional-header-title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.professional-header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* ===================================
+   PROFESSIONAL GRID SYSTEM
+   =================================== */
+
+.professional-grid {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.professional-grid-1 { grid-template-columns: 1fr; }
+.professional-grid-2 { grid-template-columns: repeat(2, 1fr); }
+.professional-grid-3 { grid-template-columns: repeat(3, 1fr); }
+.professional-grid-4 { grid-template-columns: repeat(4, 1fr); }
+.professional-grid-5 { grid-template-columns: repeat(5, 1fr); }
+.professional-grid-6 { grid-template-columns: repeat(6, 1fr); }
+.professional-grid-12 { grid-template-columns: repeat(12, 1fr); }
+
+/* Professional Grid Auto-fit */
+.professional-grid-auto-fit {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-6);
+}
+
+.professional-grid-auto-fill {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-6);
+}
+
+/* Professional Grid Spans */
+.professional-col-span-1 { grid-column: span 1; }
+.professional-col-span-2 { grid-column: span 2; }
+.professional-col-span-3 { grid-column: span 3; }
+.professional-col-span-4 { grid-column: span 4; }
+.professional-col-span-5 { grid-column: span 5; }
+.professional-col-span-6 { grid-column: span 6; }
+.professional-col-span-full { grid-column: 1 / -1; }
+
+.professional-row-span-1 { grid-row: span 1; }
+.professional-row-span-2 { grid-row: span 2; }
+.professional-row-span-3 { grid-row: span 3; }
+.professional-row-span-4 { grid-row: span 4; }
+.professional-row-span-full { grid-row: 1 / -1; }
+
+/* ===================================
+   PROFESSIONAL FLEXBOX LAYOUTS
+   =================================== */
+
+.professional-flex {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.professional-flex-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.professional-flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+}
+
+.professional-flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.professional-flex-around {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: var(--space-4);
+}
+
+.professional-flex-evenly {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: var(--space-4);
+}
+
+/* ===================================
+   PROFESSIONAL CONTAINER SYSTEM
+   =================================== */
+
+.professional-container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-4);
+  padding-right: var(--space-4);
+}
+
+.professional-container-xs { max-width: var(--container-xs); }
+.professional-container-sm { max-width: var(--container-sm); }
+.professional-container-md { max-width: var(--container-md); }
+.professional-container-lg { max-width: var(--container-lg); }
+.professional-container-xl { max-width: var(--container-xl); }
+.professional-container-2xl { max-width: var(--container-2xl); }
+
+/* ===================================
+   PROFESSIONAL SECTION LAYOUTS
+   =================================== */
+
+.professional-section {
+  padding: var(--space-12) 0;
+}
+
+.professional-section-sm {
+  padding: var(--space-8) 0;
+}
+
+.professional-section-lg {
+  padding: var(--space-16) 0;
+}
+
+.professional-section-xl {
+  padding: var(--space-20) 0;
+}
+
+/* Professional Section Headers */
+.professional-section-header {
+  text-align: center;
+  margin-bottom: var(--space-12);
+}
+
+.professional-section-title {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-4);
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.professional-section-subtitle {
+  font-size: var(--font-size-lg);
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: var(--line-height-relaxed);
+}
+
+/* ===================================
+   PROFESSIONAL CARD LAYOUTS
+   =================================== */
+
+.professional-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--space-6);
+}
+
+.professional-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.professional-card-masonry {
+  columns: 3;
+  column-gap: var(--space-6);
+  break-inside: avoid;
+}
+
+/* ===================================
+   PROFESSIONAL RESPONSIVE LAYOUT
+   =================================== */
+
+/* Mobile Layout Adjustments */
+@media (max-width: 1024px) {
+  .professional-app-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+  
+  .professional-sidebar {
+    grid-column: 1;
+    grid-row: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--sidebar-width-expanded);
+    height: 100vh;
+    transform: translateX(-100%);
+    z-index: var(--z-modal);
+    transition: transform var(--duration-300) var(--ease-smooth);
+  }
+  
+  .professional-sidebar.mobile-open {
+    transform: translateX(0);
+  }
+  
+  .professional-main {
+    grid-column: 1;
+    grid-row: 2;
+    padding: var(--space-4);
+  }
+  
+  .professional-header {
+    position: static;
+    margin-bottom: var(--space-4);
+  }
+  
+  /* Mobile Grid Adjustments */
+  .professional-grid-2,
+  .professional-grid-3,
+  .professional-grid-4,
+  .professional-grid-5,
+  .professional-grid-6 {
+    grid-template-columns: 1fr;
+  }
+  
+  .professional-card-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .professional-card-masonry {
+    columns: 1;
+  }
+}
+
+/* Tablet Layout Adjustments */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .professional-grid-2,
+  .professional-grid-4,
+  .professional-grid-6 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .professional-card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .professional-card-masonry {
+    columns: 2;
+  }
+}
+
+/* Large Screen Layout Adjustments */
+@media (min-width: 1536px) {
+  .professional-app-layout.sidebar-expanded {
+    grid-template-columns: var(--sidebar-width-wide) 1fr;
+  }
+  
+  .professional-main {
+    padding: var(--space-12);
+  }
+  
+  .professional-section {
+    padding: var(--space-16) 0;
+  }
+  
+  .professional-section-lg {
+    padding: var(--space-20) 0;
+  }
+  
+  .professional-section-xl {
+    padding: var(--space-24) 0;
+  }
+}
+
+/* ===================================
+   PROFESSIONAL MOBILE OVERLAY
+   =================================== */
+
+.professional-mobile-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: var(--glass-blur-light);
+  -webkit-backdrop-filter: var(--glass-blur-light);
+  z-index: var(--z-modal-backdrop);
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--duration-300) var(--ease-smooth);
+}
+
+.professional-mobile-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ===================================
+   PROFESSIONAL LAYOUT ANIMATIONS
+   =================================== */
+
+@keyframes professionalSlideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes professionalSlideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes professionalFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.professional-animate-slide-left {
+  animation: professionalSlideInLeft 0.6s var(--ease-smooth) forwards;
+}
+
+.professional-animate-slide-right {
+  animation: professionalSlideInRight 0.6s var(--ease-smooth) forwards;
+}
+
+.professional-animate-fade-up {
+  animation: professionalFadeInUp 0.6s var(--ease-smooth) forwards;
+}
+
+/* Staggered animations for grid items */
+.professional-grid > * {
+  animation: professionalFadeInUp 0.6s var(--ease-smooth) forwards;
+  opacity: 0;
+}
+
+.professional-grid > *:nth-child(1) { animation-delay: 0.1s; }
+.professional-grid > *:nth-child(2) { animation-delay: 0.2s; }
+.professional-grid > *:nth-child(3) { animation-delay: 0.3s; }
+.professional-grid > *:nth-child(4) { animation-delay: 0.4s; }
+.professional-grid > *:nth-child(5) { animation-delay: 0.5s; }
+.professional-grid > *:nth-child(6) { animation-delay: 0.6s; }
+
+/* ===================================
+   PROFESSIONAL LAYOUT HELPERS
+   =================================== */
+
+.professional-full-height { height: 100vh; }
+.professional-min-full-height { min-height: 100vh; }
+.professional-full-width { width: 100%; }
+.professional-max-full-width { max-width: 100%; }
+
+.professional-center-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.professional-sticky-top {
+  position: sticky;
+  top: var(--space-8);
+  z-index: var(--z-sticky);
+}
+
+.professional-fixed-top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-fixed);
+}
+
+.professional-fixed-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-fixed);
+}
+
+/* Professional Aspect Ratios */
+.professional-aspect-square { aspect-ratio: 1 / 1; }
+.professional-aspect-video { aspect-ratio: 16 / 9; }
+.professional-aspect-photo { aspect-ratio: 4 / 3; }
+.professional-aspect-portrait { aspect-ratio: 3 / 4; }
