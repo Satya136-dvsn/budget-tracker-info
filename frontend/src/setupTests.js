@@ -1,4 +1,5 @@
 // Jest setup file for testing environment
+import React from 'react';
 import '@testing-library/jest-dom';
 
 // Mock Chart.js globally

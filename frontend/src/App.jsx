@@ -311,12 +311,16 @@ function AppContent() {
 
 function App() {
   useEffect(() => {
+    document.body.classList.add('theme-glass');
     // Initialize professional animations after component mount
     const timer = setTimeout(() => {
       initProfessionalAnimations();
     }, 100);
     
-    return () => clearTimeout(timer);
+    return () => {
+      document.body.classList.remove('theme-glass');
+      clearTimeout(timer);
+    };
   }, []);
 
   return (

@@ -1,3 +1,13 @@
+/* Import Professional Component Styles */
+@import './styles/professional-forms.css';
+@import './styles/professional-tables.css';
+@import './styles/professional-modals.css';
+@import './styles/professional-loading.css';
+
+/* Import Additional Professional Component Styles */
+@import './styles/professional-goals.css';
+@import './styles/professional-analytics.css';
+
 /* ===================================
    MAIN APPLICATION PROFESSIONAL STYLING
    Portfolio-Quality Design System
@@ -184,6 +194,8 @@ body {
 @media (max-width: 768px) {
   .app-container::before {
     animation: none; /* Optimize for mobile performance */
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
   
   .main-content,
@@ -192,16 +204,21 @@ body {
     margin-left: 0;
     width: 100%;
     padding: 1rem;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
   
   .main-content-full {
     margin-left: 0;
     width: 100%;
     padding: 1rem;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .sidebar {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
   
   .professional-card {
@@ -445,13 +462,3 @@ html, body {
 .main-content-full > * {
   max-width: 100%;
 }
-
-/* Import Professional Component Styles */
-@import './styles/professional-forms.css';
-@import './styles/professional-tables.css';
-@import './styles/professional-modals.css';
-@import './styles/professional-loading.css';
-
-/* Import Additional Professional Component Styles */
-@import './styles/professional-goals.css';
-@import './styles/professional-analytics.css';
