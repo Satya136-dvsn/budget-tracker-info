@@ -118,17 +118,23 @@ primary {
   box-shadow: var(--shadow-lg), var(--glow-secondary);
 }
 
-.pro-btn-glass {
-  background: var(--glass-bg-medium);
-  backdrop-filter: var(--glass-blur-medium);
+.pro-btn {
+  background: var(--glass-bg-light);
+  backdrop-filter: var(--glass-blur-light);
   border: var(--glass-border);
   color: var(--text-primary);
+  transition: all 0.2s ease-in-out;
 }
 
-.pro-btn-glass:hover {
-  background: var(--glass-bg-heavy);
-  transform: translateY(-1px);
+.pro-btn:hover {
+  background: var(--glass-bg-medium);
+  transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
+}
+
+.pro-btn:active {
+  transform: translateY(-1px);
+  box-shadow: none;
 }
 
 .pro-btn-outline {
